@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Ghatal Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "system-ui", "sans-serif"],
+                    },
+                    colors: {
+                        primary: {
+                            50: "#eff6ff",
+                            100: "#dbeafe",
+                            500: "#3b82f6",
+                            600: "#2563eb",
+                            700: "#1d4ed8",
+                            800: "#1e40af",
+                            900: "#1e3a8a",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="icon" href="logo.png" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .dark .form-input {
+            background-color: #334155;
+            border-color: #475569;
+            color: #e5e7eb;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 200ms ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-success {
+            background-color: #16a34a;
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #15803d;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-danger {
+            background-color: #dc2626;
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border: none;
+        }
+
+        .dark .btn-secondary {
+            background-color: #475569;
+            color: #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .dark .btn-secondary:hover {
+            background-color: #64748b;
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .review-card,
+        .listing-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .dark .review-card,
+        .dark .listing-card {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #e5e7eb;
+        }
+
+        .listing-card:hover,
+        .review-card:hover {
+            border-color: #3b82f6;
+            /* primary-500 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* New styles for selection */
+        .card-selected {
+            transform: scale(0.98);
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 2px #3b82f6 !important;
+        }
+
+        .selection-indicator {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #3b82f6;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transform: scale(0);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+        }
+
+        .card-selected .selection-indicator {
+            transform: scale(1);
+        }
+
+        /* Utility to hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+            /* for Chrome, Safari, and Opera */
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            /* for Internet Explorer and Edge */
+            scrollbar-width: none;
+            /* for Firefox */
+        }
+
+        /* Custom styles for add modal hours dropdown */
+        .add-hours-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .add-hours-option:hover,
+        .add-hours-option.selected {
+            background-color: #dbeafe;
+            /* primary-100 */
+        }
+
+        .dark .add-hours-option:hover,
+        .dark .add-hours-option.selected {
+            background-color: #1e40af;
+            /* primary-800 */
+        }
+
+        /* Shake animation for login error */
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translateX(-1px);
+            }
+
+            20%,
+            80% {
+                transform: translateX(2px);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translateX(-4px);
+            }
+
+            40%,
+            60% {
+                transform: translateX(4px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<style>
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+    /* Dark mode scrollbar */
+    .dark ::-webkit-scrollbar-track {
+        background: #1e293b;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+        background: #475569;
+    }
+</style>
+
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100">
+    <div id="login-view" class="min-h-screen flex items-center justify-center">
+        <div id="login-box" class="max-w-md w-full bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
+            <div class="text-center mb-8">
+                <img src="logo.png" alt="Logo" class="w-16 h-16 mx-auto mb-4" />
+                <h1 class="text-2xl font-bold">Admin Panel Login</h1>
+                <p class="text-gray-500 dark:text-gray-400">Ghatal Guide</p>
+            </div>
+            <form id="login-form">
+                <div class="space-y-6">
+                    <div>
+                        <label for="email"
+                            class="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Email
+                            Address</label>
+                        <input type="email" id="email" required autocomplete="email"
+                            class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 form-input" />
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-semibold mb-2">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" class="form-input pr-10" required />
+                            <button type="button" id="password-toggle"
+                                class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                aria-label="Toggle password visibility">
+                                <svg id="eye-open-icon" class="h-6 w-6" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eye-closed-icon" class="h-6 w-6 hidden" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243l-4.243-4.243" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">
+                        Sign In
+                    </button>
+                </div>
+                <p id="login-error" class="text-red-500 text-sm mt-4 text-center"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-view" class="hidden">
+        <header class="bg-white dark:bg-slate-800 shadow-md sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <a href="#" id="admin-home-btn"
+                    class="flex items-center gap-3 group transition-all duration-200 hover:opacity-80"
+                    title="Back to Dashboard">
+                    <img src="logo.png" alt="Logo" class="w-10 h-10 group-hover:scale-105 transition-transform">
+                    <h1
+                        class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">
+                        Admin Panel
+                    </h1>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle"
+                        class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                        aria-label="Toggle theme">
+                        <svg id="sun-icon" class="w-6 h-6 dark:hidden" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+                        </svg>
+                        <svg id="moon-icon" class="w-6 h-6 hidden dark:block" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" />
+                        </svg>
+                    </button>
+                    <button id="logout-btn"></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+            <div class="border-b border-gray-200 dark:border-slate-700 mb-8">
+                <nav id="main-admin-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                    aria-label="Main Tabs">
+                    <button data-panel="dashboard-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-2 sm:px-3 border-b-2 font-semibold text-base sm:text-lg dark:text-blue-400">
+                        📊 Dashboard
+                    </button>
+                    <button data-panel="listings-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        📋 Listings
+                    </button>
+                    <button data-panel="reviews-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        ⭐ Reviews
+                    </button>
+                    <button data-panel="blog-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        ✍️ Blog
+                    </button>
+                    <button data-panel="jobs-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        💼 Jobs
+                    </button>
+                    <button data-panel="events-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        🎉 Events
+                    </button>
+                    <button data-panel="transportation-panel"
+                        class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-semibold text-lg dark:text-blue-400">
+                        🚌 Transportation
+                    </button>
+                </nav>
+            </div>
+
+            <div id="dashboard-panel" class="main-panel">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Approved Listings
+                            </p>
+                            <p id="stat-approved-listings" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Pending Listings
+                            </p>
+                            <p id="stat-pending-listings" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-yellow-100 dark:bg-yellow-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Pending Reviews
+                            </p>
+                            <p id="stat-pending-reviews" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-purple-100 dark:bg-purple-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Total Approved Reviews
+                            </p>
+                            <p id="stat-approved-reviews" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-indigo-100 dark:bg-indigo-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Total Listings
+                            </p>
+                            <p id="stat-total-listings" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 flex items-center space-x-4">
+                        <div class="bg-red-100 dark:bg-red-900 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Rejected Listings
+                            </p>
+                            <p id="stat-rejected-listings" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                            Listings by Category
+                        </h3>
+                        <canvas id="listings-by-category-chart"></canvas>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                            Reviews Breakdown
+                        </h3>
+                        <div class="max-w-xs mx-auto">
+                            <canvas id="reviews-status-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 mb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                        Daily Submissions (Last 30 Days)
+                    </h3>
+                    <canvas id="submissions-over-time-chart"></canvas>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                        Recent Pending Listings
+                    </h3>
+                    <div id="recent-activity-container" class="space-y-4">
+                        <p id="no-recent-activity" class="text-gray-500 dark:text-gray-400">
+                            No new pending listings.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="listings-panel" class="main-panel hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Manage Listings
+                    </h2>
+                    <button id="add-listing-btn" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Add New Listing</span>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="admin-search-input" placeholder="Search listings..."
+                            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <div class="flex-1">
+                        <label for="category-filter" class="sr-only">Filter by Category</label>
+                        <select id="category-filter"
+                            class="form-input w-full bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label for="sort-listings" class="sr-only">Sort by</label>
+                        <select id="sort-listings"
+                            class="form-input w-full bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
+                            <option value="newest">Sort by: Newest First</option>
+                            <option value="oldest">Sort by: Oldest First</option>
+                            <option value="name_asc">Sort by: Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="bulk-action-bar"
+                    class="hidden bg-blue-100 dark:bg-blue-900/50 p-3 rounded-lg mb-4 flex items-center gap-4">
+                    <input type="checkbox" id="select-all-listings"
+                        class="rounded border-gray-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500" />
+                    <label for="select-all-listings" class="font-semibold text-sm">Select All</label>
+                    <select id="bulk-action-select" class="form-input text-sm py-1 px-2 w-48">
+                        <option value="">Bulk Action...</option>
+                        <option value="approve">Approve Selected</option>
+                        <option value="reject">Reject Selected</option>
+                        <option value="delete">Delete Selected</option>
+                    </select>
+                    <button id="bulk-action-apply" class="btn btn-primary btn-sm">
+                        Apply
+                    </button>
+                    <span id="bulk-counter" class="ml-auto text-sm font-medium"></span>
+                </div>
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="admin-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Tabs">
+                        <button data-status="pending_review"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-blue-400 dark:border-blue-400">
+                            Pending
+                            <span id="pending-count"
+                                class="ml-2 hidden bg-blue-100 text-blue-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="approved"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-blue-400 dark:border-blue-400">
+                            Approved
+                            <span id="approved-count"
+                                class="ml-2 hidden bg-green-100 text-green-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="rejected"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-blue-400 dark:border-blue-400">
+                            Rejected
+                            <span id="rejected-count"
+                                class="ml-2 hidden bg-red-100 text-red-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="feature_requests"
+                            class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-yellow-600 border-yellow-500">
+                            ⭐ Feature Requests
+                            <span id="feature-request-count"
+                                class="ml-2 hidden bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="loading" class="col-span-full text-center py-12">
+                    <p class="text-lg">Loading listings...</p>
+                </div>
+                <div id="no-listings"
+                    class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                    <p class="text-lg font-semibold">🎉 No listings found!</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        There are no listings in this category.
+                    </p>
+                </div>
+                <div id="listings-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+            <div id="reviews-panel" class="main-panel hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Manage Reviews
+                    </h2>
+                </div>
+
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="admin-review-search-input"
+                            placeholder="Search reviews by user, text, or listing name..."
+                            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-lg" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div id="bulk-review-action-bar"
+                    class="hidden bg-purple-100 dark:bg-purple-900/50 p-3 rounded-lg mb-4 flex items-center gap-4">
+                    <input type="checkbox" id="select-all-reviews"
+                        class="rounded border-gray-300 dark:border-slate-600 text-purple-600 focus:ring-purple-500" />
+                    <label for="select-all-reviews" class="font-semibold text-sm">Select All</label>
+                    <select id="bulk-review-action-select" class="form-input text-sm py-1 px-2 w-48">
+                        <option value="">Bulk Action...</option>
+                        <option value="approve-review">Approve Selected</option>
+                        <option value="reject-review">Reject Selected</option>
+                        <option value="delete-review">Delete Selected</option>
+                    </select>
+                    <button id="bulk-review-action-apply"
+                        class="btn bg-purple-600 hover:bg-purple-700 text-white btn-sm">
+                        Apply
+                    </button>
+                    <span id="bulk-review-counter" class="ml-auto text-sm font-medium"></span>
+                </div>
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="review-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Review Tabs">
+                        <button data-status="pending"
+                            class="review-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-purple-400 dark:border-purple-400">
+                            Pending Reviews
+                            <span id="review-pending-count"
+                                class="ml-2 hidden bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="approved"
+                            class="review-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-purple-400 dark:border-purple-400">
+                            Approved Reviews
+                            <span id="review-approved-count"
+                                class="ml-2 hidden bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="rejected"
+                            class="review-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm dark:text-purple-400 dark:border-purple-400">
+                            Rejected Reviews
+                            <span id="review-rejected-count"
+                                class="ml-2 hidden bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="no-reviews"
+                    class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                    <p class="text-lg font-semibold">🎉 No reviews found!</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        There are no reviews in this category.
+                    </p>
+                </div>
+                <div id="reviews-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <div id="blog-panel" class="main-panel hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Manage Blog Posts
+                    </h2>
+                    <button id="add-post-btn" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Add New Post</span>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="admin-post-search-input" placeholder="Search posts by title..."
+                            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-lg" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="post-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Post Tabs">
+                        <button data-status="published"
+                            class="post-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Published
+                            <span id="post-published-count"
+                                class="ml-2 hidden bg-green-100 text-green-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="draft"
+                            class="post-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Drafts
+                            <span id="post-draft-count"
+                                class="ml-2 hidden bg-yellow-100 text-yellow-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="no-posts"
+                    class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                    <p class="text-lg font-semibold">✍️ No posts found!</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        There are no posts in this category.
+                    </p>
+                </div>
+                <div id="posts-container" class="space-y-6"></div>
+            </div>
+
+            <div id="jobs-panel" class="main-panel hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Manage Job Postings
+                    </h2>
+                    <button id="add-job-btn" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Add New Job</span>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="admin-job-search-input" placeholder="Search jobs by title or company..."
+                            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="job-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Job Tabs">
+                        <button data-status="active"
+                            class="job-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Active
+                            <span id="job-active-count"
+                                class="ml-2 hidden bg-green-100 text-green-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="expired"
+                            class="job-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Expired
+                            <span id="job-expired-count"
+                                class="ml-2 hidden bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="no-jobs"
+                    class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                    <p class="text-lg font-semibold">💼 No jobs found!</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        There are no jobs in this category.
+                    </p>
+                </div>
+                <div id="jobs-container" class="space-y-6"></div>
+            </div>
+
+            <div id="events-panel" class="main-panel hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Manage Events
+                    </h2>
+                    <button id="add-event-btn" class="btn btn-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Add New Event</span>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="admin-event-search-input"
+                            placeholder="Search events by title or location..."
+                            class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-lg" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="event-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Event Tabs">
+                        <button data-status="published"
+                            class="event-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Published
+                            <span id="event-published-count"
+                                class="ml-2 hidden bg-green-100 text-green-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                        <button data-status="draft"
+                            class="event-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Drafts
+                            <span id="event-draft-count"
+                                class="ml-2 hidden bg-yellow-100 text-yellow-600 text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="no-events"
+                    class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                    <p class="text-lg font-semibold">🎉 No events found!</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        There are no events in this category.
+                    </p>
+                </div>
+                <div id="events-container" class="space-y-6"></div>
+            </div>
+
+            <div id="transportation-panel" class="main-panel hidden">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    Manage Transportation
+                </h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">
+                    Manage train schedules, bus routes, and toto fares.
+                </p>
+
+                <div class="border-b border-gray-200 dark:border-slate-700 mb-6">
+                    <nav id="transport-tabs" class="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto hide-scrollbar"
+                        aria-label="Transportation Tabs">
+                        <button data-type="trains"
+                            class="transport-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            🚆 Trains
+                        </button>
+                        <button data-type="buses"
+                            class="transport-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            🚌 Buses
+                        </button>
+                        <button data-type="toto_routes"
+                            class="transport-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            🛺 Toto Routes
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="transport-content-wrapper">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 id="transport-section-title" class="text-xl font-bold text-gray-800 dark:text-white">
+                            Trains
+                        </h3>
+                        <button id="add-transport-btn" class="btn btn-primary">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <span>Add New</span>
+                        </button>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="relative">
+                            <input type="text" id="admin-transport-search-input" placeholder="Search..."
+                                class="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-lg" />
+                            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div id="no-transport-results"
+                        class="hidden col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow">
+                        <p class="text-lg font-semibold">No items found!</p>
+                        <p class="text-gray-500 dark:text-gray-400">
+                            There are no items in this category.
+                        </p>
+                    </div>
+
+                    <div id="transport-data-container" class="space-y-4"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="add-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add New Listing
+                </h3>
+                <button id="close-add-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="add-form" class="space-y-6" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="add-category" class="block text-sm font-medium mb-1">Category *</label>
+                                <select id="add-category" name="category" class="form-input" required></select>
+                            </div>
+                            <div id="add-subcategory-wrapper" style="display: none">
+                                <label for="add-subcategory" class="block text-sm font-medium mb-1">Subcategory
+                                    *</label>
+                                <select id="add-subcategory" name="subcategory" class="form-input" required></select>
+                            </div>
+                            <div>
+                                <label for="add-name" id="add-name-label" class="block text-sm font-medium mb-1">Name
+                                    *</label>
+                                <input type="text" id="add-name" name="name" class="form-input" required />
+                            </div>
+                            <div>
+                                <label for="add-phone" class="block text-sm font-medium mb-1">Phone *</label>
+                                <input type="tel" id="add-phone" name="phone" class="form-input" required />
+                            </div>
+                            <div>
+                                <label for="add-hours-type" class="block text-sm font-medium mb-1">
+                                    Opening Hours
+                                </label>
+                                <div id="add-hours-dropdown" class="relative">
+                                    <input type="hidden" id="add-hours-type" name="hours-type" value="open_24_7" />
+                                    <button type="button" id="add-hours-dropdown-button"
+                                        class="w-full flex items-center justify-between text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                                        aria-haspopup="listbox" aria-expanded="false">
+                                        <span id="add-hours-dropdown-selected" class="flex items-center gap-x-3">
+                                            <span class="text-xl">🕒</span>
+                                            <span class="font-medium text-gray-800 dark:text-gray-200">Open 24/7</span>
+                                        </span>
+                                        <svg id="add-hours-dropdown-chevron"
+                                            class="w-5 h-5 text-gray-400 transition-transform" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="add-hours-dropdown-panel"
+                                        class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg shadow-lg z-10 hidden">
+                                        <div class="p-2 space-y-1">
+                                            <div class="add-hours-option" data-value="open_24_7">
+                                                🕒 Open 24/7
+                                            </div>
+                                            <div class="add-hours-option" data-value="temporarily_closed">
+                                                ⛔ Temporarily Closed
+                                            </div>
+                                            <div class="add-hours-option" data-value="custom">
+                                                ⚙️ Set Custom Hours
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="add-custom-hours-section"
+                                class="hidden mt-4 p-4 border border-gray-200 dark:border-slate-600 rounded-lg bg-gray-50 dark:bg-slate-800/50">
+                                <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                                    Let customers know when you're open. Leave times blank if
+                                    you're closed on a particular day.
+                                </p>
+                                <div class="space-y-4" id="add-opening-hours-inputs"></div>
+                                <div class="mt-4">
+                                    <button type="button" id="add-copy-hours-btn"
+                                        class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+                                        Copy Monday's hours to all days
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="add-address" class="block text-sm font-medium mb-1">Address *</label>
+                                <textarea id="add-address" name="address" rows="3" class="form-input"
+                                    required></textarea>
+                            </div>
+                            <div>
+                                <label for="add-gmap" class="block text-sm font-medium mb-1">Google Maps Link *</label>
+                                <input type="url" id="add-gmap" name="googleMapLink" class="form-input"
+                                    placeholder="https://maps.app.goo.gl/..." required />
+                            </div>
+                            <div>
+                                <label for="add-image-upload" class="block text-sm font-medium mb-1">Upload Image
+                                    *</label>
+                                <input type="file" id="add-image-upload" name="image_upload"
+                                    class="form-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-800"
+                                    accept="image/png, image/jpeg, image/webp" required />
+                                <input type="hidden" id="add-image-url" name="image" />
+                                <div id="add-image-preview-wrapper" class="mt-2 hidden">
+                                    <img id="add-image-preview" src="" alt="Image Preview"
+                                        class="max-h-40 rounded-lg shadow-md" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="add-description" class="block text-sm font-medium mb-1">Description</label>
+                            <textarea id="add-description" name="description" rows="4" class="form-input"
+                                required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-add-btn" class="btn btn-primary py-3">
+                    Create Listing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Edit Listing
+                </h3>
+                <button id="close-edit-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="edit-form" class="space-y-6" novalidate>
+                    <input type="hidden" id="edit-listing-id" name="listing_id" />
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="edit-category" class="block text-sm font-medium mb-1">Category *</label>
+                                <select id="edit-category" name="category" class="form-input" required></select>
+                            </div>
+
+                            <div id="edit-subcategory-wrapper">
+                                <label for="edit-subcategory" class="block text-sm font-medium mb-1">Subcategory
+                                    *</label>
+                                <select id="edit-subcategory" name="subcategory" class="form-input" required></select>
+                            </div>
+
+                            <div>
+                                <label for="edit-name" id="edit-name-label" class="block text-sm font-medium mb-1">Name
+                                    *</label>
+                                <input type="text" id="edit-name" name="name" class="form-input" required />
+                            </div>
+
+                            <div>
+                                <label for="edit-phone" class="block text-sm font-medium mb-1">Phone *</label>
+                                <input type="tel" id="edit-phone" name="phone" class="form-input" required />
+                            </div>
+
+                            <div>
+                                <label for="edit-hours-type" class="block text-sm font-medium mb-1">Opening
+                                    Hours</label>
+                                <div id="edit-hours-dropdown" class="relative">
+                                    <input type="hidden" id="edit-hours-type" name="hours-type" value="open_24_7" />
+                                    <button type="button" id="edit-hours-dropdown-button"
+                                        class="w-full flex items-center justify-between text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                                        <span id="edit-hours-dropdown-selected" class="flex items-center gap-x-3">
+                                            <span class="text-xl">🕒</span>
+                                            <span class="font-medium text-gray-800 dark:text-gray-200">Open 24/7</span>
+                                        </span>
+                                        <svg id="edit-hours-dropdown-chevron"
+                                            class="w-5 h-5 text-gray-400 transition-transform" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="edit-hours-dropdown-panel"
+                                        class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg shadow-lg z-10 hidden">
+                                        <div class="p-2 space-y-1">
+                                            <div class="add-hours-option" data-value="open_24_7">
+                                                🕒 Open 24/7
+                                            </div>
+                                            <div class="add-hours-option" data-value="temporarily_closed">
+                                                ⛔ Temporarily Closed
+                                            </div>
+                                            <div class="add-hours-option" data-value="custom">
+                                                ⚙️ Set Custom Hours
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="edit-custom-hours-section"
+                                class="hidden mt-4 p-4 border border-gray-200 dark:border-slate-600 rounded-lg bg-gray-50 dark:bg-slate-800/50">
+                                <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                                    Set opening and closing times.
+                                </p>
+                                <div class="space-y-4" id="edit-opening-hours-inputs"></div>
+                                <div class="mt-4">
+                                    <button type="button" id="edit-copy-hours-btn"
+                                        class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+                                        Copy Monday's hours to all days
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label for="edit-address" class="block text-sm font-medium mb-1">Address *</label>
+                                <textarea id="edit-address" name="address" rows="3" class="form-input"
+                                    required></textarea>
+                            </div>
+
+                            <div>
+                                <label for="edit-gmap" class="block text-sm font-medium mb-1">Google Maps Link</label>
+                                <input type="url" id="edit-gmap" name="googleMapLink" class="form-input"
+                                    placeholder="http://googleusercontent.com/..." />
+                            </div>
+
+                            <div>
+                                <label for="edit-image-upload" class="block text-sm font-medium mb-1">Upload
+                                    Image</label>
+                                <input type="file" id="edit-image-upload" name="image_upload"
+                                    class="form-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-blue-900 file:text-blue-700 dark:file:text-blue-300 hover:file:bg-blue-100 dark:hover:file:bg-blue-800"
+                                    accept="image/png, image/jpeg, image/webp" />
+                                <input type="hidden" id="edit-image-url" name="image" />
+
+                                <div id="edit-image-preview-wrapper" class="mt-2 hidden">
+                                    <p class="text-xs text-gray-500 mb-1">Current Image:</p>
+                                    <img id="edit-image-preview" src="" alt="Image Preview"
+                                        class="max-h-40 rounded-lg shadow-md border border-gray-200 dark:border-slate-600" />
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="edit-description" class="block text-sm font-medium mb-1">Description</label>
+                                <textarea id="edit-description" name="description" rows="4"
+                                    class="form-input"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-edit-btn" class="btn btn-primary py-3">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-review-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-lg w-full flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Edit Review
+                </h3>
+                <button id="close-edit-review-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="edit-review-form" class="space-y-6" novalidate>
+                    <input type="hidden" id="edit-review-id" name="review_id" />
+                    <div class="space-y-4">
+                        <div>
+                            <label for="edit-review-user-name" class="block text-sm font-medium mb-1">User Name</label>
+                            <input type="text" id="edit-review-user-name" name="user_name" class="form-input"
+                                required />
+                        </div>
+                        <div>
+                            <label for="edit-review-text" class="block text-sm font-medium mb-1">Review Text</label>
+                            <textarea id="edit-review-text" name="review_text" rows="5" class="form-input"
+                                required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Rating</label>
+                            <div id="edit-review-rating"
+                                class="flex flex-row-reverse items-center justify-end space-x-1 space-x-reverse text-3xl">
+                                <input type="radio" id="edit-star1" name="rating" value="1" class="sr-only" required />
+                                <label for="edit-star1"
+                                    class="cursor-pointer text-gray-300 dark:text-gray-500 hover:text-yellow-400 transition-colors"
+                                    title="1 star">★</label>
+                                <input type="radio" id="edit-star2" name="rating" value="2" class="sr-only" required />
+                                <label for="edit-star2"
+                                    class="cursor-pointer text-gray-300 dark:text-gray-500 hover:text-yellow-400 transition-colors"
+                                    title="2 stars">★</label>
+                                <input type="radio" id="edit-star3" name="rating" value="3" class="sr-only" required />
+                                <label for="edit-star3"
+                                    class="cursor-pointer text-gray-300 dark:text-gray-500 hover:text-yellow-400 transition-colors"
+                                    title="3 stars">★</label>
+                                <input type="radio" id="edit-star4" name="rating" value="4" class="sr-only" required />
+                                <label for="edit-star4"
+                                    class="cursor-pointer text-gray-300 dark:text-gray-500 hover:text-yellow-400 transition-colors"
+                                    title="4 stars">★</label>
+                                <input type="radio" id="edit-star5" name="rating" value="5" class="sr-only" required />
+                                <label for="edit-star5"
+                                    class="cursor-pointer text-gray-300 dark:text-gray-500 hover:text-yellow-400 transition-colors"
+                                    title="5 stars">★</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-review-edit-btn" class="btn btn-primary py-3">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="post-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="post-modal-title" class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add New Post
+                </h3>
+                <button id="close-post-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="post-form" class="space-y-6">
+                    <input type="hidden" id="edit-post-id" name="post_id" />
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2 space-y-6">
+                            <div>
+                                <label for="post-title" class="block text-sm font-medium mb-1">Title *</label>
+                                <input type="text" id="post-title" name="title" class="form-input" required />
+                            </div>
+                            <div>
+                                <label for="post-content" class="block text-sm font-medium mb-1">Content (Markdown
+                                    supported) *</label>
+                                <textarea id="post-content" name="content" rows="15" class="form-input font-mono"
+                                    placeholder="Write your blog post here..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="post-slug" class="block text-sm font-medium mb-1">URL Slug *</label>
+                                <input type="text" id="post-slug" name="slug" class="form-input" required
+                                    placeholder="e.g., my-first-post" />
+                                <p class="text-xs text-gray-500 mt-1">
+                                    URL-friendly version of the title.
+                                </p>
+                            </div>
+                            <div>
+                                <label for="post-author" class="block text-sm font-medium mb-1">Author Name *</label>
+                                <input type="text" id="post-author" name="author_name" class="form-input" value="Admin"
+                                    required />
+                            </div>
+                            <div>
+                                <label for="post-image-url" class="block text-sm font-medium mb-1">Featured Image URL
+                                    *</label>
+                                <input type="url" id="post-image-url" name="featured_image_url" class="form-input"
+                                    required />
+                            </div>
+                            <div>
+                                <label for="post-status" class="block text-sm font-medium mb-1">Status *</label>
+                                <select id="post-status" name="status" class="form-input" required>
+                                    <option value="draft">Draft</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-post-btn" class="btn btn-primary py-3">
+                    Save Post
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="job-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="job-modal-title" class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add New Job
+                </h3>
+                <button id="close-job-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="job-form" class="space-y-6">
+                    <input type="hidden" id="edit-job-id" name="job_id" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="job-title" class="block text-sm font-medium mb-1">Job Title *</label>
+                            <input type="text" id="job-title" name="job_title" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="job-company" class="block text-sm font-medium mb-1">Company Name *</label>
+                            <input type="text" id="job-company" name="company_name" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="job-location" class="block text-sm font-medium mb-1">Location *</label>
+                            <input type="text" id="job-location" name="location" class="form-input"
+                                placeholder="e.g., Ghatal, Paschim Medinipur" required />
+                        </div>
+                        <div>
+                            <label for="job-contact" class="block text-sm font-medium mb-1">Contact Details
+                                (Email/Phone) *</label>
+                            <input type="text" id="job-contact" name="contact_details" class="form-input" required />
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="job-description" class="block text-sm font-medium mb-1">Job Description
+                                *</label>
+                            <textarea id="job-description" name="description" rows="5" class="form-input"
+                                required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="job-requirements" class="block text-sm font-medium mb-1">Requirements *</label>
+                            <textarea id="job-requirements" name="requirements" rows="4" class="form-input"
+                                required></textarea>
+                        </div>
+                        <div>
+                            <label for="job-type" class="block text-sm font-medium mb-1">Job Type *</label><select
+                                id="job-type" name="job_type" class="form-input" required>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="job-salary" class="block text-sm font-medium mb-1">Salary Range
+                                (Optional)</label><input type="text" id="job-salary" name="salary_range"
+                                class="form-input" placeholder="e.g., ₹15,000 - ₹20,000 per month" />
+                        </div>
+                        <div>
+                            <label for="job-status" class="block text-sm font-medium mb-1">Status *</label><select
+                                id="job-status" name="status" class="form-input" required>
+                                <option value="active">Active</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-job-btn" class="btn btn-primary py-3">
+                    Save Job Posting
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="event-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="event-modal-title" class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add New Event
+                </h3>
+                <button id="close-event-modal"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="event-form" class="space-y-6">
+                    <input type="hidden" id="edit-event-id" name="event_id" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="event-title" class="block text-sm font-medium mb-1">Event Title *</label>
+                            <input type="text" id="event-title" name="title" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="event-date" class="block text-sm font-medium mb-1">Date *</label>
+                            <input type="date" id="event-date" name="date" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="event-time" class="block text-sm font-medium mb-1">Time *</label>
+                            <input type="text" id="event-time" name="time" class="form-input"
+                                placeholder="e.g., 06:00 PM onwards" required />
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="event-location" class="block text-sm font-medium mb-1">Location *</label>
+                            <input type="text" id="event-location" name="location" class="form-input" required />
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="event-description" class="block text-sm font-medium mb-1">Description *</label>
+                            <textarea id="event-description" name="description" rows="4" class="form-input"
+                                required></textarea>
+                        </div>
+                        <div>
+                            <label for="event-category" class="block text-sm font-medium mb-1">Category *</label><input
+                                type="text" id="event-category" name="category" class="form-input"
+                                placeholder="e.g., Cultural, Sports" required />
+                        </div>
+                        <div>
+                            <label for="event-status" class="block text-sm font-medium mb-1">Status *</label><select
+                                id="event-status" name="status" class="form-input" required>
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div
+                class="flex justify-end items-center p-6 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button id="save-event-btn" class="btn btn-primary py-3">
+                    Save Event
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="train-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="train-modal-title" class="text-xl font-semibold">
+                    Add New Train
+                </h3>
+                <button data-close-modal="train-modal" class="text-gray-400 hover:text-gray-600 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="train-form" class="space-y-6">
+                    <input type="hidden" name="id" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="train-name" class="block text-sm font-medium mb-1">Train Name *</label><input
+                                type="text" id="train-name" name="name" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="train-time" class="block text-sm font-medium mb-1">Time *</label><input
+                                type="text" id="train-time" name="time" class="form-input" placeholder="e.g., 07:30 AM"
+                                required />
+                        </div>
+                        <div>
+                            <label for="train-from" class="block text-sm font-medium mb-1">From Station *</label><input
+                                type="text" id="train-from" name="from_station" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="train-to" class="block text-sm font-medium mb-1">To Station *</label><input
+                                type="text" id="train-to" name="to_station" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="train-platform" class="block text-sm font-medium mb-1">Platform *</label><input
+                                type="text" id="train-platform" name="platform" class="form-input" required />
+                        </div>
+                        <div>
+                            <label for="train-days" class="block text-sm font-medium mb-1">Days *</label><input
+                                type="text" id="train-days" name="days" class="form-input"
+                                placeholder="e.g., Daily, Mon-Sat" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-end p-6 border-t bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button data-save-modal="train-modal" class="btn btn-primary py-3">
+                    Save Train
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bus-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="bus-modal-title" class="text-xl font-semibold">
+                    Add New Bus Route
+                </h3>
+                <button data-close-modal="bus-modal" class="text-gray-400 hover:text-gray-600 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="bus-form" class="space-y-6">
+                    <input type="hidden" name="id" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label for="bus-route" class="block text-sm font-medium mb-1">Route *</label><input
+                                type="text" id="bus-route" name="route" class="form-input" required
+                                placeholder="e.g., Ghatal to Medinipur" />
+                        </div>
+                        <div>
+                            <label for="bus-frequency" class="block text-sm font-medium mb-1">Frequency *</label><input
+                                type="text" id="bus-frequency" name="frequency" class="form-input"
+                                placeholder="e.g., Every 30 mins" required />
+                        </div>
+                        <div>
+                            <label for="bus-first" class="block text-sm font-medium mb-1">First Bus *</label><input
+                                type="text" id="bus-first" name="first_bus" class="form-input"
+                                placeholder="e.g., 06:00 AM" required />
+                        </div>
+                        <div>
+                            <label for="bus-last" class="block text-sm font-medium mb-1">Last Bus *</label><input
+                                type="text" id="bus-last" name="last_bus" class="form-input"
+                                placeholder="e.g., 08:00 PM" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-end p-6 border-t bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button data-save-modal="bus-modal" class="btn btn-primary py-3">
+                    Save Bus Route
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toto-route-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <h3 id="toto-route-modal-title" class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add New Toto Route
+                </h3>
+                <button data-close-modal="toto-route-modal" class="text-gray-400 hover:text-gray-600 p-1 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <form id="toto-route-form" class="space-y-6">
+                    <input type="hidden" name="id" />
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label for="toto-route-input" class="block text-sm font-medium mb-1">Route *</label><input
+                                type="text" id="toto-route-input" name="route" class="form-input" required
+                                placeholder="e.g., Ghatal Bus Stand to Kushpata" />
+                        </div>
+                        <div>
+                            <label for="toto-fare-input" class="block text-sm font-medium mb-1">Fare *</label><input
+                                type="text" id="toto-fare-input" name="fare" class="form-input" placeholder="e.g., ₹10"
+                                required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-end p-6 border-t bg-gray-50 dark:bg-slate-800/50 rounded-b-xl">
+                <button data-save-modal="toto-route-modal" class="btn btn-primary py-3">
+                    Save Toto Route
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmation-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div id="confirmation-icon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+            </div>
+            <h3 id="confirmation-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Are you sure?
+            </h3>
+            <p id="confirmation-message" class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                This action cannot be undone.
+            </p>
+            <div id="rejection-reason-wrapper" class="hidden mb-6">
+                <label for="rejection-reason"
+                    class="block text-sm font-medium text-left mb-1 text-gray-700 dark:text-gray-300">Reason for
+                    Rejection (Optional)</label>
+                <input type="text" id="rejection-reason" placeholder="e.g., Incomplete information, spam..."
+                    class="form-input w-full" />
+            </div>
+            <div class="flex justify-center gap-4">
+                <button id="confirm-cancel-btn" class="btn btn-secondary py-3 px-6">
+                    Cancel
+                </button>
+                <button id="confirm-action-btn" class="btn py-3 px-6">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-3 max-w-sm"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="admin.js" defer></script>
+</body>
+
+</html>

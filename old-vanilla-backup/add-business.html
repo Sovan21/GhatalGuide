@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Add Your Business - Ghatal Guide</title>
+    <meta name="description"
+        content="List your business on Ghatal Guide and get discovered by local customers. Free business listing with easy registration.">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+
+    <!-- Favicon -->
+    <link rel="icon" href="logo.png" sizes="any" type="image/x-icon">
+
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS with same config as main site -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)' },
+                            '100%': { transform: 'translateY(0)' }
+                        },
+                        bounceIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.3)' },
+                            '50%': { opacity: '1', transform: 'scale(1.1)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        fadeOut: {
+                            'from': { opacity: '1', transform: 'translateY(0)' },
+                            'to': { opacity: '0', transform: 'translateY(-20px)' }
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translateX(-1px)' },
+                            '20%, 80%': { transform: 'translateX(2px)' },
+                            '30%, 50%, 70%': { transform: 'translateX(-4px)' },
+                            '40%, 60%': { transform: 'translateX(4px)' }
+                        },
+                        zoomOutFade: {
+                            '0%': { opacity: '1', transform: 'scale(1)' },
+                            '100%': { opacity: '0', transform: 'scale(0.5)' }
+                        },
+                        zoomInFade: {
+                            '0%': { opacity: '0', transform: 'scale(0.5)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'shake': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+                        'zoom-out-fade': 'zoomOutFade 0.5s ease-in-out forwards',
+                        'zoom-in-fade': 'zoomInFade 0.5s ease-in-out forwards'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Perfect centering container */
+        .container-perfect {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container-perfect {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-perfect {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-perfect {
+                padding: 0 3rem;
+            }
+        }
+
+        /* Glass effect */
+        .glass {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        /* মোবাইলের জন্য চূড়ান্ত পারফরম্যান্স সেটিংস */
+        @media (max-width: 768px) {
+
+            /* ১. গ্লোবাল ট্রানজিশন এবং অ্যানিমেশন বন্ধ (মোবাইলের জন্য এটাই আসল ফিক্স) */
+            html,
+            body,
+            * {
+                transition: none !important;
+                /* সমস্ত কালার পরিবর্তনের অ্যানিমেশন বন্ধ */
+                animation: none !important;
+            }
+
+            /* ২. গ্লাস এফেক্ট বন্ধ */
+            .glass {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(255, 255, 255, 0.98) !important;
+            }
+
+            .dark .glass {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(15, 23, 42, 0.98) !important;
+            }
+
+            /* ৩. স্লাইডিং অ্যানিমেশন চালু রাখা (যেটা জরুরি) */
+            .auth-panel {
+                /* transform-এর জন্য প্রয়োজনীয় ট্রানজিশনটি এখানে ফিরিয়ে আনা হলো */
+                transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1) !important;
+            }
+
+            /* ৪. ফোকাস শ্যাডো সিম্পল রাখা */
+            #auth-modal input:focus {
+                box-shadow: none !important;
+                border-color: #3b82f6 !important;
+            }
+        }
+
+        /* Form animations */
+        .form-slide-in {
+            animation: slide-in 0.6s ease-out;
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Progress indicator */
+        .progress-step {
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        /* Loading animation */
+        .loading-dots::after {
+            content: '';
+            animation: loading 1.4s infinite;
+        }
+
+        @keyframes loading {
+
+            0%,
+            61.5% {
+                content: '';
+            }
+
+            12.5% {
+                content: '.';
+            }
+
+            25% {
+                content: '..';
+            }
+
+            37.5% {
+                content: '...';
+            }
+        }
+
+        /* Success animation */
+        @keyframes checkmark {
+            0% {
+                stroke-dashoffset: 50;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .checkmark-animation {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: checkmark 0.6s ease-in-out;
+        }
+
+        /* Form input focus effects */
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Hero background */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        }
+
+        .dark .hero-bg {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+        }
+
+        /* Mobile Menu Overlay from index.html */
+        #mobile-menu-panel {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+            border-radius: 15px;
+        }
+
+        #mobile-menu-panel.open {
+            transform: translateX(0);
+        }
+
+        #mobile-menu-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Hamburger to X animation from index.html */
+        .hamburger-icon .line {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform-origin: center;
+        }
+
+        .hamburger-icon.open .line-1 {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-icon.open .line-2 {
+            opacity: 0;
+        }
+
+        .hamburger-icon.open .line-3 {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Prevent body scroll when menu is open from index.html */
+        .overflow-hidden-body {
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .overflow-hidden-body {
+                overflow: auto;
+            }
+        }
+
+        /* Toast animations */
+        .toast-enter {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .toast-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .animate-shake {
+            animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        .animate-fade-out {
+            animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .animate-zoom-out-fade {
+            animation: zoomOutFade 0.5s ease-in-out forwards;
+        }
+
+        .animate-zoom-in-fade {
+            animation: zoomInFade 0.5s ease-in-out forwards;
+        }
+
+        .animate-shake {
+            animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        /* New styles for overlapping auth forms */
+        .auth-panel {
+            transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+            /* Smoother, more professional easing */
+            position: absolute;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /* Add depth */
+        }
+
+        .auth-container {
+            position: relative;
+            /* This is the perspective container */
+        }
+
+        /* Left Panel (Sign In) */
+        .auth-container.panel-left-active #signin-container {
+            transform: translateX(0) scale(1);
+            /* Active form comes to center */
+            opacity: 1;
+            filter: blur(0);
+            z-index: 10;
+        }
+
+        .auth-container.panel-right-active #signin-container {
+            transform: translateX(-50%) scale(0.9);
+            /* Inactive form moves to the side */
+            opacity: 0.6;
+            filter: blur(2px);
+            z-index: 5;
+        }
+
+        /* Right Panel (Sign Up) */
+        .auth-container.panel-left-active #signup-container {
+            transform: translateX(50%) scale(0.9);
+            /* Inactive form moves to the side */
+            opacity: 0.6;
+            filter: blur(2px);
+            z-index: 5;
+        }
+
+        .auth-container.panel-right-active #signup-container {
+            transform: translateX(0) scale(1);
+            /* Active form comes to center */
+            opacity: 1;
+            filter: blur(0);
+            z-index: 10;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Loading Spinner -->
+    <div id="loading-spinner"
+        class="fixed inset-0 bg-white dark:bg-slate-900 z-50 flex items-center justify-center hidden">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary-600 mb-4"></div>
+            <p class="text-lg font-medium text-gray-600 dark:text-gray-400 loading-dots">Submitting your business</p>
+        </div>
+    </div>
+
+    <!-- Skip to main content -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-primary-600 text-white px-4 py-2 rounded-lg font-medium">
+        Skip to main content
+    </a>
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="glass sticky top-0 z-40 border-b border-gray-200/60 dark:border-slate-700/60" role="banner">
+            <nav class="container-perfect py-3.5 flex justify-between items-center" role="navigation"
+                aria-label="Main navigation">
+                <a href="index.html"
+                    class="flex items-center gap-3 text-2xl lg:text-3xl font-bold tracking-tight text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                    aria-label="Ghatal Guide Home">
+                    <img src="logo.png" alt="Ghatal Guide Logo" class="h-11 w-11">
+                    <span>Ghatal Guide</span>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#/"
+                        class="font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary-600 after:transition-all after:duration-300 hover:after:w-full">
+                        Home
+                    </a>
+                    <a href="index.html#/directory"
+                        class="font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-primary-600 after:transition-all after:duration-300 hover:after:w-full">
+                        Directory
+                    </a>
+                </div>
+
+                <!-- Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-3">
+                    <button id="theme-toggle"
+                        class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                        aria-label="Toggle dark mode">
+                        <svg id="sun-icon" class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+                        </svg>
+                        <svg id="moon-icon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" />
+                        </svg>
+                    </button>
+
+                    <!-- Auth Status Desktop -->
+                    <div id="auth-status-desktop" class="hidden md:block ml-6">
+                        <!-- Logged Out View -->
+                        <div class="logged-out-view">
+                            <a href="#add-business-form-section"
+                                class="px-4 py-2 border-2 border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400 rounded-lg font-semibold hover:bg-primary-600/10 dark:hover:bg-primary-400/10 transition-colors duration-300">
+                                Login
+                            </a>
+                        </div>
+                        <!-- Logged In View -->
+                        <div class="logged-in-view hidden relative">
+                            <button id="user-menu-button" type="button"
+                                class="flex items-center text-sm bg-gray-100 dark:bg-slate-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-slate-900 focus:ring-primary-500"
+                                aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img id="user-avatar-button" class="h-9 w-9 rounded-full object-cover" src=""
+                                    alt="User avatar">
+                                <div id="user-initials-button"
+                                    class="h-9 w-9 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-sm hidden">
+                                </div>
+                            </button>
+
+                            <!-- Dropdown menu -->
+                            <div id="user-menu-dropdown"
+                                class="origin-top-right absolute right-0 mt-2 w-56 rounded-xl shadow-lg py-2 bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 focus:outline-none hidden transition ease-out duration-300 transform opacity-0 -translate-y-2"
+                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                tabindex="-1">
+                                <div class="px-4 py-3 border-b border-gray-100 dark:border-slate-700">
+                                    <p id="user-menu-name"
+                                        class="text-sm font-semibold text-gray-900 dark:text-white truncate">User Name
+                                    </p>
+                                    <p id="user-menu-email" class="text-sm text-gray-500 dark:text-gray-400 truncate">
+                                        user@example.com</p>
+                                </div>
+                                <div class="py-1" role="none">
+                                    <a href="#" data-nav="dashboard"
+                                        class="flex items-center gap-3 mx-2 my-1 px-4 py-3 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors rounded-lg"
+                                        role="menuitem" tabindex="-1">
+                                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                                            </path>
+                                        </svg>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </div>
+                                <div class="my-1 border-t border-gray-100 dark:border-slate-700"></div>
+                                <button id="logout-btn-desktop"
+                                    class="w-[calc(100%-1rem)] text-left flex items-center gap-3 mx-2 my-1 px-4 py-3 text-base text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors rounded-lg"
+                                    role="menuitem" tabindex="-1">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                                        </path>
+                                    </svg>
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="mobile-menu-btn"
+                        class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors z-50"
+                        aria-label="Toggle mobile menu" aria-expanded="false">
+                        <svg class="hamburger-icon w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line class="line line-1" x1="3" y1="6" x2="21" y2="6"></line>
+                            <line class="line line-2" x1="3" y1="12" x2="21" y2="12"></line>
+                            <line class="line line-3" x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 z-40 hidden md:hidden opacity-0"
+            style="backdrop-filter: blur(2px);"></div>
+        <div id="mobile-menu-panel"
+            class="fixed top-0 right-0 max-h-screen overflow-y-auto w-4/5 max-w-sm bg-white dark:bg-slate-900 z-50 p-8 shadow-lg md:hidden flex flex-col rounded-l-2xl">
+            <button id="mobile-menu-close-btn"
+                class="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Close menu">
+                <svg class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <a href="index.html"
+                class="flex items-center gap-3 text-2xl font-bold tracking-tight text-primary-600 dark:text-primary-400 mb-2">
+                <img src="logo.png" alt="Ghatal Guide Logo" class="h-8 w-8">
+                <span>Ghatal Guide</span>
+            </a>
+            <nav class="flex flex-col justify-between" style="text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div class="space-y-6 mt-6 mb-6">
+                    <a href="index.html#/"
+                        class="block text-xl font-semibold text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
+                    <a href="index.html#/directory"
+                        class="block text-xl font-semibold text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Directory</a>
+                </div>
+                <!-- Auth Status Mobile -->
+                <div id="auth-status-mobile" class="pb-4 pt-6 border-t border-gray-200 dark:border-slate-700">
+                    <div class="logged-out-view"> <!-- Logged Out View -->
+                        <a href="#add-business-form-section"
+                            class="block text-xl font-semibold text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Login
+                            / Sign Up</a>
+                    </div>
+                    <div class="logged-in-view hidden space-y-4"> <!-- Logged In View -->
+                        <a href="#" data-nav="dashboard"
+                            class="block text-xl font-semibold text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Dashboard</a>
+                        <button id="logout-btn-mobile"
+                            class="block text-xl font-semibold text-red-500 hover:underline text-left w-full">Logout</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 flex flex-col">
+
+            <div id="add-business-view" class="view active transition-all duration-300">
+                <!-- Hero Section -->
+                <section class="hero-bg py-12 md:py-16 lg:py-20">
+                    <div class="container-perfect">
+                        <div class="max-w-4xl mx-auto text-center animate-fade-in px-2 sm:px-0">
+                            <div class="mb-6 md:mb-8">
+                                <div
+                                    class="inline-flex items-center bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                                    <span class="mr-2">🚀</span>
+                                    Free Business Listing
+                                </div>
+                            </div>
+
+                            <h1 id="form-main-title"
+                                class="text-[clamp(2.25rem,7vw,3.75rem)] font-bold text-gray-900 dark:text-white leading-tight mb-4">
+                                List Your Business on
+                                <br>
+                                <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600">Ghatal
+                                    Guide</span>
+                            </h1>
+
+                            <p id="form-subtitle"
+                                class="text-[clamp(1rem,4vw,1.25rem)] text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed">
+                                Join hundreds of local businesses and get discovered by customers in Ghatal.
+                                It's completely free and takes less than 5 minutes!
+                            </p>
+
+                            <!-- Benefits -->
+                            <div id="benefits-section"
+                                class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+                                <div
+                                    class="flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                                    <div
+                                        class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                                        <span class="text-2xl">✅</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">100% Free</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">No hidden costs</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                                    <div
+                                        class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                        <span class="text-2xl">⚡</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">Quick Setup</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Under 5 minutes</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-center space-x-3 bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                                    <div
+                                        class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                                        <span class="text-2xl">👥</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">Local Reach</h3>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Connect with customers</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Indicator -->
+                            <div id="progress-indicator" class="flex items-center justify-center space-x-4 mb-8">
+                                <div id="progress-step-1" class="flex items-center">
+                                    <div class="progress-step active w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
+                                        data-step="1">
+                                        1</div>
+                                    <span
+                                        class="ml-3 text-sm font-medium text-primary-600 dark:text-primary-400">Business
+                                        Details</span>
+                                </div>
+                                <div class="w-12 h-1 bg-gray-200 dark:bg-slate-700 rounded"></div>
+                                <div id="progress-step-2" class="flex items-center">
+                                    <div class="progress-step w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-full flex items-center justify-center text-sm font-bold text-gray-500"
+                                        data-step="2">
+                                        2</div>
+                                    <span class="ml-3 text-sm font-medium text-gray-500">Location & Media</span>
+                                </div>
+                                <div class="w-12 h-1 bg-gray-200 dark:bg-slate-700 rounded"></div>
+                                <div id="progress-step-3" class="flex items-center">
+                                    <div class="progress-step w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-full flex items-center justify-center text-sm font-bold text-gray-500"
+                                        data-step="3">
+                                        3</div>
+                                    <span class="ml-3 text-sm font-medium text-gray-500">Review & Publish</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Form Section -->
+                <section class="py-16 lg:py-20">
+                    <div class="container-perfect">
+                        <div id="add-business-form-section"
+                            class="max-w-5xl mx-auto transition-all duration-300 relative overflow-x-hidden">
+                            <!-- Authentication Modal with Overlapping Forms -->
+                            <div id="auth-modal"
+                                class="absolute inset-0 bg-black/50 z-20 flex items-start justify-center p-4 hidden rounded-2xl pt-10 ">
+                                <div
+                                    class="auth-container panel-left-active relative w-full max-w-md flex justify-center">
+                                    <!-- Sign In Form (Left) -->
+                                    <div id="signin-container" class="auth-panel">
+                                        <div
+                                            class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700">
+                                            <h2 class="text-3xl font-bold text-center mb-2">Welcome Back!</h2>
+                                            <p class="text-center text-gray-600 dark:text-gray-400 mb-8">Sign in to add
+                                                or manage your business.</p>
+                                            <form id="signin-form" class="space-y-6">
+                                                <div>
+                                                    <label for="signin-email"
+                                                        class="block text-sm font-semibold mb-2">Email Address</label>
+                                                    <input type="email" id="signin-email" required
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                </div>
+                                                <div>
+                                                    <label for="signin-password"
+                                                        class="block text-sm font-semibold mb-2">Password</label>
+                                                    <input type="password" id="signin-password" required
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                    <div class="flex justify-end mt-1">
+                                                        <button type="button" id="forgot-password-link"
+                                                            class="text-sm text-primary-600 hover:text-primary-700 font-semibold hover:underline">
+                                                            Forgot Password?
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                                <p id="signin-error" class="text-red-500 text-sm text-center hidden">
+                                                </p>
+                                                <button type="submit"
+                                                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50">Sign
+                                                    In</button>
+                                            </form>
+
+                                            <form id="forgot-password-form" class="space-y-6 hidden">
+                                                <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white">
+                                                    Reset Password</h3>
+                                                <p class="text-center text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                                    Enter your email to receive a reset link.</p>
+                                                <div>
+                                                    <label for="forgot-email"
+                                                        class="block text-sm font-semibold mb-2">Email Address</label>
+                                                    <input type="email" id="forgot-email" required
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                </div>
+                                                <p id="forgot-error" class="text-red-500 text-sm text-center hidden">
+                                                </p>
+                                                <button type="submit"
+                                                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">Send Security Code </button>
+                                                <button type="button" id="back-to-signin"
+                                                    class="w-full text-gray-500 hover:text-gray-700 dark:text-gray-400 font-medium text-sm mt-2">Back
+                                                    to Sign In</button>
+                                            </form>
+
+                                            <form id="otp-verification-form" class="space-y-6 hidden">
+                                                <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white">
+                                                    Enter Security Code</h3>
+                                                <p class="text-center text-gray-600 dark:text-gray-400 text-sm mb-4">
+                                                    We sent a 6-digit code to your email. Enter it below to reset your
+                                                    password.
+                                                </p>
+                                                <div>
+                                                    <label for="otp-code"
+                                                        class="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">Security
+                                                        Code</label>
+                                                    <input type="text" id="otp-code" required maxlength="6"
+                                                        placeholder="123456"
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-center text-2xl tracking-[0.5em] font-bold">
+                                                </div>
+                                                <p id="otp-error" class="text-red-500 text-sm text-center hidden"></p>
+                                                <button type="submit"
+                                                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">Verify
+                                                    Code</button>
+                                                <button type="button" id="back-to-email"
+                                                    class="w-full text-gray-500 hover:text-gray-700 dark:text-gray-400 font-medium text-sm mt-2">Back</button>
+                                            </form>
+
+                                            <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">Don't
+                                                have an account? <button
+                                                    class="toggle-auth-form font-semibold text-primary-600 hover:underline">Sign
+                                                    Up</button></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sign Up Form -->
+                                    <div id="signup-container" class="auth-panel">
+                                        <div
+                                            class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700">
+                                            <h2 class="text-3xl font-bold text-center mb-2">Create an Account</h2>
+                                            <p class="text-center text-gray-600 dark:text-gray-400 mb-8">Join to list
+                                                and manage your business.</p>
+                                            <form id="signup-form" class="space-y-6">
+                                                <div><label for="signup-email"
+                                                        class="block text-sm font-semibold mb-2">Email
+                                                        Address</label><input type="email" id="signup-email" required
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                </div>
+                                                <div><label for="signup-password"
+                                                        class="block text-sm font-semibold mb-2">Password</label><input
+                                                        type="password" id="signup-password" required minlength="6"
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                    <p class="text-xs text-gray-500 mt-1">Must be at least 6 characters
+                                                        long.</p>
+                                                </div>
+                                                <div><label for="signup-confirm-password"
+                                                        class="block text-sm font-semibold mb-2">Confirm
+                                                        Password</label><input type="password"
+                                                        id="signup-confirm-password" required
+                                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                </div>
+                                                <p id="signup-error" class="text-red-500 text-sm text-center hidden">
+                                                </p>
+                                                <button type="submit"
+                                                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50">Create
+                                                    Account</button>
+                                            </form>
+                                            <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">Already
+                                                have an account? <button
+                                                    class="toggle-auth-form font-semibold text-primary-600 hover:underline">Sign
+                                                    In</button></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email Confirmation Popup -->
+                                <div id="email-confirmation-popup"
+                                    class="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm z-30 flex items-center justify-center p-4 hidden animate-zoom-in-fade">
+                                    <div
+                                        class="text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 max-w-sm w-full">
+                                        <div id="email-confirm-icon"
+                                            class="w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none"
+                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div id="email-confirmed-icon"
+                                            class="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full items-center justify-center mx-auto mb-6 hidden">
+                                            <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none"
+                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 id="email-popup-title"
+                                            class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Please confirm
+                                            your email</h3>
+                                        <p id="email-popup-message"
+                                            class="text-gray-600 dark:text-gray-400 leading-relaxed">We've sent a
+                                            confirmation link to your email address. Please click the link to continue.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div
+                                class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 z-10">
+                                <!-- Form Header -->
+                                <div class="bg-gradient-to-r from-primary-600 to-purple-600 px-8 py-6">
+                                    <h2 id="form-header-title" class="text-2xl lg:text-3xl font-bold text-white mb-2">
+                                        Tell us about your business</h2>
+                                    <p id="form-header-subtitle" class="text-primary-100">Fill in the details below and
+                                        we'll get you listed in no time!</p>
+                                </div>
+
+                                <!-- Form Content -->
+                                <div class="p-8 lg:p-12">
+                                    <form id="add-business-form" class="form-slide-in" novalidate>
+                                        <input type="hidden" id="edit-listing-id" name="listing_id">
+                                        <!-- Form fields will be populated by JavaScript -->
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Help Section -->
+                            <div
+                                class="mt-12 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-8">
+                                <div class="flex items-start space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <div
+                                            class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                            <span class="text-2xl">💡</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-4">Tips for
+                                            a great
+                                            listing</h3>
+                                        <div
+                                            class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800 dark:text-blue-200">
+                                            <ul class="space-y-2">
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Use your
+                                                    official business
+                                                    name</li>
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Provide a
+                                                    complete address
+                                                    with landmarks</li>
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Include your
+                                                    primary
+                                                    contact number</li>
+                                            </ul>
+                                            <ul class="space-y-2">
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Add
+                                                    high-quality business
+                                                    photos</li>
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Double-check
+                                                    all
+                                                    information</li>
+                                                <li class="flex items-center"><span class="mr-2">✓</span> Your listing
+                                                    will be live
+                                                    within 24-48 hours</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mt-6 p-4 bg-blue-100 dark:bg-blue-800 rounded-lg">
+                                            <p class="text-sm text-blue-900 dark:text-blue-100">
+                                                <strong>Need help?</strong> Contact us at
+                                                <a href="mailto:support@ghatalguide.com"
+                                                    class="font-medium underline">support@ghatalguide.com</a>
+                                                or call <a href="tel:+919876543210" class="font-medium underline">+91
+                                                    98765
+                                                    43210</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ===== User Dashboard View (New) ===== -->
+            <section id="dashboard-view" class="view hidden py-12 lg:py-16">
+                <div class="container-perfect">
+                    <div class="text-center mb-12">
+                        <h1 id="dashboard-heading" class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
+                            My Dashboard</h1>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Manage your business listings.</p>
+                    </div>
+                    <div id="dashboard-content" class="max-w-5xl mx-auto">
+                        <!-- User's listings will be injected here by JS -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900 text-white">
+            <div class="container-perfect py-12 lg:py-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="flex flex-col">
+                        <a href="index.html" class="flex items-center gap-3 text-2xl font-bold mb-4">
+                            <img src="logo.png" alt="Ghatal Guide Logo" class="h-8 w-8">
+                            <span>Ghatal Guide</span>
+                        </a>
+                        <p class="text-slate-400 mb-6 leading-relaxed">
+                            The definitive guide to making life in Ghatal simpler and more connected.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-full transition-colors"
+                                aria-label="Ghatal Guide on Facebook">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-full transition-colors"
+                                aria-label="Ghatal Guide on Twitter">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="text-slate-400 hover:text-white hover:bg-slate-800 p-2 rounded-full transition-colors"
+                                aria-label="Ghatal Guide on Instagram">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.281C4.198 14.553 3.5 13.117 3.5 11.511c0-1.606.698-3.042 1.626-4.216.875-.791 2.026-1.281 3.323-1.281 1.297 0 2.448.49 3.323 1.281.928 1.174 1.626 2.61 1.626 4.216 0 1.606-.698 3.042-1.626 4.216-.875.791-2.026 1.281-3.323 1.281z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-xl mb-4 text-white">Why List Your Business?</h3>
+                        <ul class="text-slate-400 space-y-2 text-sm">
+                            <li class="flex items-center"><span class="mr-2">•</span> Reach thousands of local customers
+                            </li>
+                            <li class="flex items-center"><span class="mr-2">•</span> Improve your online visibility
+                            </li>
+                            <li class="flex items-center"><span class="mr-2">•</span> Completely free to get started
+                            </li>
+                            <li class="flex items-center"><span class="mr-2">•</span> Easy to manage and update</li>
+                            <li class="flex items-center"><span class="mr-2">•</span> Mobile-friendly business profile
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-xl mb-4 text-white">Get Started</h3>
+                        <div class="space-y-4">
+                            <p class="text-slate-400 text-sm">Ready to grow your business?</p>
+                            <div class="flex space-x-4">
+                                <a href="#add-business-form"
+                                    class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                    📝 List Your Business
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-slate-800 text-center">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <p class="text-slate-400">
+                            &copy; 2025 Ghatal Guide. Made with ❤️ by a proud resident.
+                        </p>
+                        <div class="mt-4 md:mt-0 flex space-x-6 text-sm text-slate-400">
+                            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                            <a href="#" class="hover:text-white transition-colors">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-3 max-w-sm">
+            <!-- Toast notifications will be inserted here -->
+        </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal"
+            class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div
+                class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-8 animate-bounce-in text-center">
+                <div
+                    class="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-green-600 dark:text-green-400 checkmark-animation" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Success! 🎉</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                    Your business has been submitted successfully! We'll review your listing and it will be live within
+                    24-48
+                    hours.
+                    You'll receive a confirmation email once it's published.
+                </p>
+
+                <div class="space-y-3">
+                    <button id="submit-another"
+                        class="w-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium transition-colors">
+                        📝 Submit Another Business
+                    </button>
+                    <button id="view-directory"
+                        class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        <span class="flex items-center justify-center gap-2">
+                            <img src="logo.png" alt="" class="h-5 w-5 inline-block"> View Business Directory
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Services Modal -->
+    <div id="location-services-modal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-8 animate-bounce-in text-center">
+            <div
+                class="w-20 h-20 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-red-600 dark:text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">📍 GPS is Off</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                To find businesses near you, please enable <strong>Location Services</strong> on your device.
+            </p>
+
+            <!-- Step-by-step guide -->
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6 text-left">
+                <p class="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-3">📱 How to enable GPS:</p>
+                <ol class="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+                    <li><strong>1.</strong> Open your device <strong>Settings</strong></li>
+                    <li><strong>2.</strong> Go to <strong>Location</strong> or <strong>Privacy → Location</strong></li>
+                    <li><strong>3.</strong> Turn on <strong>Location Services</strong></li>
+                    <li><strong>4.</strong> Return here and try again</li>
+                </ol>
+            </div>
+
+            <div class="space-y-3 mt-8">
+                <button id="open-settings-btn"
+                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Open Settings
+                </button>
+                <button id="retry-location-btn"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                    ✅ I've Enabled GPS - Retry
+                </button>
+                <button id="cancel-location-modal-btn"
+                    class="w-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium transition-colors">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="update-password-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-slate-700 max-w-md w-full p-8">
+            <h2 class="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">Set New Password</h2>
+            <form id="update-password-form" class="space-y-6">
+                <div>
+                    <label for="new-password"
+                        class="block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300">New Password</label>
+                    <input type="password" id="new-password" required minlength="6" placeholder="Min 6 characters"
+                        class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <button type="submit"
+                    class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">Update
+                    Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="add-business.js" defer></script>
+</body>
+
+</html>

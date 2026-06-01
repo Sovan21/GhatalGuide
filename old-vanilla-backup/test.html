@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Test</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 20px; line-height: 1.6; }
+        #status { padding: 15px; border-radius: 8px; font-weight: bold; margin-top: 20px; }
+        .info { background-color: #e0f7fa; color: #00796b; }
+        .success { background-color: #e8f5e9; color: #2e7d32; }
+        .error { background-color: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+    <h1>Geolocation Test Page</h1>
+    <p>The box below will show the status of the location request.</p>
+    <div id="status" class="info">Checking for Geolocation support...</div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+
+        if (navigator.geolocation) {
+            statusDiv.textContent = "✅ Geolocation is available. Requesting location...";
+            statusDiv.className = 'info';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    statusDiv.textContent = `✅ SUCCESS! Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                    statusDiv.className = 'success';
+                },
+                (error) => {
+                    statusDiv.textContent = `❌ ERROR (${error.code}): ${error.message}`;
+                    statusDiv.className = 'error';
+                }
+            );
+        } else {
+            statusDiv.textContent = "❌ FAILED: Your browser does not support Geolocation.";
+            statusDiv.className = 'error';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  
+  /* Premium Primary Colors - Tailored HSL Blue-Violet */
+  --color-primary-50: #f0f3ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-500: #4f46e5;
+  --color-primary-600: #4338ca;
+  --color-primary-700: #3730a3;
+  --color-primary-800: #312e81;
+  --color-primary-900: #1e1b4b;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+  border: 2px solid #f8fafc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border: 2px solid #0f172a;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Perfect Centering Container Utility */
+.container-perfect {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-perfect {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-perfect {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Glassmorphism Panels */
+.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.75);
+}
+
+/* Ambient Radial Mesh Background */
+.mesh-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(244, 63, 94, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dark .mesh-bg {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(244, 63, 94, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+}
+
+/* Hero Background Gradients */
+.hero-bg {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(139, 92, 246, 0.04) 50%, rgba(244, 63, 94, 0.04) 100%);
+}
+
+.dark .hero-bg {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(244, 63, 94, 0.1) 100%);
+}
+
+/* Premium Animations */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(79, 70, 229, 0.15); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 2;
+}
+
+/* Premium Button Shimmer */
+@keyframes shimmer {
+  0% { transform: translateX(-150%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Card Transitions & Interactive Shadows */
+.category-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(79, 70, 229, 0.1);
+}
+
+.dark .category-card:hover {
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(79, 70, 229, 0.2);
+}
+
+.listing-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.listing-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 35px -12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .listing-card:hover {
+  box-shadow: 0 22px 35px -12px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading animations */
+.loading-dots::after {
+  content: '';
+  animation: loading-dots 1.4s infinite;
+}
+
+@keyframes loading-dots {
+  0%, 61.5% { content: ''; }
+  12.5% { content: '.'; }
+  25% { content: '..'; }
+  37.5% { content: '...'; }
+  50% { content: '....'; }
+}
+
+/* Star rating input system */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.star-rating input:checked ~ label,
+.star-rating input:checked ~ label ~ label {
+  color: #f59e0b;
+}
+
+/* Decorative blur bubbles */
+.blur-bubble {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .blur-bubble {
+  opacity: 0.25;
+}
+
+/* Global Pointer Cursors on Interactive Elements */
+button, 
+[role="button"], 
+select, 
+input[type="submit"], 
+input[type="button"] {
+  cursor: pointer !important;
+}
+
+/* === Navbar Rainbow Gradient Border CTA Button === */
+@keyframes rainbow-spin {
+  0% { --rainbow-angle: 0deg; }
+  100% { --rainbow-angle: 360deg; }
+}
+
+@property --rainbow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.navbar-rainbow-btn {
+  position: relative;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from var(--rainbow-angle),
+    #06b6d4,
+    #a855f7,
+    #ec4899,
+    #f97316,
+    #eab308,
+    #22c55e,
+    #06b6d4
+  );
+  animation: rainbow-spin 3s linear infinite;
+  transition: box-shadow 0.4s ease, transform 0.2s ease;
+}
+
+.navbar-rainbow-btn:hover {
+  box-shadow: 
+    0 0 20px rgba(168, 85, 247, 0.25),
+    0 0 40px rgba(236, 72, 153, 0.12);
+  transform: scale(1.02);
+}
+
+.navbar-rainbow-btn:active {
+  transform: scale(0.97);
+}
+
+/* Fallback for browsers that don't support @property (e.g. Firefox) */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .navbar-rainbow-btn {
+    background: linear-gradient(135deg, #06b6d4, #a855f7, #ec4899, #f97316);
+    animation: none;
+  }
+}
