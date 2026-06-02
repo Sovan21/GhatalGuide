@@ -26,11 +26,11 @@ export default function Footer() {
   return (
     <footer className="relative bg-slate-950 text-slate-200 overflow-hidden" role="contentinfo">
       {/* Gradient top border line */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
+      <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary-500/60 to-transparent" />
 
       {/* Ambient glow effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-600/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-650/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container-perfect py-12 lg:py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
@@ -39,7 +39,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-1 lg:col-span-5 flex flex-col space-y-6">
             <div className="space-y-4">
               <Link href="/" className="flex items-center gap-3 group w-fit">
-                <div className="relative rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-500">
+                <div className="relative rounded-xl bg-gradient-to-tr from-primary-500 via-primary-600 to-indigo-500 p-0.5 shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/40 transition-all duration-500">
                   <img src="/logo.png" alt="Ghatal Guide Logo" className="h-9 w-9 bg-white rounded-[9px]" />
                 </div>
                 <span className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-300">
@@ -90,11 +90,11 @@ export default function Footer() {
                 <input 
                   type="email" 
                   placeholder="your@email.com"
-                  className="flex-grow bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                  className="flex-grow bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500/50 transition-all"
                 />
                 <button 
                   onClick={() => alert("Newsletter subscription coming soon!")}
-                  className="px-4 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 text-white rounded-xl text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25"
+                  className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold transition-all active:scale-[0.98] cursor-pointer shadow-md hover:shadow-lg hover:shadow-primary-500/20 btn-premium-glow"
                 >
                   Join
                 </button>
@@ -104,9 +104,9 @@ export default function Footer() {
               <div className="flex flex-col gap-2 pt-1 border-t border-slate-800/40">
                 <button 
                   onClick={() => alert("Notification features are coming soon!")}
-                  className="w-full flex items-center justify-center gap-2 bg-slate-950/60 hover:bg-slate-900/60 hover:text-white text-slate-350 px-3.5 py-2.5 rounded-xl text-xs font-bold border border-slate-800/60 hover:border-indigo-500/30 transition-all cursor-pointer shadow-sm shadow-indigo-500/5"
+                  className="w-full flex items-center justify-center gap-2 bg-slate-950/60 hover:bg-slate-900/60 hover:text-white text-slate-350 px-3.5 py-2.5 rounded-xl text-xs font-bold border border-slate-800/60 hover:border-primary-500/30 transition-all cursor-pointer shadow-sm shadow-primary-500/5"
                 >
-                  <Bell className="w-3.5 h-3.5 text-indigo-400 group-hover:animate-shake" />
+                  <Bell className="w-3.5 h-3.5 text-primary-400 group-hover:animate-shake" />
                   <span>Enable Browser Alerts</span>
                 </button>
 
@@ -138,7 +138,7 @@ export default function Footer() {
                       href={link.href} 
                       className="text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-1.5 group"
                     >
-                      <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-indigo-400 shrink-0" />
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-primary-400 shrink-0" />
                       <span className="group-hover:translate-x-0.5 transition-transform duration-300 truncate">{link.name}</span>
                     </Link>
                   </li>
@@ -159,7 +159,7 @@ export default function Footer() {
                       href={cat.href} 
                       className="text-slate-400 hover:text-white transition-all duration-300 flex items-center gap-1.5 group"
                     >
-                      <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-purple-400 shrink-0" />
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-primary-450 shrink-0" />
                       <span className="group-hover:translate-x-0.5 transition-transform duration-300 truncate">{cat.name}</span>
                     </Link>
                   </li>
@@ -184,7 +184,7 @@ export default function Footer() {
               <Link href="/terms" className="hover:text-white transition-colors duration-300">Terms of Service</Link>
               <span className="hidden sm:inline text-slate-800">•</span>
               <span className="flex items-center gap-1.5 text-slate-600 select-none">
-                <MapPin className="w-3 h-3 text-indigo-400" />
+                <MapPin className="w-3 h-3 text-primary-400" />
                 Paschim Medinipur, WB
               </span>
             </div>

@@ -1,47 +1,41 @@
 import { networkInterfaces } from 'os';
 
-const getLocalIP = () => {
+const getAllLocalIPs = () => {
   const nets = networkInterfaces();
+  const ips = ['localhost', '127.0.0.1'];
   
-  // 1. Prefer Wi-Fi or Ethernet interfaces
-  for (const name of Object.keys(nets)) {
-    const lowerName = name.toLowerCase();
-    if (lowerName.includes('wi-fi') || lowerName.includes('ethernet') || lowerName.includes('wlan') || lowerName.includes('wi fi')) {
-      for (const net of nets[name]) {
-        // Skip link-local IPs starting with 169.254
-        if (net.family === 'IPv4' && !net.internal && !net.address.startsWith('169.254')) {
-          return net.address;
-        }
-      }
-    }
-  }
-  
-  // 2. Fallback to any active non-internal IPv4
   for (const name of Object.keys(nets)) {
     for (const net of nets[name]) {
-      if (net.family === 'IPv4' && !net.internal && !net.address.startsWith('169.254')) {
-        return net.address;
+      // Allow all valid active IPv4 addresses on the local machine
+      if (net.family === 'IPv4' && !net.address.startsWith('169.254')) {
+        ips.push(net.address);
       }
     }
   }
-  
-  return '0.0.0.0';
+  return [...new Set(ips)];
 };
 
-const ip = getLocalIP();
+const localIPs = getAllLocalIPs();
+const devOrigins = [];
+for (const ip of localIPs) {
+  devOrigins.push(ip);
+  for (let port = 3000; port <= 3010; port++) {
+    devOrigins.push(`${ip}:${port}`);
+  }
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  allowedDevOrigins: ip !== '0.0.0.0' ? [
-    ip,
-    `${ip}:3000`,
-    `${ip}:3001`,
-    `${ip}:3002`,
-    `${ip}:3003`,
-    `${ip}:3004`,
-    `${ip}:3005`
-  ] : [],
+  experimental: {
+    serverActions: {
+      // Dynamic allowed origins for safe dev server action triggers from any local network IP
+      allowedOrigins: devOrigins,
+    },
+  },
+  // Fallback for older next version dev origins checking if applicable
+  allowedDevOrigins: devOrigins,
 };
 
 export default nextConfig;
+

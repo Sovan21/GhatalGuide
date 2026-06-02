@@ -5,15 +5,18 @@
 @theme inline {
   --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
   
-  /* Premium Primary Colors - Tailored HSL Blue-Violet */
-  --color-primary-50: #f0f3ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-500: #4f46e5;
-  --color-primary-600: #4338ca;
-  --color-primary-700: #3730a3;
-  --color-primary-800: #312e81;
-  --color-primary-900: #1e1b4b;
+  /* Premium Primary Colors - Tailored HSL Blue Palette */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
 }
 
 /* Custom Scrollbars */
@@ -289,4 +292,178 @@ input[type="button"] {
     background: linear-gradient(135deg, #06b6d4, #a855f7, #ec4899, #f97316);
     animation: none;
   }
+}
+
+/* --- Custom Animations, Overlapping Auth Panels, and Mobile Performance --- */
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes zoomOutFade {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
+
+@keyframes zoomInFade {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-zoom-out-fade {
+  animation: zoomOutFade 0.3s ease-in-out forwards;
+}
+
+.animate-zoom-in-fade {
+  animation: zoomInFade 0.3s ease-in-out forwards;
+}
+
+/* Overlapping Authentication Panels */
+.auth-container {
+  position: relative;
+  perspective: 1000px;
+}
+
+.auth-panel {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-out;
+  position: absolute;
+  width: 100%;
+  max-width: 420px;
+  will-change: transform, opacity;
+}
+
+/* Left Panel (Sign In) active states */
+.auth-container.panel-left-active #signin-container {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.auth-container.panel-right-active #signin-container {
+  transform: translateX(-30%) scale(0.9);
+  opacity: 0.5;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Right Panel (Sign Up) active states */
+.auth-container.panel-left-active #signup-container {
+  transform: translateX(30%) scale(0.9);
+  opacity: 0.5;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.auth-container.panel-right-active #signup-container {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Mobile Performance Optimization Settings */
+@media (max-width: 768px) {
+  /* 1. Disable global transitions and animations to prevent mobile lag */
+  *, *::before, *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* 2. Disable heavy graphics (backdrop-filter glass effect) */
+  .glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+  }
+  
+  .dark .glass {
+    background: rgba(15, 23, 42, 0.98) !important;
+  }
+
+  /* 3. Exemptions to maintain smooth sliding animations */
+  #mobile-menu-panel, 
+  .auth-panel,
+  .hamburger-icon .line,
+  .toast-enter-active,
+  .toast-exit-active {
+    transition: transform 0.3s ease-in-out !important;
+  }
+
+  .auth-panel {
+    transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1) !important;
+  }
+}
+
+/* --- Redesign Overrides --- */
+
+/* Premium Inputs, Selections, and Textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(59, 130, 246, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  transform: translateY(-0.5px);
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="password"]:focus,
+.dark input[type="tel"]:focus,
+.dark input[type="url"]:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: rgba(96, 165, 250, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.08) !important;
+}
+
+/* Subtle Shimmer for Primary Call-To-Action buttons */
+.btn-premium-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-premium-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 30%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: skewX(-20deg) translateX(-100%);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-premium-glow:hover::after {
+  transform: skewX(-20deg) translateX(100%);
 }

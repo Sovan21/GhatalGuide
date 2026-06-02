@@ -225,7 +225,7 @@ export default function ListingDetails({ params }) {
           </div>
           <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">Listing Not Found</h2>
           <p className="text-slate-500 dark:text-slate-400 mb-6">The shop or business is no longer listed in our directory.</p>
-          <Link href="/directory" className="text-indigo-500 font-bold hover:underline">&larr; Back to Directory</Link>
+          <Link href="/directory" className="text-primary-500 font-bold hover:underline">&larr; Back to Directory</Link>
         </main>
         <Footer />
       </div>
@@ -242,7 +242,7 @@ export default function ListingDetails({ params }) {
           
           <Link
             href="/directory"
-            className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 mb-8 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 mb-8 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
             <span>Back to Directory</span>
@@ -324,7 +324,7 @@ export default function ListingDetails({ params }) {
               {/* Reviews Section */}
               <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-10 space-y-8">
                 <h3 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
-                  <MessageSquare className="w-6 h-6 text-indigo-500" />
+                  <MessageSquare className="w-6 h-6 text-primary-500" />
                   <span>Reviews & Ratings ({reviews.length})</span>
                 </h3>
 
@@ -355,13 +355,13 @@ export default function ListingDetails({ params }) {
                     placeholder="Tell others about your experience with this business..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    className="w-full p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-950 dark:text-white transition-all placeholder-slate-400"
+                    className="w-full p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-950 dark:text-white transition-all placeholder-slate-400"
                   ></textarea>
 
                   <button
                     type="submit"
                     disabled={submittingReview}
-                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-black px-6 py-3 rounded-xl text-xs transition-all shadow-md hover:shadow-lg disabled:opacity-50 cursor-pointer animate-fade-in"
+                    className="bg-primary-600 hover:bg-primary-700 text-white font-black px-6 py-3 rounded-xl text-xs transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 disabled:opacity-50 cursor-pointer animate-fade-in btn-premium-glow"
                   >
                     {submittingReview ? "Submitting..." : "Submit Review"}
                   </button>
@@ -433,12 +433,12 @@ export default function ListingDetails({ params }) {
                   {/* Phone */}
                   {listing.phone && (
                     <div className="flex gap-3 border-t border-slate-200 dark:border-slate-800 pt-5">
-                      <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 shrink-0 rounded-xl">
+                      <div className="p-2.5 bg-primary-50 dark:bg-primary-950/40 text-primary-500 shrink-0 rounded-xl">
                         <Phone className="w-5 h-5" />
                       </div>
                       <div>
                         <h4 className="font-black text-slate-900 dark:text-white">Phone</h4>
-                        <a href={`tel:${listing.phone}`} className="text-indigo-500 dark:text-indigo-400 font-black hover:underline block mt-1">
+                        <a href={`tel:${listing.phone}`} className="text-primary-605 dark:text-primary-400 font-black hover:underline block mt-1">
                           {listing.phone}
                         </a>
                       </div>
@@ -467,7 +467,7 @@ export default function ListingDetails({ params }) {
                     href={listing.googleMapLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-2xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm mt-8 cursor-pointer"
+                    className="w-full bg-primary-600 hover:bg-primary-700 text-white font-black py-3.5 rounded-2xl transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 flex items-center justify-center gap-2 text-sm mt-8 cursor-pointer btn-premium-glow"
                   >
                     <Share2 className="w-4 h-4" />
                     <span>Open in Google Maps</span>
@@ -487,7 +487,7 @@ export default function ListingDetails({ params }) {
         {listing.phone && (
           <a
             href={`tel:${listing.phone}`}
-            className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 px-4 rounded-2xl shadow-md flex items-center justify-center gap-2 text-sm transition-all"
+            className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-black py-3.5 px-4 rounded-2xl shadow-md hover:shadow-lg hover:shadow-primary-500/20 flex items-center justify-center gap-2 text-sm transition-all btn-premium-glow"
           >
             <Phone className="w-4.5 h-4.5" />
             <span>Call Now</span>

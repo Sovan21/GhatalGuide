@@ -226,20 +226,20 @@ export default function Home() {
       <main className="flex-grow relative z-10 pt-20 sm:pt-24">
         
         {/* Hero Section */}
-        <section className="relative py-12 lg:py-16 text-center">
+        <section className="relative py-12 lg:py-16 text-center animate-fade-in">
           <div className="max-w-4xl mx-auto px-4">
             
             {/* Location Tag */}
-            <div className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/50 dark:border-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase shadow-sm mb-8 animate-fade-in select-none">
+            <div className="inline-flex items-center gap-1.5 bg-primary-50 dark:bg-primary-950/40 border border-primary-100/50 dark:border-primary-900/30 text-primary-700 dark:text-primary-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase shadow-sm mb-8 select-none">
               <MapPin className="w-3.5 h-3.5" />
               <span>Ghatal, West Bengal</span>
             </div>
             
             {/* Title Header */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.08] mb-6 animate-fade-in tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.08] mb-6 tracking-tight">
               Your Digital Companion
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 drop-shadow-sm font-extrabold dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-650 drop-shadow-sm font-extrabold dark:from-primary-400 dark:to-indigo-400">
                 for Ghatal Town
               </span>
             </h1>
@@ -250,7 +250,7 @@ export default function Home() {
 
             {/* Premium Search Container */}
             <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto mb-10 animate-slide-up">
-              <div className="flex items-center bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl shadow-xl shadow-indigo-500/5 border border-slate-200 dark:border-slate-800 p-2 pl-4 md:pl-6 transition-all duration-300 focus-within:ring-2 focus-within:ring-indigo-500/40 focus-within:border-indigo-500 focus-within:scale-[1.01]">
+              <div className="flex items-center bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl shadow-xl shadow-primary-500/5 border border-slate-200 dark:border-slate-800 p-2 pl-4 md:pl-6 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500/40 focus-within:border-primary-500 focus-within:scale-[1.01]">
                 <input
                   type="text"
                   placeholder={isListening ? "Listening to voice..." : "Search doctors, stores, restaurants, services..."}
@@ -267,7 +267,7 @@ export default function Home() {
                     className={`relative p-3 rounded-xl transition-all cursor-pointer ${
                       isListening 
                         ? "bg-red-500 text-white shadow-lg shadow-red-500/30" 
-                        : "text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950/30"
+                        : "text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950/30"
                     }`}
                     title={isListening ? "Click to stop listening" : "Voice Search"}
                     aria-label={isListening ? "Stop voice search" : "Start voice search"}
@@ -280,7 +280,7 @@ export default function Home() {
                   </button>
                   <button
                     type="submit"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 md:px-7 py-3 md:py-3.5 rounded-xl md:rounded-2xl font-black transition-all shadow-md flex items-center space-x-2 shrink-0 cursor-pointer"
+                    className="bg-primary-600 hover:bg-primary-700 text-white px-5 md:px-7 py-3 md:py-3.5 rounded-xl md:rounded-2xl font-black transition-all shadow-md flex items-center space-x-2 shrink-0 cursor-pointer btn-premium-glow"
                   >
                     <Search className="w-4.5 h-4.5" />
                     <span className="hidden sm:inline text-sm">Search</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Ruler, Car, Navigation, PlusCircle } from "lucide-react";
 
 export default function TestDistancePage() {
   const [userLoc, setUserLoc] = useState(null);
@@ -81,11 +82,14 @@ export default function TestDistancePage() {
   return (
     <div className="min-h-screen p-10 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white">
       <div className="max-w-xl mx-auto space-y-6 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700">
-        <h1 className="text-2xl font-black text-indigo-600 dark:text-indigo-400">Distance Debugger</h1>
+        <h1 className="text-2xl font-black text-primary-600 dark:text-primary-400 flex items-center gap-2">
+          <Navigation className="w-6 h-6 text-primary-500" />
+          <span>Distance Debugger</span>
+        </h1>
         
         <div className="space-y-4">
-          <div className="p-5 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900/50 space-y-3">
-            <h3 className="font-bold text-indigo-800 dark:text-indigo-300">Enter Destination:</h3>
+          <div className="p-5 bg-primary-50 dark:bg-primary-950/20 rounded-xl border border-primary-100/10 space-y-3">
+            <h3 className="font-bold text-primary-800 dark:text-primary-300">Enter Destination:</h3>
             <div>
               <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Paste Google Maps Link</label>
               <input 
@@ -100,32 +104,32 @@ export default function TestDistancePage() {
                     setMapLink(""); // clear after extraction
                   }
                 }}
-                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
                 placeholder="https://www.google.com/maps/@..."
               />
             </div>
             
             <div className="text-center text-xs text-slate-500 font-bold">OR</div>
-
+ 
             <div>
               <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Latitude, Longitude</label>
               <input 
                 type="text" 
                 value={destCoords} 
                 onChange={e => setDestCoords(e.target.value)}
-                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-mono"
+                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 outline-none text-sm font-mono"
                 placeholder="e.g. 23.6844929, 86.9620772"
               />
             </div>
             <button 
               onClick={calculateDistance}
               disabled={!userLoc || loading}
-              className="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 dark:disabled:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl transition-colors shadow-sm"
+              className="w-full mt-4 bg-primary-600 hover:bg-primary-700 disabled:bg-slate-400 dark:disabled:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm btn-premium-glow cursor-pointer"
             >
               {loading ? "Calculating..." : "Calculate Distance"}
             </button>
           </div>
-
+ 
           <p>
             <strong>Your GPS Location:</strong>{" "}
             {userLoc ? (
@@ -139,15 +143,15 @@ export default function TestDistancePage() {
         <div className="p-6 bg-slate-100 dark:bg-slate-900/50 rounded-xl space-y-4 border border-slate-200 dark:border-slate-700">
           <h2 className="font-black text-lg">Results:</h2>
           
-          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
-            <span>📏 Straight Line (Math):</span>
-            <strong className="text-lg text-indigo-600 dark:text-indigo-400">
+          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-750">
+            <span className="flex items-center gap-1.5"><Ruler className="w-4 h-4 text-primary-500" /> Straight Line (Math):</span>
+            <strong className="text-lg text-primary-600 dark:text-primary-400">
               {straight ? `${straight} km` : (loading ? "Calculating..." : "-")}
             </strong>
           </div>
           
-          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
-            <span>🚗 Road Route (Ola Maps):</span>
+          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-750">
+            <span className="flex items-center gap-1.5"><Car className="w-4 h-4 text-emerald-500" /> Road Route (Ola Maps):</span>
             <strong className="text-lg text-emerald-600 dark:text-emerald-400">
               {road ? `${road} km` : (loading ? "Calculating..." : "-")}
             </strong>

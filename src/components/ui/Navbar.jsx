@@ -36,17 +36,34 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
 
-    // Auth initialization
+    // Auth initialization & legacy DOM view reactivity support
+    const updateLegacyViews = (user) => {
+      if (typeof document === "undefined") return;
+      const loggedOutElements = document.querySelectorAll(".logged-out-view");
+      const loggedInElements = document.querySelectorAll(".logged-in-view");
+      if (user) {
+        loggedOutElements.forEach((el) => el.classList.add("hidden"));
+        loggedInElements.forEach((el) => el.classList.remove("hidden"));
+      } else {
+        loggedInElements.forEach((el) => el.classList.add("hidden"));
+        loggedOutElements.forEach((el) => el.classList.remove("hidden"));
+      }
+    };
+
     supabase.auth.getSession()
       .then(({ data: { session } }) => {
-        setCurrentUser(session?.user || null);
+        const user = session?.user || null;
+        setCurrentUser(user);
+        updateLegacyViews(user);
       })
       .catch((err) => {
         console.warn("Failed to retrieve auth session:", err);
       });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setCurrentUser(session?.user || null);
+      const user = session?.user || null;
+      setCurrentUser(user);
+      updateLegacyViews(user);
       if (event === "SIGNED_OUT") {
         setIsDropdownOpen(false);
         router.push("/");
@@ -106,7 +123,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full px-3 sm:px-4 py-4 bg-transparent pointer-events-none">
-      <div className={`max-w-5xl mx-auto pointer-events-auto transition-all duration-500 ease-out rounded-full border ${
+      <div className={`max-w-7xl mx-auto pointer-events-auto transition-all duration-500 ease-out rounded-full border ${
         isScrolled 
           ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl shadow-lg dark:shadow-2xl shadow-slate-200/40 dark:shadow-black/40 border-slate-200/80 dark:border-white/[0.08]" 
           : "bg-white/70 dark:bg-slate-950/75 backdrop-blur-md shadow-md dark:shadow-xl shadow-slate-100/30 dark:shadow-black/20 border-slate-200/50 dark:border-white/[0.04]"
@@ -116,10 +133,10 @@ export default function Navbar() {
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="relative overflow-hidden rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 p-[2.5px] group-hover:shadow-lg group-hover:shadow-indigo-500/20 transition-all duration-400 group-hover:scale-105">
+            <div className="relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-[1.5px] group-hover:bg-primary-500 transition-all duration-300">
               <img src="/logo.png" alt="Ghatal Guide Logo" className="h-8.5 w-8.5 object-cover bg-white rounded-[10px]" />
             </div>
-            <span className="text-[16.5px] sm:text-lg font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 transition-colors">
+            <span className="text-[16.5px] sm:text-lg font-black tracking-tight text-slate-900 dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
               Ghatal Guide
             </span>
           </Link>
@@ -134,8 +151,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`relative px-4 py-2.5 rounded-full text-[14.5px] font-bold transition-all duration-300 whitespace-nowrap ${
                     isActive 
-                      ? "text-indigo-600 dark:text-indigo-300 bg-indigo-50/90 dark:bg-indigo-900/40 border border-indigo-100/40 dark:border-indigo-500/30 shadow-sm" 
-                      : "text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-white hover:bg-slate-100/50 dark:hover:bg-white/10"
+                      ? "text-primary-600 dark:text-primary-300 bg-primary-50/90 dark:bg-primary-900/40 border border-primary-100/40 dark:border-primary-500/30 shadow-sm" 
+                      : "text-slate-700 dark:text-slate-200 hover:text-primary-600 dark:hover:text-white hover:bg-slate-100/50 dark:hover:bg-white/10"
                   }`}
                 >
                   {link.name}
@@ -147,15 +164,6 @@ export default function Navbar() {
           {/* Controls & Actions */}
           <div className="flex items-center gap-2.5">
             
-            {/* Desktop List Business Button */}
-            <Link
-              href="/add-business"
-              className="hidden lg:flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-indigo-500/20 active:scale-95"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>List Business</span>
-            </Link>
-
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -164,6 +172,15 @@ export default function Navbar() {
             >
               {darkMode ? <Sun className="w-[17px] h-[17px]" /> : <Moon className="w-[17px] h-[17px]" />}
             </button>
+
+            {/* Desktop List Business Button */}
+            <Link
+              href="/add-business"
+              className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 btn-premium-glow"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>List Business</span>
+            </Link>
 
 
 
@@ -179,12 +196,12 @@ export default function Navbar() {
                 >
                   {currentUser.user_metadata?.avatar_url ? (
                     <img
-                      className="h-8.5 w-8.5 rounded-full object-cover border-2 border-white/10 group-hover:border-indigo-400/50 transition-colors"
+                      className="h-8.5 w-8.5 rounded-full object-cover border-2 border-white/10 group-hover:border-primary-400/50 transition-colors"
                       src={currentUser.user_metadata.avatar_url}
                       alt="User Avatar"
                     />
                   ) : (
-                    <div className="h-8.5 w-8.5 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                    <div className="h-8.5 w-8.5 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
                       {getInitials(currentUser)}
                     </div>
                   )}
@@ -307,7 +324,7 @@ export default function Navbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-4 px-5 py-4 rounded-2xl text-[17px] font-bold transition-all duration-300 ${
                       isActive
-                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
+                        ? "bg-primary-600 text-white shadow-md shadow-primary-600/20"
                         : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
@@ -325,7 +342,7 @@ export default function Navbar() {
               <Link
                 href="/add-business"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-[16px] font-black transition-all duration-300 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-500/30 active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-[16px] font-black transition-all duration-300 bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-500/20 active:scale-[0.98] btn-premium-glow"
               >
                 <PlusCircle className="w-5.5 h-5.5" />
                 <span>List Your Business</span>
@@ -405,7 +422,7 @@ export default function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-black text-[15px] transition-all active:scale-[0.98] shadow-md"
+                    className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-2xl font-black text-[15px] transition-all active:scale-[0.98] shadow-md btn-premium-glow"
                   >
                     <UserPlus className="w-5 h-5" />
                     <span>Sign In to Account</span>
