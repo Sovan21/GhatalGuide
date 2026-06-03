@@ -302,14 +302,14 @@ function LoginContent() {
         
         {/* Sign In Container (Left Panel) */}
         <div id="signin-container" className="auth-panel">
-          <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+          <div className="bg-[#e0e8f0] dark:bg-dark-card p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none dark:border dark:border-dark-border border border-white/5 transition-all duration-300">
             {authStep === "signin" && (
               <>
                 <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Login Form</h2>
                 
                 <form onSubmit={handleSignIn} className="space-y-6">
                   {/* Email/Phone/Username Input */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <User className="w-5 h-5" />
                     </div>
@@ -324,7 +324,7 @@ function LoginContent() {
                   </div>
                   
                   {/* Password Input */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Lock className="w-5 h-5" />
                     </div>
@@ -351,7 +351,7 @@ function LoginContent() {
                       <input 
                         type="checkbox" 
                         defaultChecked
-                        className="w-4 h-4 rounded bg-[#e0e8f0] dark:bg-[#1a202c] border-none shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-primary-600 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block" 
+                        className="w-4 h-4 rounded bg-[#e0e8f0] dark:bg-dark-bg border-none shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/80 text-primary-600 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block" 
                       />
                       <span>Remember me</span>
                     </label>
@@ -369,7 +369,7 @@ function LoginContent() {
                   {/* Sign In submit button */}
                   <button 
                     type="submit" disabled={authLoading}
-                    className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
+                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
                   >
                     {authLoading ? "Signing In..." : "Sign in"}
                   </button>
@@ -397,7 +397,7 @@ function LoginContent() {
                         key={provider.label}
                         type="button"
                         onClick={() => showToast(`${provider.label} sign-in option coming soon!`, "info")}
-                        className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] transition-all cursor-pointer"
+                        className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none transition-all cursor-pointer"
                         title={`Sign in with ${provider.label}`}
                       >
                         {provider.icon}
@@ -414,7 +414,7 @@ function LoginContent() {
                 
                 <form onSubmit={handleSendReset} className="space-y-6">
                   {/* Email Input */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Mail className="w-5 h-5" />
                     </div>
@@ -430,7 +430,7 @@ function LoginContent() {
                   
                   <button 
                     type="submit" disabled={authLoading} 
-                    className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
+                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
                   >
                     {authLoading ? "Sending..." : "Send Security Code"}
                   </button>
@@ -450,7 +450,7 @@ function LoginContent() {
                 
                 <form onSubmit={handleVerifyOtp} className="space-y-6">
                   {/* OTP input field */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <input 
                       type="text" required maxLength="6" placeholder="123456" value={otpCode} onChange={(e) => setOtpCode(e.target.value)}
                       className="w-full bg-transparent border-none outline-none py-3.5 text-center text-2xl tracking-[0.5em] font-black text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:ring-0 focus:border-none focus:outline-none"
@@ -462,7 +462,7 @@ function LoginContent() {
                   
                   <button 
                     type="submit" disabled={authLoading} 
-                    className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
+                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
                   >
                     {authLoading ? "Verifying..." : "Verify Code"}
                   </button>
@@ -482,7 +482,7 @@ function LoginContent() {
                 
                 <form onSubmit={handleUpdatePassword} className="space-y-6">
                   {/* New Password Input */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Lock className="w-5 h-5" />
                     </div>
@@ -509,7 +509,7 @@ function LoginContent() {
                   
                   <button 
                     type="submit" disabled={authLoading} 
-                    className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
+                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer"
                   >
                     {authLoading ? "Updating..." : "Save Password"}
                   </button>
@@ -521,7 +521,7 @@ function LoginContent() {
 
         {/* Sign Up Container (Right Panel) */}
         <div id="signup-container" className="auth-panel">
-          <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+          <div className="bg-[#e0e8f0] dark:bg-dark-card p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none dark:border dark:border-dark-border border border-white/5 transition-all duration-300">
             <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Register</h2>
             
             <form onSubmit={handleSignUp} className="space-y-4">
@@ -607,7 +607,7 @@ function LoginContent() {
               {/* Convex Submit button */}
               <button 
                 type="submit" disabled={authLoading}
-                className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50 mt-4"
+                className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50 mt-4"
               >
                 {authLoading ? "Creating Account..." : "Sign up"}
               </button>
@@ -651,7 +651,7 @@ function LoginContent() {
       {/* Awaiting Confirmation Modal (Popup Manager) */}
       {isAwaitingConfirmation && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-zoom-in-fade">
-          <div className="bg-[#e0e8f0] dark:bg-[#1a202c] rounded-[32px] p-8 max-w-md w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] text-center animate-bounce-in">
+          <div className="bg-[#e0e8f0] dark:bg-dark-card rounded-[32px] p-8 max-w-md w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border text-center animate-bounce-in">
             <div className="relative w-20 h-20 mx-auto mb-6">
               <span className="absolute inset-0 rounded-full border-4 border-indigo-50 dark:border-indigo-950" />
               <span className="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin" />
@@ -665,7 +665,7 @@ function LoginContent() {
               We've sent an email verification link to <span className="text-primary-650 font-extrabold">{email}</span>. Please click the link to verify your account.
             </p>
             
-            <div className="p-4 bg-[#e0e8f0]/40 dark:bg-[#1a202c]/40 rounded-2xl shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] mb-6 text-xs font-black text-slate-500">
+            <div className="p-4 bg-[#e0e8f0]/40 dark:bg-dark-bg/60 rounded-2xl shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/40 mb-6 text-xs font-black text-slate-500">
               <p className="uppercase tracking-wider">Device Verification Polling Active</p>
               <p className="text-primary-650 dark:text-primary-400 text-xl mt-1.5 font-black">
                 {Math.floor(pollingCountdown / 60)}:{(pollingCountdown % 60).toString().padStart(2, "0")}
@@ -677,7 +677,7 @@ function LoginContent() {
                 if (pollingRef.current) clearInterval(pollingRef.current);
                 setIsAwaitingConfirmation(false);
               }}
-              className="w-full py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-700 dark:text-slate-300 rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
+              className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
             >
               Cancel Verification
             </button>
@@ -723,7 +723,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100  relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#e0e8f0] dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative overflow-hidden">
       
       {/* Ambient backgrounds */}
       <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />

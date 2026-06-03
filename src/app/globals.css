@@ -19,11 +19,17 @@
   --color-primary-900: #1e3a8a;
   --color-primary-950: #172554;
 
-  /* YouTube/Facebook Inspired Dark Mode Palette */
-  --color-dark-bg: #0f0f12;
-  --color-dark-card: #17181c;
-  --color-dark-card-hover: #22232a;
-  --color-dark-border: #252630;
+  /* YouTube Inspired Dark Mode Palette */
+  --color-dark-bg: #0f0f0f;
+  --color-dark-card: #1f1f1f;
+  --color-dark-card-hover: #272727;
+  --color-dark-border: #272727;
+
+  /* Custom Breakpoints — mobile layout persists until 900px, then desktop */
+  --breakpoint-sm: 900px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 900px;
+  --breakpoint-desk: 900px;
 }
 
 /* Highly optimized lag-free theme switch transition for colors only (no reflow) */
@@ -79,16 +85,16 @@ textarea {
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #0f0f0f;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border: 2px solid #0f172a;
+  background: #3f3f3f;
+  border: 2px solid #0f0f0f;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #555555;
 }
 
 /* Perfect Centering Container Utility */
@@ -101,14 +107,14 @@ textarea {
   padding-right: 0.5rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   .container-perfect {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1400px) {
   .container-perfect {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -123,7 +129,7 @@ textarea {
 }
 
 .dark .glass {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 15, 15, 0.75);
 }
 
 /* Ambient Radial Mesh Background */
@@ -143,9 +149,7 @@ textarea {
 
 .dark .mesh-bg {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 0%, rgba(244, 63, 94, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+    radial-gradient(at 50% 0%, rgba(255, 255, 255, 0.015) 0px, transparent 50%);
 }
 
 /* Hero Background Gradients */
@@ -217,7 +221,7 @@ textarea {
 }
 
 .dark .category-card:hover {
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .listing-card {
@@ -271,7 +275,7 @@ textarea {
 }
 
 .dark .blur-bubble {
-  opacity: 0.25;
+  display: none !important;
 }
 
 /* Global Pointer Cursors on Interactive Elements */
@@ -409,7 +413,7 @@ input[type="button"] {
 }
 
 /* Mobile Performance Optimization Settings */
-@media (max-width: 768px) {
+@media (max-width: 899px) {
   /* Disable heavy graphics (backdrop-filter glass effect) only on standard .glass class */
   .glass {
     backdrop-filter: none !important;
@@ -418,7 +422,7 @@ input[type="button"] {
   }
   
   .dark .glass {
-    background: rgba(15, 23, 42, 0.98) !important;
+    background: rgba(15, 15, 15, 0.98) !important;
   }
 }
 

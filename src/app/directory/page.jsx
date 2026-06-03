@@ -290,7 +290,7 @@ function FiltersSidebarContent({
 const ListingCardSkeleton = ({ viewMode }) => {
   if (viewMode === "list") {
     return (
-      <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col sm:flex-row gap-5 items-center justify-between overflow-hidden animate-pulse w-full">
+      <div className="bg-white dark:bg-dark-card/60 border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col sm:flex-row gap-5 items-center justify-between overflow-hidden animate-pulse w-full">
         <div className="flex flex-col sm:flex-row gap-4 items-center flex-1 w-full">
           <div className="h-32 w-44 bg-slate-200 dark:bg-dark-card-hover rounded-2xl shrink-0" />
           <div className="space-y-3 flex-1 w-full">
@@ -306,7 +306,7 @@ const ListingCardSkeleton = ({ viewMode }) => {
   }
 
   return (
-    <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col justify-between overflow-hidden animate-pulse h-[380px] w-full">
+    <div className="bg-white dark:bg-dark-card/60 border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col justify-between overflow-hidden animate-pulse h-[380px] w-full">
       <div>
         {/* Top Category Header skeleton */}
         <div className="flex items-center justify-between mb-4">

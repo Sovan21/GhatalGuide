@@ -212,7 +212,7 @@ function CustomSelect({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left cursor-pointer disabled:opacity-55"
+        className="w-full flex items-center justify-between bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left cursor-pointer disabled:opacity-55"
       >
         <span className={`flex items-center gap-2.5 ${selectedOption ? "" : "text-slate-400 dark:text-slate-500"}`}>
           {selectedOption && selectedOption.icon && (
@@ -224,7 +224,7 @@ function CustomSelect({
       </button>
 
       {isOpen && (
-        <div className="absolute z-35 mt-2 w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] rounded-2xl p-2 border border-white/5 max-h-60 overflow-y-auto animate-zoom-in-fade origin-top">
+        <div className="absolute z-35 mt-2 w-full bg-[#e0e8f0] dark:bg-dark-card shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-2xl p-2 border border-white/5 max-h-60 overflow-y-auto animate-zoom-in-fade origin-top">
           {showSearch && (
             <div className="p-1 mb-2">
               <input
@@ -232,7 +232,7 @@ function CustomSelect({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none"
+                className="w-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -332,14 +332,14 @@ function TimePickerDropdown({ value, onChange, label }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="text-xs px-3 py-2 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] rounded-xl text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left min-w-[100px] flex items-center justify-between cursor-pointer"
+        className="text-xs px-3 py-2 bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left min-w-[100px] flex items-center justify-between cursor-pointer"
       >
         <span>{displayLabel}</span>
         <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-1.5 shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute z-45 mt-1 w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_12px_#becbdc,_-4px_-4px_12px_#ffffff] dark:shadow-[4px_4px_12px_#0e1117,_-4px_-4px_12px_#262f41] rounded-xl p-1 border border-white/5 max-h-48 overflow-y-auto animate-zoom-in-fade origin-top">
+        <div className="absolute z-45 mt-1 w-full bg-[#e0e8f0] dark:bg-dark-card shadow-[4px_4px_12px_#becbdc,_-4px_-4px_12px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl p-1 border border-white/5 max-h-48 overflow-y-auto animate-zoom-in-fade origin-top">
           {timeOptions.map((opt) => (
             <button
               key={opt.value}
@@ -945,14 +945,14 @@ function AddBusinessContent() {
             
             {/* Sign In form container */}
             <div id="signin-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+              <div className="bg-[#e0e8f0] dark:bg-dark-card p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border transition-all duration-300">
                 {authStep === "signin" && (
                   <>
                     <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Welcome Back</h2>
                     
                     <form onSubmit={handleInlineSignIn} className="space-y-6">
                       {/* Email Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-5 text-slate-700 dark:text-slate-400">
                           <Mail className="w-5 h-5" />
                         </div>
@@ -967,7 +967,7 @@ function AddBusinessContent() {
                       </div>
                       
                       {/* Password Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-5 text-slate-700 dark:text-slate-400">
                           <Lock className="w-5 h-5" />
                         </div>
@@ -994,7 +994,7 @@ function AddBusinessContent() {
                           <input 
                             type="checkbox" 
                             defaultChecked
-                            className="w-4 h-4 rounded bg-[#e0e8f0] dark:bg-[#1a202c] border-none shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-primary-650 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block" 
+                            className="w-4 h-4 rounded bg-[#e0e8f0] dark:bg-dark-bg border-none shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/85 text-primary-650 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block" 
                           />
                           <span>Remember me</span>
                         </label>
@@ -1011,7 +1011,7 @@ function AddBusinessContent() {
                       
                       <button 
                         type="submit" disabled={authSubmitLoading}
-                        className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
+                        className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
                       >
                         {authSubmitLoading ? "Signing In..." : "Sign In"}
                       </button>
@@ -1038,7 +1038,7 @@ function AddBusinessContent() {
                             key={provider.label}
                             type="button"
                             onClick={() => showToast(`${provider.label} sign-in option coming soon!`, "info")}
-                            className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] transition-all cursor-pointer"
+                            className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none transition-all cursor-pointer"
                             title={`Sign in with ${provider.label}`}
                           >
                             {provider.icon}
@@ -1055,7 +1055,7 @@ function AddBusinessContent() {
                     
                     <form onSubmit={handleInlineForgotPassword} className="space-y-6">
                       {/* Email Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-5 text-slate-700 dark:text-slate-400">
                           <Mail className="w-5 h-5" />
                         </div>
@@ -1072,7 +1072,7 @@ function AddBusinessContent() {
                       {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
                       {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
                       
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
+                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
                         Send Security Code
                       </button>
                       <button type="button" onClick={() => setAuthStep("signin")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
@@ -1088,7 +1088,7 @@ function AddBusinessContent() {
                     
                     <form onSubmit={handleInlineVerifyOtp} className="space-y-6">
                       {/* OTP input field */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <input 
                           type="text" 
                           required 
@@ -1103,7 +1103,7 @@ function AddBusinessContent() {
                       {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
                       {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
                       
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
+                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
                         Verify Code
                       </button>
                       <button type="button" onClick={() => setAuthStep("forgot")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
@@ -1119,7 +1119,7 @@ function AddBusinessContent() {
                     
                     <form onSubmit={handleInlineUpdatePassword} className="space-y-6">
                       {/* Password field */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-5 text-slate-700 dark:text-slate-400">
                           <Lock className="w-5 h-5" />
                         </div>
@@ -1144,7 +1144,7 @@ function AddBusinessContent() {
                       {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
                       {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
                       
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
+                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
                         Update Password
                       </button>
                     </form>
@@ -1155,12 +1155,12 @@ function AddBusinessContent() {
 
             {/* Sign Up form container */}
             <div id="signup-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+              <div className="bg-[#e0e8f0] dark:bg-dark-card p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border transition-all duration-300">
                 <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Register</h2>
                 
                 <form onSubmit={handleInlineSignUp} className="space-y-4">
                   {/* Full Name */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <User className="w-5 h-5" />
                     </div>
@@ -1175,7 +1175,7 @@ function AddBusinessContent() {
                   </div>
 
                   {/* Email */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Mail className="w-5 h-5" />
                     </div>
@@ -1190,7 +1190,7 @@ function AddBusinessContent() {
                   </div>
 
                   {/* Password */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Lock className="w-5 h-5" />
                     </div>
@@ -1213,7 +1213,7 @@ function AddBusinessContent() {
                   </div>
 
                   {/* Confirm Password */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                     <div className="pl-5 text-slate-700 dark:text-slate-400">
                       <Lock className="w-5 h-5" />
                     </div>
@@ -1240,7 +1240,7 @@ function AddBusinessContent() {
 
                   <button 
                     type="submit" disabled={authSubmitLoading}
-                    className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-[inset_3px_3px_6px_#0e1117,_inset_-3px_-3px_6px_#262f41] text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
+                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
                   >
                     {authSubmitLoading ? "Creating Account..." : "Sign up"}
                   </button>
@@ -1267,7 +1267,7 @@ function AddBusinessContent() {
                         key={provider.label}
                         type="button"
                         onClick={() => showToast(`${provider.label} sign-up option coming soon!`, "info")}
-                        className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] transition-all cursor-pointer"
+                        className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none transition-all cursor-pointer"
                         title={`Sign up with ${provider.label}`}
                       >
                         {provider.icon}
@@ -1284,7 +1284,7 @@ function AddBusinessContent() {
           {/* Polling popup overlay */}
           {isAwaitingConfirmation && (
             <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 animate-zoom-in-fade">
-              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] border border-white/5 rounded-[32px] p-8 max-w-sm w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] text-center animate-bounce-in">
+              <div className="bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[32px] p-8 max-w-sm w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none text-center animate-bounce-in">
                 <div className="relative w-16 h-16 mx-auto mb-5">
                   <span className="absolute inset-0 rounded-full border-4 border-indigo-50 dark:border-indigo-950" />
                   <span className="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin" />
@@ -1296,7 +1296,7 @@ function AddBusinessContent() {
                 <p className="text-slate-500 dark:text-slate-400 mb-5 text-xs font-bold leading-relaxed">
                   We've sent a verification link to <span className="text-primary-650 font-extrabold">{authEmail}</span>. Please click it to verify.
                 </p>
-                <div className="p-3.5 bg-[#e0e8f0]/40 dark:bg-[#1a202c]/40 rounded-xl shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] mb-5 text-[10px] font-black text-slate-500">
+                <div className="p-3.5 bg-[#e0e8f0]/40 dark:bg-dark-bg/60 rounded-xl shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/40 mb-5 text-[10px] font-black text-slate-500">
                   <p>Verification Polling Active</p>
                   <p className="text-primary-650 dark:text-primary-400 text-lg mt-1 font-black">
                     {Math.floor(pollingCountdown / 60)}:{(pollingCountdown % 60).toString().padStart(2, "0")}
@@ -1307,7 +1307,7 @@ function AddBusinessContent() {
                     if (pollingRef.current) clearInterval(pollingRef.current);
                     setIsAwaitingConfirmation(false);
                   }}
-                  className="w-full py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-700 dark:text-slate-300 rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
+                  className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
                 >
                   Cancel Verification
                 </button>
@@ -1354,7 +1354,7 @@ function AddBusinessContent() {
 
   // Logged In: Show Multi-step Business Form
   return (
-    <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100  flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#e0e8f0] dark:bg-dark-bg text-slate-900 dark:text-slate-100  flex flex-col relative overflow-hidden">
       
       {/* Ambient background layout */}
       <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />
@@ -1368,7 +1368,7 @@ function AddBusinessContent() {
           {/* Form Header Banner */}
           {!editListingId && (
             <section className="text-center mb-10 animate-fade-in">
-              <div className="inline-flex items-center gap-1.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] border border-white/5 text-primary-600 dark:text-primary-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase mb-6 select-none shadow-sm">
+              <div className="inline-flex items-center gap-1.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none text-primary-600 dark:text-primary-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase mb-6 select-none shadow-sm">
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Free Business Listing</span>
               </div>
@@ -1386,7 +1386,7 @@ function AddBusinessContent() {
               </p>
               
               {/* Progress Steps Indicator */}
-              <div id="progress-indicator" className="flex flex-wrap items-center justify-center gap-4 max-w-xl mx-auto p-4 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e1117,_-6px_-6px_12px_#262f41] rounded-3xl border border-white/5">
+              <div id="progress-indicator" className="flex flex-wrap items-center justify-center gap-4 max-w-xl mx-auto p-4 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none rounded-3xl">
                 {[1, 2, 3].map((step) => (
                   <div key={step} className="flex items-center gap-2.5">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
@@ -1394,7 +1394,7 @@ function AddBusinessContent() {
                         ? "bg-primary-600 text-white scale-110 shadow-md shadow-primary-500/20" 
                         : currentStep > step 
                         ? "bg-emerald-500 text-white" 
-                        : "bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-400"
+                        : "bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none text-slate-400"
                     }`}>
                       {step}
                     </div>
@@ -1418,7 +1418,7 @@ function AddBusinessContent() {
           )}
 
           {/* Form Container */}
-          <div className="bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] rounded-[32px] border border-white/5 overflow-hidden animate-slide-up">
+          <div className="bg-[#e0e8f0] dark:bg-dark-card shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-[32px] overflow-hidden animate-slide-up">
             
             {/* Form Steps */}
             <form onSubmit={handleSubmit} className="p-4 sm:p-10 space-y-6 sm:space-y-8">
@@ -1472,7 +1472,7 @@ function AddBusinessContent() {
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                           {getBusinessNameLabel()}
                         </label>
-                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                           <input 
                             type="text" 
                             value={businessName}
@@ -1486,7 +1486,7 @@ function AddBusinessContent() {
                       {/* Phone Number */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Phone Number * (10-Digit Mobile)</label>
-                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                           <div className="pl-5 text-slate-700 dark:text-slate-400">
                             <Phone className="w-5 h-5" />
                           </div>
@@ -1532,7 +1532,7 @@ function AddBusinessContent() {
 
                       {/* Custom Hours list */}
                       {hoursType === "custom" && (
-                        <div className="md:col-span-2 p-6 border border-white/5 rounded-3xl bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] space-y-4">
+                        <div className="md:col-span-2 p-6 border border-transparent dark:border-dark-border rounded-3xl bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none space-y-4">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-black/5 dark:border-white/5">
                             <p className="text-xs font-bold text-slate-500 dark:text-slate-400">Specify open and close timings for operating days.</p>
                             <button 
@@ -1549,12 +1549,12 @@ function AddBusinessContent() {
                               const dKey = day.toLowerCase();
                               const isDayOpen = !!(customHours[dKey] && customHours[dKey].open && customHours[dKey].close);
                               return (
-                                <div key={day} style={{ zIndex: daysOfWeek.length - index }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 rounded-2xl bg-[#e0e8f0]/40 dark:bg-[#1a202c]/40 border border-white/5 shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] transition-all duration-300 gap-3">
+                                <div key={day} style={{ zIndex: daysOfWeek.length - index }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 rounded-2xl bg-[#e0e8f0]/40 dark:bg-dark-bg/40 border border-white/5 shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none transition-all duration-300 gap-3">
                                   <div className="flex items-center justify-between sm:justify-start gap-4 min-w-[150px]">
                                     <span className="text-sm font-black text-slate-700 dark:text-slate-200">{day}</span>
                                     
                                     {/* Segmented control Open/Closed */}
-                                    <div className="flex rounded-lg p-0.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] border border-white/5">
+                                    <div className="flex rounded-lg p-0.5 bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none">
                                       <button
                                         type="button"
                                         onClick={() => { if (!isDayOpen) handleToggleDayOpen(dKey); }}
@@ -1619,7 +1619,7 @@ function AddBusinessContent() {
                     {/* Full Address */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Full Address *</label>
-                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-1 transition-all duration-200">
+                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-1 transition-all duration-200">
                         <textarea 
                           rows="2" 
                           value={address}
@@ -1633,7 +1633,7 @@ function AddBusinessContent() {
                     {/* Google Maps Link */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Google Maps Share Link</label>
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-4 text-slate-700 dark:text-slate-400">
                           <Link2 className="w-4 h-4" />
                         </div>
@@ -1650,7 +1650,7 @@ function AddBusinessContent() {
                     {/* Business Image Upload */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Business Storefront Image</label>
-                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-dark-border rounded-[24px] bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] hover:bg-[#d4dfea] dark:hover:bg-[#222a3a] transition-all duration-250 cursor-pointer relative group text-center">
+                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-dark-border rounded-[24px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none hover:bg-[#d4dfea] dark:hover:bg-dark-card transition-all duration-250 cursor-pointer relative group text-center">
                         <input 
                           type="file" 
                           accept="image/png, image/jpeg, image/webp"
@@ -1663,7 +1663,7 @@ function AddBusinessContent() {
                       
                       {/* Image Preview */}
                       {(imagePreviewUrl || existingImageUrl) && (
-                        <div className="mt-2.5 p-2 bg-[#e0e8f0] dark:bg-[#1a202c] border border-white/5 rounded-[20px] max-w-xs shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] animate-fade-in">
+                        <div className="mt-2.5 p-2 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[20px] max-w-xs shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none animate-fade-in">
                           <p className="text-[9.5px] font-black uppercase text-slate-500 mb-1.5">Image Preview:</p>
                           <img 
                             src={imagePreviewUrl || existingImageUrl} 
@@ -1677,7 +1677,7 @@ function AddBusinessContent() {
                     {/* Business Description */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Business Description</label>
-                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] p-1 transition-all duration-200">
+                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-1 transition-all duration-200">
                         <textarea 
                           rows="2" 
                           maxLength="500"
@@ -1700,7 +1700,7 @@ function AddBusinessContent() {
                     <span>Review Business Information</span>
                   </h3>
 
-                  <div className="p-6 bg-[#e0e8f0] dark:bg-[#1a202c] border border-white/5 rounded-3xl shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] divide-y divide-black/5 dark:divide-white/5 space-y-4">
+                  <div className="p-6 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-3xl shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none divide-y divide-black/5 dark:divide-white/5 space-y-4">
                     
                     <div className="pt-0 flex flex-col sm:flex-row gap-2">
                       <p className="w-full sm:w-1/3 font-black text-slate-500 text-xs uppercase tracking-wide">{getBusinessNameLabel().replace(" *", "")}</p>
@@ -1770,7 +1770,7 @@ function AddBusinessContent() {
                     key="prev-btn"
                     type="button" 
                     onClick={(e) => { e.preventDefault(); handlePrevStep(); }}
-                    className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer animate-fade-in"
+                    className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer animate-fade-in"
                   >
                     <ArrowLeft className="w-4 h-4" /> Previous
                   </button>
@@ -1783,7 +1783,7 @@ function AddBusinessContent() {
                     key="next-btn"
                     type="button" 
                     onClick={(e) => { e.preventDefault(); handleNextStep(); }}
-                    className="inline-flex items-center gap-1.5 px-8 py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-800 dark:text-slate-200 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer ml-auto"
+                    className="inline-flex items-center gap-1.5 px-8 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer ml-auto"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4 text-slate-500" />
@@ -1794,7 +1794,7 @@ function AddBusinessContent() {
                     type="button" 
                     onClick={handleSubmit}
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-800 dark:text-slate-200 rounded-full font-black text-sm transition-all cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 rounded-full font-black text-sm transition-all cursor-pointer disabled:opacity-50"
                   >
                     {submitting ? (
                       <>
@@ -1819,8 +1819,8 @@ function AddBusinessContent() {
       {/* Success Modal (Popup Manager) */}
       {isSuccessModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-zoom-in-fade">
-          <div className="bg-[#e0e8f0] dark:bg-[#1a202c] border border-white/5 rounded-[32px] p-8 max-w-md w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] text-center animate-bounce-in">
-            <div className="w-16 h-16 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[32px] p-8 max-w-md w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none text-center animate-bounce-in">
+            <div className="w-16 h-16 bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-black text-slate-800 dark:text-slate-200 mb-2.5">Business Submitted!</h3>
@@ -1831,13 +1831,13 @@ function AddBusinessContent() {
             <div className="flex flex-col gap-3">
               <button 
                 onClick={resetForm}
-                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
+                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
               >
                 Add Another Business
               </button>
               <button 
                 onClick={() => { setIsSuccessModalOpen(false); router.push("/dashboard"); }}
-                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e1117,_-4px_-4px_8px_#262f41] hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
+                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
               >
                 Go to Dashboard
               </button>

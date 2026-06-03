@@ -137,12 +137,12 @@ export default function Navbar() {
           : "bg-white/70 dark:bg-dark-bg/75 backdrop-blur-md shadow-md dark:shadow-xl shadow-slate-100/30 dark:shadow-black/20 border-slate-200/50 dark:border-dark-border/40"
       }`}>
 
-        <nav className="px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 flex justify-between items-center">
+        <nav className="px-4 sm:px-5 lg:px-6 py-3 sm:py-3 flex justify-between items-center">
           
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2 group shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="relative overflow-hidden rounded-xl bg-slate-200 dark:bg-dark-card-hover p-[1.5px] group-hover:bg-primary-500 transition-all duration-300">
-              <img src="/logo.png" alt="Ghatal Guide Logo" className="h-8.5 w-8.5 object-cover bg-white rounded-[10px]" />
+              <img src="/logo.png" alt="Ghatal Guide Logo" className="h-10 w-10 sm:h-11 sm:w-11 object-cover bg-white rounded-[10px]" />
             </div>
             <span className="text-[17px] sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 dark:from-white dark:via-indigo-200 dark:to-indigo-300 bg-clip-text text-transparent group-hover:scale-[1.01] transition-all duration-300 font-outfit select-none">
               Ghatal Guide
@@ -150,7 +150,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden desk:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -185,7 +185,7 @@ export default function Navbar() {
             {!currentUser && (
               <Link
                 href="/add-business"
-                className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 btn-premium-glow"
+                className="hidden desk:flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 btn-premium-glow"
               >
                 <PlusCircle className="w-4 h-4" />
                 <span>List Business</span>
@@ -199,7 +199,7 @@ export default function Navbar() {
                   onMouseDown={(e) => e.stopPropagation()}
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (window.innerWidth < 1024) {
+                    if (window.innerWidth < 900) {
                       setIsMobileMenuOpen((prev) => !prev);
                     } else {
                       setIsDropdownOpen((prev) => !prev);
@@ -224,7 +224,7 @@ export default function Navbar() {
  
                 {/* User Dropdown */}
                 {isDropdownOpen && (
-                  <div className="hidden lg:block origin-top-right absolute right-0 mt-3 w-56 rounded-2xl shadow-2xl py-1.5 bg-white dark:bg-dark-card/98 backdrop-blur-xl border border-slate-200/80 dark:border-dark-border focus:outline-none z-50 animate-fade-in text-slate-900 dark:text-white">
+                  <div className="hidden desk:block origin-top-right absolute right-0 mt-3 w-56 rounded-2xl shadow-2xl py-1.5 bg-white dark:bg-dark-card/98 backdrop-blur-xl border border-slate-200/80 dark:border-dark-border focus:outline-none z-50 animate-fade-in text-slate-900 dark:text-white">
                     <div className="px-4 py-3 border-b border-slate-100 dark:border-dark-border/50">
                       <p className="text-sm font-bold truncate">
                         {currentUser.user_metadata?.full_name || "Ghatal Guide User"}
@@ -287,7 +287,7 @@ export default function Navbar() {
                   e.stopPropagation();
                   setIsMobileMenuOpen((prev) => !prev);
                 }}
-                className="lg:hidden w-9.5 h-9.5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.08] transition-all active:scale-90 cursor-pointer"
+                className="desk:hidden w-9.5 h-9.5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.08] transition-all active:scale-90 cursor-pointer"
                 aria-label="Toggle Mobile Menu"
               >
                 {isMobileMenuOpen ? <X className="w-5.5 h-5.5" /> : <Menu className="w-5.5 h-5.5" />}
