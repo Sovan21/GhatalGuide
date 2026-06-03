@@ -64,39 +64,39 @@ export default function Transportation() {
           </div>
 
           {/* Tabs */}
-          <div className="flex bg-white/70 dark:bg-dark-card/70 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200/60 dark:border-dark-border/60 p-1.5 mb-10 select-none max-w-2xl mx-auto">
+          <div className="flex bg-white/70 dark:bg-dark-card/70 backdrop-blur-xl rounded-2xl shadow-sm border border-slate-200/60 dark:border-dark-border/60 p-1 mb-8 select-none max-w-2xl mx-auto gap-0.5 sm:p-1.5 sm:mb-10">
             <button
               onClick={() => setActiveTab("trains")}
-              className={`flex-1 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer ${
+              className={`flex-1 py-2.5 sm:py-3.5 rounded-xl font-bold flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all duration-300 cursor-pointer ${
                 activeTab === "trains"
                   ? "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/25 translate-y-[1px]"
                   : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:text-indigo-600 dark:hover:text-indigo-400"
               }`}
             >
-              <Train className="w-5 h-5" />
-              <span className="text-sm md:text-base tracking-wide">Trains</span>
+              <Train className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-[12px] sm:text-sm md:text-base tracking-wide">Trains</span>
             </button>
             <button
               onClick={() => setActiveTab("buses")}
-              className={`flex-1 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer ${
+              className={`flex-1 py-2.5 sm:py-3.5 rounded-xl font-bold flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all duration-300 cursor-pointer ${
                 activeTab === "buses"
                   ? "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/25 translate-y-[1px]"
                   : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:text-indigo-600 dark:hover:text-indigo-400"
               }`}
             >
-              <Bus className="w-5 h-5" />
-              <span className="text-sm md:text-base tracking-wide">Buses</span>
+              <Bus className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-[12px] sm:text-sm md:text-base tracking-wide">Buses</span>
             </button>
             <button
               onClick={() => setActiveTab("totos")}
-              className={`flex-1 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer ${
+              className={`flex-1 py-2.5 sm:py-3.5 rounded-xl font-bold flex items-center justify-center gap-1.5 sm:gap-2.5 transition-all duration-300 cursor-pointer ${
                 activeTab === "totos"
                   ? "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/25 translate-y-[1px]"
                   : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:text-indigo-600 dark:hover:text-indigo-400"
               }`}
             >
-              <Compass className="w-5 h-5" />
-              <span className="text-sm md:text-base tracking-wide">Totos</span>
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-[12px] sm:text-sm md:text-base tracking-wide">Totos</span>
             </button>
           </div>
 
@@ -108,7 +108,7 @@ export default function Transportation() {
                 <p className="text-slate-500 dark:text-slate-400 font-medium animate-pulse">Loading schedules...</p>
               </div>
             ) : (
-              <div className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-2xl rounded-3xl shadow-xl shadow-slate-200/20 dark:shadow-none border border-slate-200/80 dark:border-dark-border/80 p-6 md:p-10 overflow-hidden">
+              <div className="bg-white/80 dark:bg-dark-card/80 backdrop-blur-2xl rounded-3xl shadow-xl shadow-slate-200/20 dark:shadow-none border border-slate-200/80 dark:border-dark-border/80 p-4 sm:p-6 md:p-10 overflow-hidden">
                 
                 {/* Decorative gradients inside the content card */}
                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-indigo-500/10 dark:bg-indigo-500/5 blur-3xl pointer-events-none"></div>
@@ -137,7 +137,7 @@ export default function Transportation() {
                           {/* Mobile view cards */}
                           <div className="space-y-4 md:hidden">
                             {transportData.trains.map((train, index) => (
-                              <div key={`train-mob-${train.id || index}`} className="group bg-white dark:bg-dark-card p-5 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-dark-border hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 space-y-4 relative overflow-hidden">
+                              <div key={`train-mob-${train.id || index}`} className="group bg-white dark:bg-dark-card p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-dark-border hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 space-y-3 sm:space-y-4 relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
                                 <div className="flex justify-between items-start">
                                   <h4 className="font-black text-slate-900 dark:text-white text-lg leading-snug">{train.name}</h4>
@@ -251,7 +251,7 @@ export default function Transportation() {
                           {transportData.buses.map((bus, index) => (
                             <div
                               key={`bus-${bus.id || index}`}
-                              className="group relative border border-slate-200 dark:border-dark-border rounded-3xl p-6 bg-white dark:bg-dark-card flex flex-col gap-5 hover:shadow-xl hover:shadow-emerald-500/5 dark:hover:shadow-emerald-500/5 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-300 overflow-hidden"
+                              className="group relative border border-slate-200 dark:border-dark-border rounded-3xl p-4 sm:p-6 bg-white dark:bg-dark-card flex flex-col gap-4 sm:gap-5 hover:shadow-xl hover:shadow-emerald-500/5 dark:hover:shadow-emerald-500/5 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-300 overflow-hidden"
                             >
                               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-emerald-100 to-transparent dark:from-emerald-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-[100px]"></div>
                               
@@ -270,7 +270,7 @@ export default function Transportation() {
                                 </div>
                               </div>
 
-                              <div className="bg-slate-50 dark:bg-dark-card/50 rounded-2xl p-4 flex justify-between items-center text-sm font-semibold border border-slate-100 dark:border-dark-border/50 relative z-10">
+                              <div className="bg-slate-50 dark:bg-dark-card/50 rounded-2xl p-3 sm:p-4 flex justify-between items-center text-sm font-semibold border border-slate-100 dark:border-dark-border/50 relative z-10">
                                 <div className="flex flex-col gap-1">
                                   <span className="text-xs text-slate-400 uppercase tracking-wider font-bold">First Bus</span>
                                   <span className="text-slate-800 dark:text-slate-200 text-base">{bus.first_bus}</span>
@@ -310,7 +310,7 @@ export default function Transportation() {
                           {transportData.totos.map((toto, index) => (
                             <div
                               key={`toto-${toto.id || index}`}
-                              className="group border border-slate-200 dark:border-dark-border rounded-3xl p-6 text-center flex flex-col justify-between bg-white dark:bg-dark-card hover:shadow-xl hover:shadow-amber-500/5 hover:border-amber-300 dark:hover:border-amber-700 transition-all duration-300 relative overflow-hidden h-full min-h-[200px]"
+                              className="group border border-slate-200 dark:border-dark-border rounded-3xl p-4 sm:p-6 text-center flex flex-col justify-between bg-white dark:bg-dark-card hover:shadow-xl hover:shadow-amber-500/5 hover:border-amber-300 dark:hover:border-amber-700 transition-all duration-300 relative overflow-hidden h-full min-h-[170px]"
                             >
                               <div className="absolute -inset-2 bg-gradient-to-b from-amber-50/50 to-transparent dark:from-amber-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                               

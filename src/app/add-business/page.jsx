@@ -8,8 +8,50 @@ import { categories } from "@/lib/sampleData";
 import { 
   Building, Phone, Clock, MapPin, Link2, FileText, Image as ImageIcon, CheckCircle, 
   ChevronRight, ChevronDown, ArrowLeft, PlusCircle, LayoutDashboard, Compass, Lock, Mail, User, RotateCcw,
-  MailOpen, AlertCircle, Info, Save, Eye, EyeOff
+  MailOpen, AlertCircle, Info, Save, Eye, EyeOff,
+  Activity, Utensils, ShoppingBag, Wrench, GraduationCap, ShieldAlert,
+  Hospital, Stethoscope, Pill, Coffee, Candy, IceCream, Shirt, Smartphone,
+  ShoppingBasket, BookOpen, Zap, Droplet, Car, School, Shield, Ambulance, Flame, Heart
 } from "lucide-react";
+
+const categoryIconMap = {
+  health: <Activity className="w-4 h-4" />,
+  food: <Utensils className="w-4 h-4" />,
+  shopping: <ShoppingBag className="w-4 h-4" />,
+  services: <Wrench className="w-4 h-4" />,
+  education: <GraduationCap className="w-4 h-4" />,
+  emergency: <ShieldAlert className="w-4 h-4" />,
+};
+
+const subcategoryIconMap = {
+  // Health
+  "Hospitals": <Hospital className="w-4 h-4" />,
+  "Doctors": <Stethoscope className="w-4 h-4" />,
+  "Pharmacy": <Pill className="w-4 h-4" />,
+  // Food
+  "Restaurants": <Utensils className="w-4 h-4" />,
+  "Cafes": <Coffee className="w-4 h-4" />,
+  "Sweets": <Candy className="w-4 h-4" />,
+  "Desserts": <IceCream className="w-4 h-4" />,
+  // Shopping
+  "Apparel": <Shirt className="w-4 h-4" />,
+  "Electronics": <Smartphone className="w-4 h-4" />,
+  "Groceries": <ShoppingBasket className="w-4 h-4" />,
+  "Book Store": <BookOpen className="w-4 h-4" />,
+  // Services
+  "Electricians": <Zap className="w-4 h-4" />,
+  "Plumbers": <Droplet className="w-4 h-4" />,
+  "Mechanics": <Car className="w-4 h-4" />,
+  // Education
+  "Schools": <School className="w-4 h-4" />,
+  "Colleges": <GraduationCap className="w-4 h-4" />,
+  "Coaching Centers": <BookOpen className="w-4 h-4" />,
+  // Emergency
+  "Police": <Shield className="w-4 h-4" />,
+  "Ambulance": <Ambulance className="w-4 h-4" />,
+  "Fire Station": <Flame className="w-4 h-4" />,
+  "Blood Banks": <Heart className="w-4 h-4" />,
+};
 
 const labelMap = {
   'Hospitals': 'Hospital Name *',
@@ -172,8 +214,11 @@ function CustomSelect({
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left cursor-pointer disabled:opacity-55"
       >
-        <span className={selectedOption ? "" : "text-slate-400 dark:text-slate-500"}>
-          {selectedOption ? selectedOption.label : placeholder}
+        <span className={`flex items-center gap-2.5 ${selectedOption ? "" : "text-slate-400 dark:text-slate-500"}`}>
+          {selectedOption && selectedOption.icon && (
+            <span className="shrink-0 text-indigo-500 dark:text-indigo-400">{selectedOption.icon}</span>
+          )}
+          <span>{selectedOption ? selectedOption.label : placeholder}</span>
         </span>
         <ChevronRight className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isOpen ? "rotate-90" : "rotate-0"}`} />
       </button>
@@ -209,7 +254,14 @@ function CustomSelect({
                       : "text-slate-700 dark:text-slate-300 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
                   }`}
                 >
-                  <span>{opt.label}</span>
+                  <span className="flex items-center gap-2.5 min-w-0">
+                    {opt.icon && (
+                      <span className={`shrink-0 ${opt.value === value ? "text-white" : "text-indigo-500 dark:text-indigo-400"}`}>
+                        {opt.icon}
+                      </span>
+                    )}
+                    <span className="truncate">{opt.label}</span>
+                  </span>
                   {opt.value === value && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                 </button>
               ))
@@ -878,9 +930,9 @@ function AddBusinessContent() {
         
         <Navbar />
         
-        <main className="flex-grow pt-28 pb-16 flex items-center justify-center relative z-10 px-4">
-          <div className="w-full max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
-            <div className="max-w-xl text-center lg:text-left px-4">
+        <main className="flex-grow pt-24 pb-16 flex items-center justify-center relative z-10 px-2 sm:px-4">
+          <div className="w-full max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20">
+            <div className="max-w-xl text-center lg:text-left px-2 sm:px-4">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-800 dark:text-slate-200 leading-tight mb-4 lg:whitespace-normal">
                 List Your Business on <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-indigo-500 font-extrabold">Ghatal Guide</span>
               </h1>
@@ -893,7 +945,7 @@ function AddBusinessContent() {
             
             {/* Sign In form container */}
             <div id="signin-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
                 {authStep === "signin" && (
                   <>
                     <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Welcome Back</h2>
@@ -1103,7 +1155,7 @@ function AddBusinessContent() {
 
             {/* Sign Up form container */}
             <div id="signup-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
+              <div className="bg-[#e0e8f0] dark:bg-[#1a202c] p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] border border-white/5 transition-all duration-300">
                 <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Register</h2>
                 
                 <form onSubmit={handleInlineSignUp} className="space-y-4">
@@ -1310,7 +1362,7 @@ function AddBusinessContent() {
       <div className="mesh-bg opacity-30" />
       <Navbar />
 
-      <main className="flex-grow pt-24 pb-16 relative z-10 px-4">
+      <main className="flex-grow pt-20 pb-16 relative z-10 px-2 sm:px-4">
         <div className="container-perfect max-w-5xl">
           
           {/* Form Header Banner */}
@@ -1369,7 +1421,7 @@ function AddBusinessContent() {
           <div className="bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0e1117,_-12px_-12px_24px_#262f41] rounded-[32px] border border-white/5 overflow-hidden animate-slide-up">
             
             {/* Form Steps */}
-            <form onSubmit={handleSubmit} className="p-8 sm:p-10 space-y-8">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-10 space-y-6 sm:space-y-8">
               
               {/* STEP 1: Details & Operating Hours */}
               {currentStep === 1 && (
@@ -1391,7 +1443,8 @@ function AddBusinessContent() {
                           onChange={handleCategoryChange}
                           options={Object.entries(categories).map(([key, value]) => ({
                             value: key,
-                            label: value.name
+                            label: value.name,
+                            icon: categoryIconMap[key]
                           }))}
                           placeholder="Select a Category"
                         />
@@ -1405,7 +1458,8 @@ function AddBusinessContent() {
                           onChange={(val) => { setSubcategory(val); setHasUnsavedChanges(true); }}
                           options={(category && categories[category]?.subcategories || []).map((sub) => ({
                             value: sub,
-                            label: sub
+                            label: sub,
+                            icon: subcategoryIconMap[sub]
                           }))}
                           placeholder={category ? "Select a Sub-Category" : "Please select a Category first"}
                           showSearch={true}
