@@ -38,11 +38,11 @@ export default function Jobs() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
-      <main className="flex-grow py-12 lg:py-20 relative z-10">
+      <main className="flex-grow pt-24 pb-12 lg:pt-32 lg:pb-20 relative z-10">
         <div className="container-perfect max-w-4xl">
           
           {/* Header */}
@@ -60,22 +60,22 @@ export default function Jobs() {
           {loading ? (
             <div className="space-y-4">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-pulse">
+                <div key={i} className="bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-pulse">
                   <div className="flex-grow space-y-3 w-full">
-                    <div className="w-20 h-5 rounded-xl bg-slate-200 dark:bg-slate-800" />
-                    <div className="w-48 h-6 rounded bg-slate-200 dark:bg-slate-800" />
-                    <div className="w-32 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                    <div className="w-20 h-5 rounded-xl bg-slate-200 dark:bg-dark-card-hover" />
+                    <div className="w-48 h-6 rounded bg-slate-200 dark:bg-dark-card-hover" />
+                    <div className="w-32 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
                     <div className="flex gap-4">
-                      <div className="w-24 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-                      <div className="w-24 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                      <div className="w-24 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+                      <div className="w-24 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
                     </div>
                   </div>
-                  <div className="w-24 h-5 rounded bg-slate-200 dark:bg-slate-800 shrink-0" />
+                  <div className="w-24 h-5 rounded bg-slate-200 dark:bg-dark-card-hover shrink-0" />
                 </div>
               ))}
             </div>
           ) : jobs.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 py-16 px-4 text-center max-w-xl mx-auto shadow-sm">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border py-16 px-4 text-center max-w-xl mx-auto shadow-sm">
               <div className="mb-4">
                 <Briefcase className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto" />
               </div>
@@ -91,7 +91,7 @@ export default function Jobs() {
               {jobs.map((job) => (
                 <div
                   key={job.id}
-                  className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-lg transition-all duration-300 group"
+                  className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-200 dark:border-dark-border p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-lg transition-all duration-300 group"
                 >
                   <div className="flex-grow min-w-0">
                     <span className="inline-block bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/30 dark:border-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-3 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">

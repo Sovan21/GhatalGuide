@@ -187,7 +187,7 @@ function CustomSelect({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-450 focus:outline-none"
+                className="w-full bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e1117,_inset_-2px_-2px_4px_#262f41] rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -276,7 +276,7 @@ function TimePickerDropdown({ value, onChange, label }) {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <span className="text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase tracking-wider block mb-1">{label}</span>
+      <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">{label}</span>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -299,7 +299,7 @@ function TimePickerDropdown({ value, onChange, label }) {
               className={`w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                 opt.value === value
                   ? "bg-primary-600 text-white shadow-sm"
-                  : "text-slate-700 dark:text-slate-350 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
+                  : "text-slate-700 dark:text-slate-300 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
               }`}
             >
               {opt.label}
@@ -854,7 +854,7 @@ function AddBusinessContent() {
   // loading view
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
+      <div className="min-h-screen bg-slate-50 dark:bg-dark-bg flex flex-col">
         <Navbar />
         <main className="flex-grow flex items-center justify-center pt-28">
           <div className="text-center">
@@ -869,7 +869,7 @@ function AddBusinessContent() {
   // Not logged in: Show the Overlay Authentication Modal inline
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100 flex flex-col relative overflow-hidden transition-colors duration-300">
+      <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100 flex flex-col relative overflow-hidden ">
         
         {/* Ambient background layout */}
         <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />
@@ -910,7 +910,7 @@ function AddBusinessContent() {
                           value={authEmail} 
                           onChange={(e) => setAuthEmail(e.target.value)}
                           placeholder="Email Address"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                         />
                       </div>
                       
@@ -925,7 +925,7 @@ function AddBusinessContent() {
                           value={authPassword} 
                           onChange={(e) => setAuthPassword(e.target.value)}
                           placeholder="Password"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                         />
                         <button
                           type="button"
@@ -1013,7 +1013,7 @@ function AddBusinessContent() {
                           value={authEmail} 
                           onChange={(e) => setAuthEmail(e.target.value)}
                           placeholder="Email Address"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                         />
                       </div>
                       
@@ -1078,7 +1078,7 @@ function AddBusinessContent() {
                           value={authNewPassword} 
                           onChange={(e) => setAuthNewPassword(e.target.value)}
                           placeholder="New Password"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                         />
                         <button
                           type="button"
@@ -1118,7 +1118,7 @@ function AddBusinessContent() {
                       value={authFullName} 
                       onChange={(e) => setAuthFullName(e.target.value)}
                       placeholder="Full Name"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                   </div>
 
@@ -1133,7 +1133,7 @@ function AddBusinessContent() {
                       value={authEmail} 
                       onChange={(e) => setAuthEmail(e.target.value)}
                       placeholder="Email Address"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                   </div>
 
@@ -1149,7 +1149,7 @@ function AddBusinessContent() {
                       value={authPassword} 
                       onChange={(e) => setAuthPassword(e.target.value)}
                       placeholder="Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                     <button
                       type="button"
@@ -1172,7 +1172,7 @@ function AddBusinessContent() {
                       value={authConfirmPassword} 
                       onChange={(e) => setAuthConfirmPassword(e.target.value)}
                       placeholder="Confirm Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                     <button
                       type="button"
@@ -1302,7 +1302,7 @@ function AddBusinessContent() {
 
   // Logged In: Show Multi-step Business Form
   return (
-    <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100  flex flex-col relative overflow-hidden">
       
       {/* Ambient background layout */}
       <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />
@@ -1346,7 +1346,7 @@ function AddBusinessContent() {
                     }`}>
                       {step}
                     </div>
-                    {step < 3 && <div className="w-6 h-[2px] bg-slate-350 dark:bg-slate-700 hidden sm:block" />}
+                    {step < 3 && <div className="w-6 h-[2px] bg-slate-300 dark:bg-slate-700 hidden sm:block" />}
                   </div>
                 ))}
               </div>
@@ -1377,7 +1377,7 @@ function AddBusinessContent() {
                   {/* Primary Details Section */}
                   <div className="space-y-6">
                     <h3 className="text-xl font-black text-slate-800 dark:text-slate-200 pb-3 border-b border-black/5 dark:border-white/5 flex items-center gap-2">
-                      <Building className="w-5 h-5 text-slate-450" />
+                      <Building className="w-5 h-5 text-slate-400" />
                       <span>Business Categories & Primary Details</span>
                     </h3>
                     
@@ -1424,7 +1424,7 @@ function AddBusinessContent() {
                             value={businessName}
                             onChange={(e) => { setBusinessName(e.target.value); setHasUnsavedChanges(true); }}
                             placeholder={placeholderMap[subcategory] || "Enter business or service name"}
-                            className="w-full bg-transparent border-none outline-none px-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                            className="w-full bg-transparent border-none outline-none px-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1441,7 +1441,7 @@ function AddBusinessContent() {
                             value={phone}
                             onChange={handlePhoneChange}
                             placeholder="e.g. 9876543210"
-                            className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                            className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1455,7 +1455,7 @@ function AddBusinessContent() {
                   {/* Operating Hours Section */}
                   <div className="space-y-6">
                     <h3 className="text-xl font-black text-slate-800 dark:text-slate-200 pb-3 border-b border-black/5 dark:border-white/5 flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-slate-450" />
+                      <Clock className="w-5 h-5 text-slate-400" />
                       <span>Operating Hours</span>
                     </h3>
 
@@ -1557,7 +1557,7 @@ function AddBusinessContent() {
               {currentStep === 2 && (
                 <div className="space-y-4 animate-fade-in">
                   <h3 className="text-xl font-black text-slate-800 dark:text-slate-200 pb-2 border-b border-black/5 dark:border-white/5 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-slate-450" />
+                    <MapPin className="w-5 h-5 text-slate-400" />
                     <span>Location details, Description & Media</span>
                   </h3>
 
@@ -1571,7 +1571,7 @@ function AddBusinessContent() {
                           value={address}
                           onChange={(e) => { setAddress(e.target.value); setHasUnsavedChanges(true); }}
                           placeholder="Enter full business address, landmarks, and area details..."
-                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none resize-none"
+                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none resize-none"
                         />
                       </div>
                     </div>
@@ -1588,7 +1588,7 @@ function AddBusinessContent() {
                           value={googleMapLink}
                           onChange={(e) => { setGoogleMapLink(e.target.value); setHasUnsavedChanges(true); }}
                           placeholder="e.g. https://maps.app.goo.gl/..."
-                          className="w-full bg-transparent border-none outline-none pl-2.5 pr-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                          className="w-full bg-transparent border-none outline-none pl-2.5 pr-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                         />
                       </div>
                     </div>
@@ -1596,14 +1596,14 @@ function AddBusinessContent() {
                     {/* Business Image Upload */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Business Storefront Image</label>
-                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-slate-750 rounded-[24px] bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] hover:bg-[#d4dfea] dark:hover:bg-[#222a3a] transition-all duration-250 cursor-pointer relative group text-center">
+                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-dark-border rounded-[24px] bg-[#e0e8f0] dark:bg-[#1a202c] shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0e1117,_inset_-4px_-4px_8px_#262f41] hover:bg-[#d4dfea] dark:hover:bg-[#222a3a] transition-all duration-250 cursor-pointer relative group text-center">
                         <input 
                           type="file" 
                           accept="image/png, image/jpeg, image/webp"
                           onChange={handleImageChange}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         />
-                        <ImageIcon className="w-6 h-6 text-slate-450 group-hover:text-primary-500 transition-colors mb-1.5" />
+                        <ImageIcon className="w-6 h-6 text-slate-400 group-hover:text-primary-500 transition-colors mb-1.5" />
                         <p className="text-xs font-black text-slate-700 dark:text-slate-300">Click or drag image here to upload</p>
                       </div>
                       
@@ -1630,7 +1630,7 @@ function AddBusinessContent() {
                           value={description}
                           onChange={(e) => { setDescription(e.target.value); setHasUnsavedChanges(true); }}
                           placeholder="Briefly describe your business..."
-                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none resize-none"
+                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none resize-none"
                         />
                       </div>
                     </div>
@@ -1642,7 +1642,7 @@ function AddBusinessContent() {
               {currentStep === 3 && (
                 <div className="space-y-6 animate-fade-in">
                   <h3 className="text-xl font-black text-slate-800 dark:text-slate-200 pb-3 border-b border-black/5 dark:border-white/5 flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-slate-450" />
+                    <CheckCircle className="w-5 h-5 text-slate-400" />
                     <span>Review Business Information</span>
                   </h3>
 
@@ -1670,7 +1670,7 @@ function AddBusinessContent() {
                       <div className="w-full sm:w-2/3 text-sm font-bold text-slate-800 dark:text-slate-200">
                         <p>{hoursType === "open_24_7" ? "Open 24/7" : hoursType === "temporarily_closed" ? "Temporarily Closed" : "Custom Timetable Set"}</p>
                         {hoursType === "custom" && (
-                          <div className="mt-2 text-xs space-y-1 bg-[#d4dfea]/30 dark:bg-slate-900/30 p-3 rounded-xl">
+                          <div className="mt-2 text-xs space-y-1 bg-[#d4dfea]/30 dark:bg-dark-card/30 p-3 rounded-xl">
                             {daysOfWeek.map((day) => {
                               const dKey = day.toLowerCase();
                               const isDayOpen = !!(customHours[dKey] && customHours[dKey].open && customHours[dKey].close);
@@ -1690,7 +1690,7 @@ function AddBusinessContent() {
 
                               return (
                                 <div key={day} className="flex justify-between max-w-xs font-semibold py-0.5">
-                                  <span className="text-slate-500 dark:text-slate-450">{day}:</span>
+                                  <span className="text-slate-500 dark:text-slate-400">{day}:</span>
                                   <span>{isDayOpen ? `${formatTime(openTime)} - ${formatTime(closeTime)}` : "Closed"}</span>
                                 </div>
                               );
@@ -1832,7 +1832,7 @@ function AddBusinessContent() {
 export default function AddBusiness() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col justify-center items-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-dark-bg flex flex-col justify-center items-center">
         <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
       </div>
     }>

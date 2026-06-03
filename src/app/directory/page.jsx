@@ -10,7 +10,7 @@ import { CategoryIcon } from "@/lib/categoryIcons";
 import { useInView } from 'react-intersection-observer';
 import { 
   Search, SlidersHorizontal, Grid, List, X, Clock, Star, MapPin, Globe, Store, Loader2,
-  ChevronDown, Check
+  ChevronDown, Check, Mic, MicOff
 } from "lucide-react";
 
 // Extracted FiltersSidebarContent component to prevent input focus loss and re-mounting on state updates
@@ -45,7 +45,7 @@ function FiltersSidebarContent({
     <div className="space-y-4">
       {/* Search query tag helper */}
       {searchQuery && (
-        <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800 p-2.5 rounded-2xl flex items-center justify-between shadow-sm">
+        <div className="bg-slate-50 dark:bg-dark-card/50 border border-slate-200/60 dark:border-dark-border p-2.5 rounded-2xl flex items-center justify-between shadow-sm">
           <div className="min-w-0">
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">Searching for</p>
             <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">"{searchQuery}"</p>
@@ -70,7 +70,7 @@ function FiltersSidebarContent({
           <button
             type="button"
             onClick={() => setIsSortOpen(!isSortOpen)}
-            className="w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            className="w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-50 dark:bg-dark-card/60 border border-slate-200 dark:border-dark-border/80 rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
           >
             <div className="flex items-center gap-2">
               {CurrentSortIcon ? (
@@ -90,7 +90,7 @@ function FiltersSidebarContent({
                 className="fixed inset-0 z-10" 
                 onClick={() => setIsSortOpen(false)}
               />
-              <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-2xl shadow-xl z-20 py-1.5 overflow-hidden animate-fade-in">
+              <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl z-20 py-1.5 overflow-hidden animate-fade-in">
                 {sortOptions.map(option => {
                   const Icon = option.icon;
                   const isSelected = sortBy === option.value;
@@ -126,7 +126,7 @@ function FiltersSidebarContent({
         </div>
       </div>
 
-      <div className="h-px bg-slate-100 dark:bg-slate-800/60 w-full" />
+      <div className="h-px bg-slate-100 dark:bg-dark-card-hover/60 w-full" />
 
       {/* Quick Status Filter - Toggle Switches */}
       <div className="space-y-2">
@@ -135,7 +135,7 @@ function FiltersSidebarContent({
         </h3>
         <div className="space-y-2">
           {/* Open Now Toggle */}
-          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
+          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/50 dark:border-dark-border/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl text-emerald-600 dark:text-emerald-400">
                 <Clock className="w-4 h-4" />
@@ -150,7 +150,7 @@ function FiltersSidebarContent({
               type="button"
               onClick={() => setOpenNow(!openNow)}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                openNow ? "bg-emerald-500" : "bg-slate-200 dark:bg-slate-800"
+                openNow ? "bg-emerald-500" : "bg-slate-200 dark:bg-dark-card-hover"
               }`}
             >
               <span
@@ -162,7 +162,7 @@ function FiltersSidebarContent({
           </div>
 
           {/* Highly Rated Toggle */}
-          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
+          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/50 dark:border-dark-border/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 bg-amber-50 dark:bg-amber-950/40 rounded-xl text-amber-500 dark:text-amber-400">
                 <Star className="w-4 h-4" />
@@ -177,7 +177,7 @@ function FiltersSidebarContent({
               type="button"
               onClick={() => setTopRated(!topRated)}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                topRated ? "bg-amber-500" : "bg-slate-200 dark:bg-slate-800"
+                topRated ? "bg-amber-500" : "bg-slate-200 dark:bg-dark-card-hover"
               }`}
             >
               <span
@@ -189,7 +189,7 @@ function FiltersSidebarContent({
           </div>
 
           {/* Near Me Toggle */}
-          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
+          <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/50 dark:border-dark-border/50 rounded-2xl transition-all hover:bg-slate-100/50 dark:hover:bg-slate-900/80 shadow-sm">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-500 dark:text-blue-400">
                 <MapPin className="w-4 h-4" />
@@ -210,7 +210,7 @@ function FiltersSidebarContent({
                 setNearMe(!nearMe);
               }}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                nearMe ? "bg-blue-500" : "bg-slate-200 dark:bg-slate-800"
+                nearMe ? "bg-blue-500" : "bg-slate-200 dark:bg-dark-card-hover"
               }`}
             >
               <span
@@ -223,7 +223,7 @@ function FiltersSidebarContent({
         </div>
       </div>
 
-      <div className="h-px bg-slate-100 dark:bg-slate-800/60 w-full" />
+      <div className="h-px bg-slate-100 dark:bg-dark-card-hover/60 w-full" />
 
       {/* Categories Selection List - Sleek modern menu */}
       <div className="space-y-2">
@@ -290,48 +290,48 @@ function FiltersSidebarContent({
 const ListingCardSkeleton = ({ viewMode }) => {
   if (viewMode === "list") {
     return (
-      <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-slate-800/80 rounded-[24px] p-5 flex flex-col sm:flex-row gap-5 items-center justify-between overflow-hidden animate-pulse w-full">
+      <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col sm:flex-row gap-5 items-center justify-between overflow-hidden animate-pulse w-full">
         <div className="flex flex-col sm:flex-row gap-4 items-center flex-1 w-full">
-          <div className="h-32 w-44 bg-slate-200 dark:bg-slate-800 rounded-2xl shrink-0" />
+          <div className="h-32 w-44 bg-slate-200 dark:bg-dark-card-hover rounded-2xl shrink-0" />
           <div className="space-y-3 flex-1 w-full">
-            <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-            <div className="w-2/3 h-5 rounded bg-slate-200 dark:bg-slate-800" />
-            <div className="w-1/2 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-            <div className="w-3/4 h-3.5 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="w-20 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+            <div className="w-2/3 h-5 rounded bg-slate-200 dark:bg-dark-card-hover" />
+            <div className="w-1/2 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+            <div className="w-3/4 h-3.5 rounded bg-slate-200 dark:bg-dark-card-hover" />
           </div>
         </div>
-        <div className="w-24 h-9 rounded-full bg-slate-200 dark:bg-slate-800 shrink-0" />
+        <div className="w-24 h-9 rounded-full bg-slate-200 dark:bg-dark-card-hover shrink-0" />
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-slate-800/80 rounded-[24px] p-5 flex flex-col justify-between overflow-hidden animate-pulse h-[380px] w-full">
+    <div className="bg-white dark:bg-[#0d1527] border border-slate-100 dark:border-dark-border/80 rounded-[24px] p-5 flex flex-col justify-between overflow-hidden animate-pulse h-[380px] w-full">
       <div>
         {/* Top Category Header skeleton */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-slate-800" />
-            <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-dark-card-hover" />
+            <div className="w-20 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
           </div>
-          <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800" />
+          <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-dark-card-hover" />
         </div>
         {/* Image skeleton */}
-        <div className="h-44 w-full bg-slate-200 dark:bg-slate-800 rounded-2xl mb-4" />
+        <div className="h-44 w-full bg-slate-200 dark:bg-dark-card-hover rounded-2xl mb-4" />
         {/* Rating row skeleton */}
-        <div className="w-28 h-4 rounded bg-slate-200 dark:bg-slate-800 mb-3" />
+        <div className="w-28 h-4 rounded bg-slate-200 dark:bg-dark-card-hover mb-3" />
         {/* Title skeleton */}
-        <div className="w-48 h-5 rounded bg-slate-200 dark:bg-slate-800 mb-3" />
+        <div className="w-48 h-5 rounded bg-slate-200 dark:bg-dark-card-hover mb-3" />
         {/* Address skeleton */}
         <div className="space-y-2 mb-4">
-          <div className="w-full h-3 rounded bg-slate-200 dark:bg-slate-800" />
-          <div className="w-3/4 h-3 rounded bg-slate-200 dark:bg-slate-800" />
+          <div className="w-full h-3 rounded bg-slate-200 dark:bg-dark-card-hover" />
+          <div className="w-3/4 h-3 rounded bg-slate-200 dark:bg-dark-card-hover" />
         </div>
       </div>
       {/* Footer actions skeleton */}
-      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center gap-4">
-        <div className="w-20 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-        <div className="w-24 h-8 rounded-full bg-slate-200 dark:bg-slate-800" />
+      <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-dark-border/80 flex justify-between items-center gap-4">
+        <div className="w-20 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+        <div className="w-24 h-8 rounded-full bg-slate-200 dark:bg-dark-card-hover" />
       </div>
     </div>
   );
@@ -345,6 +345,12 @@ function DirectoryContent() {
   // State for search and filters
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "all");
+  
+  // Voice search and suggestions states
+  const [isListening, setIsListening] = useState(false);
+  const [voiceLang, setVoiceLang] = useState("bn-IN");
+  const [searchFocused, setSearchFocused] = useState(false);
+  const recognitionRef = React.useRef(null);
   
   // Backward compatibility check for "?filter=..."
   const initialFilter = searchParams.get("filter") || "";
@@ -381,6 +387,147 @@ function DirectoryContent() {
       );
     }
   }, []);
+
+  // Load voice language preference from local storage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("voiceLang");
+      if (savedLang) {
+        setVoiceLang(savedLang);
+      }
+    }
+  }, []);
+
+  // Cleanup recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch (e) {
+          // Ignore
+        }
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleToggleVoiceLang = (lang) => {
+    setVoiceLang(lang);
+    localStorage.setItem("voiceLang", lang);
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch (e) {
+        // Ignore
+      }
+    }
+  };
+
+  const handleVoiceSearch = () => {
+    // If already listening, stop
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {
+        // Ignore
+      }
+      setIsListening(false);
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice search is not supported in this browser. Please use Chrome or Edge.");
+      return;
+    }
+
+    // Abort any existing recognition first
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch (e) {
+        // Ignore
+      }
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = voiceLang;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.continuous = false;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+      recognitionRef.current = null;
+    };
+
+    recognition.onresult = (event) => {
+      const speechToText = event.results[0][0].transcript;
+      setSearchQuery(speechToText);
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === "aborted") return;
+      console.error("Speech recognition error:", event.error);
+      setIsListening(false);
+      recognitionRef.current = null;
+      
+      if (event.error === "not-allowed" || event.error === "permission-denied") {
+        alert("Microphone access was denied. Please allow microphone permission in your browser settings.");
+      }
+    };
+
+    recognitionRef.current = recognition;
+
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Failed to start speech recognition:", err);
+      setIsListening(false);
+      recognitionRef.current = null;
+    }
+  };
+
+  // Compute search suggestions in memory
+  const suggestions = React.useMemo(() => {
+    if (!searchFocused || !searchQuery.trim()) return [];
+ 
+    const q = searchQuery.toLowerCase().trim();
+    const matches = [];
+ 
+    // Match categories
+    Object.keys(categories).forEach(key => {
+      const cat = categories[key];
+      if (cat.name.toLowerCase().includes(q)) {
+        matches.push({ type: "category", id: key, text: cat.name, subtext: "Category" });
+      }
+    });
+ 
+    // Match listings (limit to 6 matches)
+    let listingCount = 0;
+    for (const item of allListings) {
+      if (listingCount >= 6) break;
+      if (
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.subcategory && item.subcategory.toLowerCase().includes(q))
+      ) {
+        matches.push({
+          type: "business",
+          id: item.id,
+          text: item.name,
+          subtext: item.subcategory || item.category
+        });
+        listingCount++;
+      }
+    }
+ 
+    return matches;
+  }, [allListings, searchQuery, searchFocused]);
 
   // Helper: calculate air distance (Haversine) for sorting
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -649,7 +796,7 @@ function DirectoryContent() {
     (searchQuery !== "" ? 1 : 0);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
@@ -670,7 +817,7 @@ function DirectoryContent() {
           <div ref={directorySectionRef} className="flex flex-col lg:flex-row gap-8 items-start">
             
             {/* Desktop Sidebar (visible on lg and above) */}
-            <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800/80 p-6 shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
+            <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border/80 p-6 shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
               <FiltersSidebarContent 
                 searchQuery={searchQuery}
                 clearFilter={clearFilter}
@@ -692,37 +839,104 @@ function DirectoryContent() {
             <div className="flex-grow w-full space-y-6">
               
               {/* Directory Filter Bar Panel */}
-              <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm">
+              <div className="bg-white dark:bg-dark-card rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-dark-border p-4 sm:p-5 shadow-sm">
                 <div className="flex gap-3 items-center">
                   
                   {/* Search Bar Input */}
-                  <div className="relative flex-grow">
+                  <form onSubmit={(e) => { e.preventDefault(); document.activeElement?.blur(); }} className="relative flex-grow">
                     <input
-                      type="text"
-                      placeholder="Search by name, address, or service..."
+                      type="search"
+                      placeholder={isListening ? (voiceLang === "bn-IN" ? "বলুন..." : "Speak now...") : "Search by name, address, or service..."}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all"
+                      onFocus={() => setSearchFocused(true)}
+                      onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                      className="w-full pl-11 pr-28 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all"
                     />
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500" />
-                  </div>
+                    
+                    {/* Voice Search Pill inside input */}
+                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5 z-20">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleVoiceLang(voiceLang === "bn-IN" ? "en-US" : "bn-IN")}
+                        className="text-[9px] font-black uppercase bg-slate-200/80 dark:bg-dark-card hover:bg-slate-300/80 dark:hover:bg-dark-card-hover px-2 py-1 rounded-md text-slate-650 dark:text-slate-300 transition-colors"
+                        title="Switch voice search language"
+                      >
+                        {voiceLang === "bn-IN" ? "বাংলা" : "ENG"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleVoiceSearch}
+                        className={`p-2 rounded-xl transition-all cursor-pointer relative shrink-0 ${
+                           isListening 
+                             ? "bg-red-500 text-white shadow-lg shadow-red-500/30" 
+                             : "text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-dark-card-hover"
+                        }`}
+                        title={isListening ? "Stop listening" : "Voice Search"}
+                      >
+                        {isListening && (
+                          <span className="absolute inset-0 rounded-xl border-2 border-red-400 animate-ping opacity-40" />
+                        )}
+                        {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                      </button>
+                    </div>
 
+                    {/* Suggestions Dropdown */}
+                    {searchFocused && suggestions.length > 0 && (
+                      <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden max-h-72 overflow-y-auto animate-fade-in text-slate-900 dark:text-white">
+                        {suggestions.map((suggestion, idx) => (
+                          <button
+                            key={`sug-${idx}`}
+                            type="button"
+                            onMouseDown={() => {
+                              if (suggestion.type === "category") {
+                                setSelectedCategory(suggestion.id);
+                                setSearchQuery("");
+                              } else {
+                                setSearchQuery(suggestion.text);
+                              }
+                              setSearchFocused(false);
+                            }}
+                            className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-bold text-left hover:bg-slate-50 dark:hover:bg-dark-card-hover transition-colors text-slate-800 dark:text-slate-200"
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              {suggestion.type === "category" ? (
+                                <div className="p-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 rounded-lg">
+                                  <Store className="w-3.5 h-3.5" />
+                                </div>
+                              ) : (
+                                <div className="p-1.5 bg-slate-100 dark:bg-dark-border text-slate-400 rounded-lg">
+                                  <Search className="w-3.5 h-3.5" />
+                                </div>
+                              )}
+                              <div className="min-w-0">
+                                <p className="truncate font-black">{suggestion.text}</p>
+                                <p className="text-[9px] text-slate-400 dark:text-slate-500 font-medium truncate">{suggestion.subtext}</p>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </form>
+ 
                   {/* Mobile Filters Toggle Button (hidden on desktop) */}
                   <button
                     onClick={() => setIsFilterDrawerOpen(true)}
-                    className="lg:hidden p-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                    className="lg:hidden p-3.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-2xl text-slate-650 dark:text-slate-300 hover:bg-slate-100 transition-all flex items-center justify-center shrink-0 cursor-pointer"
                     title="Filters"
                   >
                     <SlidersHorizontal className="w-5 h-5" />
                   </button>
-
+ 
                   {/* View Mode Toggle Switch */}
-                  <div className="bg-slate-100 dark:bg-slate-900 p-1 rounded-2xl flex items-center shrink-0 border border-slate-200 dark:border-slate-800">
+                  <div className="hidden sm:flex bg-slate-100 dark:bg-dark-card p-1 rounded-2xl items-center shrink-0 border border-slate-200 dark:border-dark-border">
                     <button
                       onClick={() => setViewMode("grid")}
                       className={`p-2.5 rounded-xl transition-all cursor-pointer ${
                         viewMode === "grid" 
-                          ? "bg-white dark:bg-slate-800 text-indigo-500 dark:text-white shadow-sm" 
+                          ? "bg-white dark:bg-dark-card-hover text-indigo-500 dark:text-white shadow-sm" 
                           : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                       }`}
                       title="Grid View"
@@ -733,7 +947,7 @@ function DirectoryContent() {
                       onClick={() => setViewMode("list")}
                       className={`p-2.5 rounded-xl transition-all cursor-pointer ${
                         viewMode === "list" 
-                          ? "bg-white dark:bg-slate-800 text-indigo-500 dark:text-white shadow-sm" 
+                          ? "bg-white dark:bg-dark-card-hover text-indigo-500 dark:text-white shadow-sm" 
                           : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                       }`}
                       title="List View"
@@ -746,7 +960,7 @@ function DirectoryContent() {
 
                 {/* Active Filter Badges */}
                 {activeFiltersCount > 0 && (
-                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-2 text-xs font-black">
+                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-dark-border flex flex-wrap items-center gap-2 text-xs font-black">
                     <span className="text-slate-400 uppercase select-none text-[10px] tracking-wide">Active Filters:</span>
                     
                     {selectedCategory !== "all" && (
@@ -807,7 +1021,7 @@ function DirectoryContent() {
                   ))}
                 </div>
               ) : !loading && filteredListings.length === 0 ? (
-                <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 py-20 px-6 text-center max-w-xl mx-auto shadow-sm">
+                <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border py-20 px-6 text-center max-w-xl mx-auto shadow-sm">
                   <div className="mb-5">
                     <Store className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto" />
                   </div>
@@ -869,8 +1083,8 @@ function DirectoryContent() {
           />
           
           {/* Drawer container panel */}
-          <div className="relative ml-auto w-full max-w-xs h-full bg-white dark:bg-slate-900 shadow-2xl p-6 overflow-y-auto flex flex-col transition-transform duration-300">
-            <div className="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-slate-800 mb-6">
+          <div className="relative ml-auto w-full max-w-xs h-full bg-white dark:bg-dark-card shadow-2xl p-6 overflow-y-auto flex flex-col transition-transform duration-300">
+            <div className="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-dark-border mb-6">
               <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
                 <SlidersHorizontal className="w-5 h-5 text-indigo-500" />
                 <span>Filters & Sort</span>
@@ -901,7 +1115,7 @@ function DirectoryContent() {
               />
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-dark-border">
               <button
                 onClick={() => setIsFilterDrawerOpen(false)}
                 className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md text-sm transition-all cursor-pointer"
@@ -921,7 +1135,7 @@ function DirectoryContent() {
 export default function Directory() {
   return (
     <Suspense fallback={
-      <div className="fixed inset-0 bg-white dark:bg-slate-950 z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-white dark:bg-dark-bg z-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
       </div>
     }>

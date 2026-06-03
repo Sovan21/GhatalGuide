@@ -106,11 +106,11 @@ export default function Favorites() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
-      <main className="flex-grow py-12 lg:py-20 relative z-10">
+      <main className="flex-grow pt-24 pb-12 lg:pt-32 lg:pb-20 relative z-10">
         <div className="container-perfect">
           
           {/* Header */}
@@ -129,7 +129,7 @@ export default function Favorites() {
               <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
             </div>
           ) : favoriteListings.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-100 dark:border-dark-border py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
               <div className="w-16 h-16 bg-red-50 dark:bg-red-950/20 text-red-500 dark:text-red-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100/10">
                 <Heart className="w-8 h-8 fill-red-500 animate-pulse" />
               </div>

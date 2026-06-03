@@ -246,7 +246,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
     }
 
     return (
-      <div className="flex items-center gap-1.5 text-[12px] font-bold text-slate-700 dark:text-slate-350 select-none">
+      <div className="flex items-center gap-1.5 text-[12px] font-bold text-slate-700 dark:text-slate-400 select-none">
         <div className="flex items-center gap-0.5">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star 
@@ -259,7 +259,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
             />
           ))}
         </div>
-        <span className="text-slate-455 dark:text-slate-550 font-bold">
+        <span className="text-slate-500 dark:text-slate-400 font-bold">
           ({listing.reviewCount || 0} {listing.reviewCount === 1 ? 'review' : 'reviews'})
         </span>
       </div>
@@ -330,7 +330,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
   return (
     <article
       onClick={handleCardClick}
-      className={`listing-card bg-white dark:bg-[#0d1527] border ${theme.borderClass} rounded-[20px] flex flex-col overflow-hidden relative group transition-all duration-400 cursor-pointer h-full`}
+      className={`listing-card bg-white dark:bg-dark-card border ${theme.borderClass} rounded-[20px] flex flex-col overflow-hidden relative group transition-all duration-400 cursor-pointer h-full`}
     >
       {/* Top Category Header (with padding) */}
       <div className="px-4.5 pt-4 pb-3 flex items-center justify-between z-10 select-none shrink-0">
@@ -347,7 +347,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
             e.stopPropagation();
             onBookmarkToggle(listing.id);
           }}
-          className="p-1 rounded-full text-slate-400 hover:text-slate-650 dark:text-slate-500 dark:hover:text-slate-350 transition-colors cursor-pointer"
+          className="p-1 rounded-full text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors cursor-pointer"
           title="Bookmark"
         >
           <Heart className={`w-4.5 h-4.5 ${isBookmarked ? "text-rose-500 fill-rose-500" : ""}`} />
@@ -355,7 +355,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
       </div>
 
       {/* Cover Image Area (full width, touches edges) */}
-      <div className="h-48 w-full relative bg-slate-950 overflow-hidden shrink-0 border-y border-slate-100 dark:border-slate-800/65">
+      <div className="h-48 w-full relative bg-slate-900 dark:bg-dark-bg overflow-hidden shrink-0 border-y border-slate-100 dark:border-dark-border">
         <img
           src={getImageUrl(listing.image)}
           alt={listing.name}
@@ -368,17 +368,17 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
           <div className="absolute top-3 right-3 z-10 select-none">
             <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-md border backdrop-blur-md flex items-center gap-1.5 ${
               isOpen 
-                ? "bg-emerald-500/90 text-white border-emerald-400/20" 
-                : "bg-rose-500/90 text-white border-rose-400/20"
+                ? "bg-emerald-500/90 text-white border-emerald-500/20" 
+                : "bg-rose-500/90 text-white border-rose-500/20"
             }`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? "bg-emerald-350" : "bg-rose-350 animate-pulse"}`} />
+              <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? "bg-emerald-400" : "bg-rose-400 animate-pulse"}`} />
               <span>{isOpen ? "Open" : "Closed"}</span>
             </span>
           </div>
         )}
 
         {/* Floating Category Icon Badge (bottom-right of image) */}
-        <div className="absolute bottom-3.5 right-3.5 z-10 w-9 h-9 rounded-xl flex items-center justify-center bg-white/95 dark:bg-[#0d1527]/95 border border-slate-200/50 dark:border-white/10 shadow-lg backdrop-blur-sm">
+        <div className="absolute bottom-3.5 right-3.5 z-10 w-9 h-9 rounded-xl flex items-center justify-center bg-white/95 dark:bg-dark-card/95 border border-slate-200/50 dark:border-dark-border shadow-lg backdrop-blur-sm">
           <CategoryIcon className={`w-4.5 h-4.5 ${theme.iconColor}`} />
         </div>
       </div>
@@ -403,7 +403,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
             <span>Price: ₹</span>
             <span className="text-slate-300 dark:text-slate-700">|</span>
             {isOpen !== undefined && (
-              <span className={isOpen ? "text-emerald-500 dark:text-emerald-450" : "text-rose-500 dark:text-rose-455"}>
+              <span className={isOpen ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
                 {isOpen ? "Open Now" : "Closed"}
               </span>
             )}
@@ -417,14 +417,14 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
 
           {/* Distance Indicator (Dual Air & Road Distance) */}
           {airDistance && (
-            <div className="mt-3.5 flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 w-fit px-2 py-0.5 rounded border border-slate-100 dark:border-slate-800 select-none">
+            <div className="mt-3.5 flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-dark-card w-fit px-2 py-0.5 rounded border border-slate-100 dark:border-dark-border select-none">
               <span className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-indigo-500 dark:text-indigo-400 shrink-0" />
                 <span>{airDistance} km (straight)</span>
               </span>
               {roadDistance && (
                 <>
-                  <span className="text-slate-350 dark:text-slate-700">|</span>
+                  <span className="text-slate-300 dark:text-slate-700">|</span>
                   <span className="flex items-center gap-1">
                     <Car className="w-3 h-3 text-emerald-500 dark:text-emerald-400 shrink-0" />
                     <span>{roadDistance} km (road)</span>
@@ -436,7 +436,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
         </div>
 
         {/* Card Footer Actions */}
-        <div className="mt-4.5 pt-3.5 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center gap-4 shrink-0 relative">
+        <div className="mt-4.5 pt-3.5 border-t border-slate-100 dark:border-dark-border flex justify-between items-center gap-4 shrink-0 relative">
           {/* Left: View Menu/View Details */}
           <span className="text-[11px] font-black text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline tracking-wider uppercase cursor-pointer select-none">
             {theme.viewText}
@@ -456,7 +456,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
                 <span>CALL NOW</span>
               </button>
             ) : (
-              <div className="text-[9px] text-slate-400 dark:text-slate-600 font-bold uppercase">No contact</div>
+              <div className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase">No contact</div>
             )}
           </div>
 

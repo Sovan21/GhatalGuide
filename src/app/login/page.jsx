@@ -319,7 +319,7 @@ function LoginContent() {
                       value={email} 
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter Email/Phone/Username"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                   </div>
                   
@@ -334,7 +334,7 @@ function LoginContent() {
                       value={password} 
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                     <button
                       type="button"
@@ -421,7 +421,7 @@ function LoginContent() {
                     <input 
                       type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter Email Address"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                   </div>
                   
@@ -493,7 +493,7 @@ function LoginContent() {
                       value={newPassword} 
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Enter New Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                     />
                     <button
                       type="button"
@@ -536,7 +536,7 @@ function LoginContent() {
                   value={fullName} 
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Enter Full Name"
-                  className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                  className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                 />
               </div>
               
@@ -551,7 +551,7 @@ function LoginContent() {
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter Email/Phone/Username"
-                  className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                  className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                 />
               </div>
               
@@ -567,7 +567,7 @@ function LoginContent() {
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create Password"
-                  className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                  className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                 />
                 <button
                   type="button"
@@ -590,7 +590,7 @@ function LoginContent() {
                   value={confirmPassword} 
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm Password"
-                  className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-450 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                  className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
                 />
                 <button
                   type="button"
@@ -723,7 +723,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100  relative overflow-hidden">
       
       {/* Ambient backgrounds */}
       <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />

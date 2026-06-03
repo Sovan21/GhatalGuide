@@ -36,11 +36,11 @@ export default function Events() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
-      <main className="flex-grow py-12 lg:py-20 relative z-10">
+      <main className="flex-grow pt-24 pb-12 lg:pt-32 lg:pb-20 relative z-10">
         <div className="container-perfect max-w-4xl">
           
           {/* Header */}
@@ -58,25 +58,25 @@ export default function Events() {
           {loading ? (
             <div className="space-y-6">
               {Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start animate-pulse w-full">
-                  <div className="w-full md:w-28 h-24 rounded-2xl bg-slate-100 dark:bg-slate-850 shrink-0 shadow-sm" />
+                <div key={i} className="bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start animate-pulse w-full">
+                  <div className="w-full md:w-28 h-24 rounded-2xl bg-slate-100 dark:bg-dark-border shrink-0 shadow-sm" />
                   <div className="flex-grow space-y-3.5 w-full">
-                    <div className="w-2/3 h-7 rounded bg-slate-200 dark:bg-slate-800" />
+                    <div className="w-2/3 h-7 rounded bg-slate-200 dark:bg-dark-card-hover" />
                     <div className="flex gap-4">
-                      <div className="w-28 h-4 rounded bg-slate-200 dark:bg-slate-800" />
-                      <div className="w-28 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                      <div className="w-28 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+                      <div className="w-28 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
                     </div>
-                    <div className="h-px bg-slate-100 dark:bg-slate-800 w-full my-2" />
+                    <div className="h-px bg-slate-100 dark:bg-dark-card-hover w-full my-2" />
                     <div className="space-y-2">
-                      <div className="w-full h-4 rounded bg-slate-200 dark:bg-slate-800" />
-                      <div className="w-5/6 h-4 rounded bg-slate-200 dark:bg-slate-800" />
+                      <div className="w-full h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
+                      <div className="w-5/6 h-4 rounded bg-slate-200 dark:bg-dark-card-hover" />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : events.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-200 dark:border-dark-border py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
               <div className="mb-4">
                 <Calendar className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto" />
               </div>
@@ -92,10 +92,10 @@ export default function Events() {
               {events.map((event) => (
                 <div
                   key={event.id}
-                  className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start hover:shadow-lg transition-all duration-350 animate-fade-in"
+                  className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-200 dark:border-dark-border p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start hover:shadow-lg transition-all duration-350 animate-fade-in"
                 >
                   {/* Premium Styled Date Calendar Tile Badge */}
-                  <div className="w-full md:w-28 overflow-hidden bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-center flex flex-row md:flex-col items-center justify-center md:justify-start shrink-0 select-none shadow-sm pb-0 md:pb-3 gap-4 md:gap-0">
+                  <div className="w-full md:w-28 overflow-hidden bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-2xl text-center flex flex-row md:flex-col items-center justify-center md:justify-start shrink-0 select-none shadow-sm pb-0 md:pb-3 gap-4 md:gap-0">
                     <div className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-[10px] font-black uppercase tracking-wider text-white py-2 px-4 md:px-0">
                       {new Date(event.date).toLocaleDateString("en-US", { month: "short" })}
                     </div>
@@ -124,7 +124,7 @@ export default function Events() {
                       </div>
                     </div>
 
-                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4 font-bold">
+                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed border-t border-slate-100 dark:border-dark-border pt-4 font-bold">
                       {event.description}
                     </p>
                   </div>

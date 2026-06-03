@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { 
-  Sun, Moon, Menu, X, PlusCircle, LogOut, Heart, LayoutDashboard, ShieldCheck, ChevronDown, UserPlus,
+  Sun, Moon, Menu, X, PlusCircle, LogOut, Heart, LayoutDashboard, ShieldCheck, ChevronDown, UserPlus, LogIn, Plus,
   Home, Compass, Bus, Calendar, BookOpen, Briefcase, ChevronRight
 } from "lucide-react";
 
@@ -17,6 +17,7 @@ export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     // Theme initialization
@@ -75,6 +76,13 @@ export default function Navbar() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        // If the click is inside dropdownRef (avatar button), let the click handler toggle it
+        if (dropdownRef.current && dropdownRef.current.contains(event.target)) {
+          return;
+        }
+        setIsMobileMenuOpen(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -123,20 +131,20 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full px-3 sm:px-4 py-4 bg-transparent pointer-events-none">
-      <div className={`max-w-7xl mx-auto pointer-events-auto transition-all duration-500 ease-out rounded-full border ${
+      <div className={`max-w-7xl mx-auto relative pointer-events-auto transition-all duration-500 ease-out rounded-full border ${
         isScrolled 
-          ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl shadow-lg dark:shadow-2xl shadow-slate-200/40 dark:shadow-black/40 border-slate-200/80 dark:border-white/[0.08]" 
-          : "bg-white/70 dark:bg-slate-950/75 backdrop-blur-md shadow-md dark:shadow-xl shadow-slate-100/30 dark:shadow-black/20 border-slate-200/50 dark:border-white/[0.04]"
+          ? "bg-white/90 dark:bg-dark-bg/90 backdrop-blur-xl shadow-lg dark:shadow-2xl shadow-slate-200/40 dark:shadow-black/40 border-slate-200/80 dark:border-dark-border" 
+          : "bg-white/70 dark:bg-dark-bg/75 backdrop-blur-md shadow-md dark:shadow-xl shadow-slate-100/30 dark:shadow-black/20 border-slate-200/50 dark:border-dark-border/40"
       }`}>
 
         <nav className="px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 flex justify-between items-center">
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="relative overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-[1.5px] group-hover:bg-primary-500 transition-all duration-300">
+            <div className="relative overflow-hidden rounded-xl bg-slate-200 dark:bg-dark-card-hover p-[1.5px] group-hover:bg-primary-500 transition-all duration-300">
               <img src="/logo.png" alt="Ghatal Guide Logo" className="h-8.5 w-8.5 object-cover bg-white rounded-[10px]" />
             </div>
-            <span className="text-[16.5px] sm:text-lg font-black tracking-tight text-slate-900 dark:text-white group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
+            <span className="text-[17px] sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 dark:from-white dark:via-indigo-200 dark:to-indigo-300 bg-clip-text text-transparent group-hover:scale-[1.01] transition-all duration-300 font-outfit select-none">
               Ghatal Guide
             </span>
           </Link>
@@ -174,23 +182,29 @@ export default function Navbar() {
             </button>
 
             {/* Desktop List Business Button */}
-            <Link
-              href="/add-business"
-              className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 btn-premium-glow"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>List Business</span>
-            </Link>
-
-
-
-
+            {!currentUser && (
+              <Link
+                href="/add-business"
+                className="hidden lg:flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-[14.5px] font-bold transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 btn-premium-glow"
+              >
+                <PlusCircle className="w-4 h-4" />
+                <span>List Business</span>
+              </Link>
+            )}
 
             {/* Auth Dropdown - Only if logged in */}
             {currentUser && (
               <div className="relative" ref={dropdownRef}>
                 <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (window.innerWidth < 1024) {
+                      setIsMobileMenuOpen((prev) => !prev);
+                    } else {
+                      setIsDropdownOpen((prev) => !prev);
+                    }
+                  }}
                   className="flex items-center gap-1 text-sm rounded-full active:scale-95 transition-all cursor-pointer group"
                   aria-label="User menu"
                 >
@@ -207,11 +221,11 @@ export default function Navbar() {
                   )}
                   <ChevronDown className="w-3.5 h-3.5 text-slate-500 hidden sm:block transition-transform duration-200 group-hover:text-slate-800 dark:group-hover:text-white" />
                 </button>
-
+ 
                 {/* User Dropdown */}
                 {isDropdownOpen && (
-                  <div className="origin-top-right absolute right-0 mt-3 w-56 rounded-2xl shadow-2xl py-1.5 bg-white dark:bg-slate-900/98 backdrop-blur-xl border border-slate-200/80 dark:border-white/[0.08] focus:outline-none z-50 animate-fade-in text-slate-900 dark:text-white">
-                    <div className="px-4 py-3 border-b border-slate-100 dark:border-white/[0.06]">
+                  <div className="hidden lg:block origin-top-right absolute right-0 mt-3 w-56 rounded-2xl shadow-2xl py-1.5 bg-white dark:bg-dark-card/98 backdrop-blur-xl border border-slate-200/80 dark:border-dark-border focus:outline-none z-50 animate-fade-in text-slate-900 dark:text-white">
+                    <div className="px-4 py-3 border-b border-slate-100 dark:border-dark-border/50">
                       <p className="text-sm font-bold truncate">
                         {currentUser.user_metadata?.full_name || "Ghatal Guide User"}
                       </p>
@@ -224,7 +238,7 @@ export default function Navbar() {
                         <Link
                           href="/admin"
                           onClick={() => setIsDropdownOpen(false)}
-                          className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-red-500 hover:bg-slate-50 dark:hover:bg-white/[0.05] rounded-xl transition-colors"
+                          className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-red-500 hover:bg-slate-50 dark:hover:bg-dark-card-hover rounded-xl transition-colors"
                         >
                           <ShieldCheck className="w-4 h-4 text-red-500" />
                           <span>Admin Dashboard</span>
@@ -233,7 +247,7 @@ export default function Navbar() {
                       <Link
                         href="/dashboard"
                         onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/[0.05] rounded-xl transition-colors"
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-dark-card-hover rounded-xl transition-colors"
                       >
                         <LayoutDashboard className="w-4 h-4 text-slate-400" />
                         <span>Dashboard</span>
@@ -241,7 +255,7 @@ export default function Navbar() {
                       <Link
                         href="/favorites"
                         onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/[0.05] rounded-xl transition-colors"
+                        className="flex items-center gap-3 px-3 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-dark-card-hover rounded-xl transition-colors"
                       >
                         <Heart className="w-4 h-4 text-slate-400" />
                         <span>Favorites</span>
@@ -266,174 +280,118 @@ export default function Navbar() {
             )}
 
             {/* Mobile Menu Toggle Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden w-9.5 h-9.5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.08] transition-all active:scale-90 cursor-pointer"
-              aria-label="Toggle Mobile Menu"
-            >
-              <Menu className="w-5.5 h-5.5" />
-            </button>
+            {!currentUser && (
+              <button
+                onMouseDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMobileMenuOpen((prev) => !prev);
+                }}
+                className="lg:hidden w-9.5 h-9.5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.08] transition-all active:scale-90 cursor-pointer"
+                aria-label="Toggle Mobile Menu"
+              >
+                {isMobileMenuOpen ? <X className="w-5.5 h-5.5" /> : <Menu className="w-5.5 h-5.5" />}
+              </button>
+            )}
           </div>
         </nav>
 
-      </div>
-
-      {/* Mobile Drawer */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex animate-fade-in pointer-events-auto">
-          {/* Backdrop Overlay */}
-          <div 
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-md transition-opacity" 
-          />
-          
-          {/* Drawer container panel */}
-          <div className="relative ml-auto w-[85%] max-w-[340px] h-full bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border-l border-white/20 dark:border-white/10 shadow-[rgba(0,0,0,0.1)_0px_20px_50px] dark:shadow-[rgba(0,0,0,0.5)_0px_20px_50px] p-6 sm:p-8 overflow-y-auto flex flex-col transition-transform duration-500 ease-out rounded-l-[2rem] text-slate-900 dark:text-white">
+        {/* Mobile Popover Menu Dropdown */}
+        <div 
+          id="mobile-menu-panel"
+          ref={mobileMenuRef}
+          className={`absolute top-[68px] right-2 sm:right-4 w-[280px] z-50 bg-white dark:bg-dark-card md:bg-white/85 md:dark:bg-dark-card/85 md:backdrop-blur-xl border border-slate-200/80 dark:border-dark-border shadow-2xl p-3.5 rounded-3xl flex flex-col text-slate-800 dark:text-white transition-[transform,opacity] duration-200 ease-out origin-top-right ${
+            isMobileMenuOpen 
+              ? "opacity-100 scale-100 pointer-events-auto" 
+              : "opacity-0 scale-95 pointer-events-none"
+          }`}
+        >
+          <div className="space-y-0.5">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-3.5 px-4 py-3 rounded-2xl text-[15px] font-bold transition-colors duration-150 ${
+                    isActive
+                      ? "bg-primary-50 dark:bg-primary-950/20 text-primary-600 dark:text-primary-400 border border-primary-200/50 dark:border-primary-500/20 shadow-sm"
+                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-100/60 dark:hover:bg-dark-card-hover hover:text-slate-950 dark:hover:text-white"
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 transition-transform duration-300 ${
+                    isActive ? "text-primary-600 dark:text-primary-400 scale-105" : "text-slate-400 dark:text-slate-500"
+                  }`} />
+                  <span>{link.name}</span>
+                </Link>
+              );
+            })}
             
-            {/* Header */}
-            <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/50 mb-6">
-              <Link 
-                href="/" 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-3 group"
-              >
-                <div className="rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 p-[3px] shadow-md group-hover:scale-105 transition-transform">
-                  <img src="/logo.png" alt="Ghatal Guide Logo" className="h-8 w-8 object-cover bg-white rounded-[13px]" />
-                </div>
-                <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
-                  Ghatal Guide
-                </span>
-              </Link>
-              <button 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-90 transition-all cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            {/* Navigation links - Premium App Style */}
-            <div className="space-y-2 flex-1">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                const Icon = link.icon;
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-4 px-5 py-4 rounded-2xl text-[17px] font-bold transition-all duration-300 ${
-                      isActive
-                        ? "bg-primary-600 text-white shadow-md shadow-primary-600/20"
-                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white"
-                    }`}
-                  >
-                    <Icon className={`w-5.5 h-5.5 transition-transform duration-300 ${
-                      isActive ? "text-white scale-110" : "text-slate-400 dark:text-slate-500"
-                    }`} />
-                    <span>{link.name}</span>
-                  </Link>
-                );
-              })}
-            </div>
-            
-            {/* Primary Action Button */}
-            <div className="mt-8 mb-6">
+            {/* List Business - Emerald color plus and text */}
+            {!currentUser && (
               <Link
                 href="/add-business"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-[16px] font-black transition-all duration-300 bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-500/20 active:scale-[0.98] btn-premium-glow"
+                className="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-[15px] font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50/60 dark:hover:bg-emerald-950/15 transition-colors duration-150"
               >
-                <PlusCircle className="w-5.5 h-5.5" />
-                <span>List Your Business</span>
+                <Plus className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>List Business</span>
               </Link>
-            </div>
-
-            {/* Profile / Bottom Action Controls */}
-            <div className="pt-6 border-t border-slate-200/50 dark:border-slate-800/50 space-y-5">
-              {currentUser ? (
-                <div className="space-y-4">
-                  {/* Profile info block */}
-                  <div className="flex items-center gap-4 bg-slate-100/80 dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800">
-                    {currentUser.user_metadata?.avatar_url ? (
-                      <img
-                        className="h-11 w-11 rounded-full object-cover border-2 border-white dark:border-slate-800 shadow-sm"
-                        src={currentUser.user_metadata.avatar_url}
-                        alt="User Avatar"
-                      />
-                    ) : (
-                      <div className="h-11 w-11 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-black text-sm shadow-sm">
-                        {getInitials(currentUser)}
-                      </div>
-                    )}
-                    <div className="min-w-0 flex-grow">
-                      <p className="text-[15px] font-black text-slate-900 dark:text-white truncate">
-                        {currentUser.user_metadata?.full_name || "Ghatal User"}
-                      </p>
-                      <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                        {currentUser.email}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Settings style navigation items */}
-                  <div className="grid grid-cols-2 gap-3">
-                    {isAdmin && (
-                      <Link
-                        href="/admin"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 rounded-xl text-sm font-black text-red-600 dark:text-red-400 transition-colors"
-                      >
-                        <ShieldCheck className="w-4.5 h-4.5" />
-                        <span>Admin Dashboard</span>
-                      </Link>
-                    )}
-                    <Link
-                      href="/dashboard"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex flex-col items-center justify-center gap-2 p-3 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-300 transition-colors"
-                    >
-                      <LayoutDashboard className="w-5 h-5 text-indigo-500" />
-                      <span>Dashboard</span>
-                    </Link>
-                    <Link
-                      href="/favorites"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex flex-col items-center justify-center gap-2 p-3 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-300 transition-colors"
-                    >
-                      <Heart className="w-5 h-5 text-rose-500" />
-                      <span>Favorites</span>
-                    </Link>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 py-3.5 rounded-xl font-bold text-sm transition-colors mt-2"
-                  >
-                    <LogOut className="w-4.5 h-4.5" />
-                    <span>Log Out</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-2xl font-black text-[15px] transition-all active:scale-[0.98] shadow-md btn-premium-glow"
-                  >
-                    <UserPlus className="w-5 h-5" />
-                    <span>Sign In to Account</span>
-                  </Link>
-                </div>
-              )}
-            </div>
-
+            )}
           </div>
+ 
+          {/* Divider */}
+          <div className="border-t border-slate-100 dark:border-dark-border/50 my-2" />
+ 
+          {/* Profile / Login Controls */}
+          <div className="space-y-0.5">
+            {currentUser && (
+              <>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3.5 px-4 py-3 bg-red-500/10 dark:bg-red-500/5 hover:bg-red-500/20 dark:hover:bg-red-500/10 border border-red-500/20 dark:border-red-500/30 rounded-2xl text-[15px] font-extrabold text-red-650 dark:text-red-400 transition-colors"
+                  >
+                    <ShieldCheck className="w-5 h-5 text-red-500" />
+                    <span>Admin Dashboard</span>
+                  </Link>
+                )}
+                <Link
+                  href="/dashboard"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-[15px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100/60 dark:hover:bg-dark-card-hover hover:text-slate-950 dark:hover:text-white transition-colors duration-150"
+                >
+                  <LayoutDashboard className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
+                  <span>Dashboard</span>
+                </Link>
+                <Link
+                  href="/favorites"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3.5 px-4 py-3 rounded-2xl text-[15px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100/60 dark:hover:bg-dark-card-hover hover:text-slate-950 dark:hover:text-white transition-colors duration-150"
+                >
+                  <Heart className="w-5 h-5 text-rose-500 dark:text-rose-450" />
+                  <span>Favorites</span>
+                </Link>
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-[15px] font-bold text-red-500 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/15 text-left transition-colors duration-150 cursor-pointer"
+                >
+                  <LogOut className="w-5 h-5 text-red-500" />
+                  <span>Log Out</span>
+                </button>
+              </>
+            )}
+          </div>
+
         </div>
-      )}
+
+      </div>
     </header>
   );
 }

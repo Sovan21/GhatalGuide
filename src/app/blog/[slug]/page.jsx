@@ -56,7 +56,7 @@ export default function BlogPost({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
@@ -68,7 +68,7 @@ export default function BlogPost({ params }) {
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <main className="flex-grow py-20 text-center px-4 relative z-10">
           <div className="mb-4">
@@ -84,11 +84,11 @@ export default function BlogPost({ params }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
-      <main className="flex-grow py-12 lg:py-20 relative z-10">
+      <main className="flex-grow pt-24 pb-12 lg:pt-32 lg:pb-20 relative z-10">
         <div className="container-perfect max-w-3xl">
           
           <Link
@@ -100,10 +100,10 @@ export default function BlogPost({ params }) {
           </Link>
 
           {/* Blog Post Article */}
-          <article className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden p-6 md:p-10">
+          <article className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-100 dark:border-dark-border overflow-hidden p-6 md:p-10">
             
             {/* Header */}
-            <header className="mb-8 pb-8 border-b border-slate-100 dark:border-slate-800">
+            <header className="mb-8 pb-8 border-b border-slate-100 dark:border-dark-border">
               <h1 className="text-3xl md:text-4xl font-black text-slate-950 dark:text-white mb-4 leading-tight">
                 {post.title}
               </h1>

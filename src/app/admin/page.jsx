@@ -161,11 +161,11 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300 relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100 flex flex-col font-sans  relative">
       <div className="mesh-bg" />
 
       {/* Navbar for Admin Panel */}
-      <header className="glass border-b border-slate-200/50 dark:border-slate-800/50 px-6 py-4 flex justify-between items-center z-10">
+      <header className="glass border-b border-slate-200/50 dark:border-dark-border/50 px-6 py-4 flex justify-between items-center z-10">
         <div className="flex items-center gap-3 text-2xl font-black text-slate-950 dark:text-white">
           <ShieldAlert className="w-8 h-8 text-rose-500 animate-pulse" />
           <span className="bg-gradient-to-r from-rose-500 to-primary-500 bg-clip-text text-transparent">Admin Panel</span>
@@ -184,7 +184,7 @@ export default function AdminDashboard() {
       {/* Auth Block */}
       {!isAdminLoggedIn ? (
         <div className="flex-grow flex items-center justify-center p-4 relative z-10">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 p-8 max-w-md w-full">
+          <div className="bg-white dark:bg-dark-card rounded-3xl shadow-xl border border-slate-100 dark:border-dark-border p-8 max-w-md w-full">
             <h3 className="text-2xl font-black text-slate-950 dark:text-white mb-6 text-center">Admin Access</h3>
             
             {loginError && (
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
                   required
                   value={adminEmail}
                   onChange={(e) => setAdminEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white"
                   placeholder="admin@ghatalguide.com"
                 />
               </div>
@@ -213,7 +213,7 @@ export default function AdminDashboard() {
                   required
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white"
                   placeholder="••••••••"
                 />
               </div>
@@ -234,7 +234,7 @@ export default function AdminDashboard() {
           
           {/* Stats Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-fade-in">
-            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-dark-card rounded-2xl p-6 border border-slate-100 dark:border-dark-border shadow-sm flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Listings</span>
                 <p className="text-3xl font-black mt-1 text-slate-950 dark:text-white">{listingsCount.total}</p>
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-dark-card rounded-2xl p-6 border border-slate-100 dark:border-dark-border shadow-sm flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-black text-amber-500 uppercase tracking-wider animate-pulse">Pending Moderation</span>
                 <p className="text-3xl font-black mt-1 text-amber-500">{listingsCount.pending}</p>
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div className="bg-white dark:bg-dark-card rounded-2xl p-6 border border-slate-100 dark:border-dark-border shadow-sm flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-black text-emerald-600 uppercase tracking-wider">Approved Active</span>
                 <p className="text-3xl font-black mt-1 text-emerald-600 dark:text-emerald-400">{listingsCount.approved}</p>
@@ -266,7 +266,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Tab Selection */}
-          <div className="flex bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-1.5 w-fit gap-2 shadow-sm animate-fade-in select-none">
+          <div className="flex bg-white dark:bg-dark-card rounded-2xl border border-slate-200 dark:border-dark-border p-1.5 w-fit gap-2 shadow-sm animate-fade-in select-none">
             <button
               onClick={() => setActiveTab("listings")}
               className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all flex items-center gap-2 cursor-pointer ${
@@ -293,12 +293,12 @@ export default function AdminDashboard() {
 
           {/* Listings Moderation Section */}
           {activeTab === "listings" && (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 space-y-6 animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-100 dark:border-dark-border shadow-sm p-6 space-y-6 animate-fade-in">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h3 className="text-xl font-black text-slate-950 dark:text-white">Listings Management</h3>
                 
                 {/* Moderation status filters */}
-                <div className="flex border border-slate-200 dark:border-slate-800 rounded-xl p-1 gap-1 text-xs font-black select-none bg-slate-50 dark:bg-slate-950">
+                <div className="flex border border-slate-200 dark:border-dark-border rounded-xl p-1 gap-1 text-xs font-black select-none bg-slate-50 dark:bg-dark-bg">
                   <button
                     onClick={() => setListingsFilter("pending_review")}
                     className={`px-4 py-2 rounded-lg cursor-pointer ${listingsFilter === "pending_review" ? "bg-primary-500 text-white shadow-sm" : "text-slate-500"}`}
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-wider">
+                    <tr className="border-b border-slate-100 dark:border-dark-border text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-wider">
                       <th className="py-3 px-4">Name</th>
                       <th className="py-3 px-4">Category</th>
                       <th className="py-3 px-4">Phone</th>
@@ -373,7 +373,7 @@ export default function AdminDashboard() {
                             )}
                             <button
                               onClick={() => handleDeleteListing(l.id)}
-                              className="p-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-red-500 border border-slate-200 dark:border-slate-700 cursor-pointer"
+                              className="p-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-dark-card-hover dark:hover:bg-slate-700 text-red-500 border border-slate-200 dark:border-dark-border cursor-pointer"
                               title="Delete permanently"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -389,13 +389,13 @@ export default function AdminDashboard() {
 
           {/* Reviews Moderation Section */}
           {activeTab === "reviews" && (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 space-y-6 animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-100 dark:border-dark-border shadow-sm p-6 space-y-6 animate-fade-in">
               <h3 className="text-xl font-black text-slate-950 dark:text-white">Reviews Moderation</h3>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-wider">
+                    <tr className="border-b border-slate-100 dark:border-dark-border text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-wider">
                       <th className="py-3 px-4">User</th>
                       <th className="py-3 px-4">Rating</th>
                       <th className="py-3 px-4">Comment</th>

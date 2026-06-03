@@ -80,8 +80,8 @@ export default function TestDistancePage() {
   };
 
   return (
-    <div className="min-h-screen p-10 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white">
-      <div className="max-w-xl mx-auto space-y-6 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700">
+    <div className="min-h-screen p-10 bg-slate-50 dark:bg-dark-card text-slate-900 dark:text-white">
+      <div className="max-w-xl mx-auto space-y-6 bg-white dark:bg-dark-card-hover p-8 rounded-2xl shadow-lg border border-slate-200 dark:border-dark-border">
         <h1 className="text-2xl font-black text-primary-600 dark:text-primary-400 flex items-center gap-2">
           <Navigation className="w-6 h-6 text-primary-500" />
           <span>Distance Debugger</span>
@@ -104,7 +104,7 @@ export default function TestDistancePage() {
                     setMapLink(""); // clear after extraction
                   }
                 }}
-                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
+                className="w-full px-3 py-2 border rounded-lg dark:bg-dark-card dark:border-dark-border focus:ring-2 focus:ring-primary-500 outline-none text-sm"
                 placeholder="https://www.google.com/maps/@..."
               />
             </div>
@@ -117,7 +117,7 @@ export default function TestDistancePage() {
                 type="text" 
                 value={destCoords} 
                 onChange={e => setDestCoords(e.target.value)}
-                className="w-full px-3 py-2 border rounded-lg dark:bg-slate-900 dark:border-slate-700 focus:ring-2 focus:ring-primary-500 outline-none text-sm font-mono"
+                className="w-full px-3 py-2 border rounded-lg dark:bg-dark-card dark:border-dark-border focus:ring-2 focus:ring-primary-500 outline-none text-sm font-mono"
                 placeholder="e.g. 23.6844929, 86.9620772"
               />
             </div>
@@ -140,17 +140,17 @@ export default function TestDistancePage() {
           </p>
         </div>
         
-        <div className="p-6 bg-slate-100 dark:bg-slate-900/50 rounded-xl space-y-4 border border-slate-200 dark:border-slate-700">
+        <div className="p-6 bg-slate-100 dark:bg-dark-card/50 rounded-xl space-y-4 border border-slate-200 dark:border-dark-border">
           <h2 className="font-black text-lg">Results:</h2>
           
-          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-750">
+          <div className="flex items-center justify-between p-3 bg-white dark:bg-dark-card-hover rounded-lg shadow-sm border border-slate-100 dark:border-dark-border">
             <span className="flex items-center gap-1.5"><Ruler className="w-4 h-4 text-primary-500" /> Straight Line (Math):</span>
             <strong className="text-lg text-primary-600 dark:text-primary-400">
               {straight ? `${straight} km` : (loading ? "Calculating..." : "-")}
             </strong>
           </div>
           
-          <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-750">
+          <div className="flex items-center justify-between p-3 bg-white dark:bg-dark-card-hover rounded-lg shadow-sm border border-slate-100 dark:border-dark-border">
             <span className="flex items-center gap-1.5"><Car className="w-4 h-4 text-emerald-500" /> Road Route (Ola Maps):</span>
             <strong className="text-lg text-emerald-600 dark:text-emerald-400">
               {road ? `${road} km` : (loading ? "Calculating..." : "-")}

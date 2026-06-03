@@ -43,7 +43,7 @@ export default function JobDetails({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
@@ -55,7 +55,7 @@ export default function JobDetails({ params }) {
 
   if (!job) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <main className="flex-grow py-20 text-center px-4 relative z-10">
           <div className="mb-4">
@@ -71,11 +71,11 @@ export default function JobDetails({ params }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative overflow-hidden">
       <div className="mesh-bg" />
       <Navbar />
 
-      <main className="flex-grow py-12 lg:py-20 relative z-10">
+      <main className="flex-grow pt-24 pb-12 lg:pt-32 lg:pb-20 relative z-10">
         <div className="container-perfect max-w-3xl">
           
           <Link
@@ -87,10 +87,10 @@ export default function JobDetails({ params }) {
           </Link>
 
           {/* Job Details Card */}
-          <article className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <article className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-200 dark:border-dark-border overflow-hidden">
             
             {/* Header info */}
-            <div className="p-6 md:p-8 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20">
+            <div className="p-6 md:p-8 border-b border-slate-200 dark:border-dark-border bg-slate-50/50 dark:bg-dark-bg/20">
               <span className="inline-block bg-indigo-55 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/50 dark:border-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-black px-3.5 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">
                 {job.job_type || "Full Time"}
               </span>
@@ -101,7 +101,7 @@ export default function JobDetails({ params }) {
                 {job.company_name}
               </p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-200 dark:border-dark-border text-sm font-bold text-slate-500 dark:text-slate-400">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4.5 h-4.5 text-slate-400" />
                   <span>{job.location}</span>
@@ -134,7 +134,7 @@ export default function JobDetails({ params }) {
 
               {/* Requirements */}
               {job.requirements && (
-                <div className="pt-5 border-t border-slate-200 dark:border-slate-800">
+                <div className="pt-5 border-t border-slate-200 dark:border-dark-border">
                   <h3 className="text-lg font-black text-slate-900 dark:text-white mb-3">
                     Requirements
                   </h3>

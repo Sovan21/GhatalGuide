@@ -205,7 +205,7 @@ export default function ListingDetails({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
@@ -217,7 +217,7 @@ export default function ListingDetails({ params }) {
 
   if (!listing) {
     return (
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
         <Navbar />
         <main className="flex-grow py-20 text-center px-4">
           <div className="mb-4">
@@ -233,7 +233,7 @@ export default function ListingDetails({ params }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative">
       <div className="mesh-bg" />
       <Navbar />
 
@@ -254,8 +254,8 @@ export default function ListingDetails({ params }) {
             <div className="lg:col-span-2 space-y-8">
               
               {/* Business Banner & Core Info */}
-              <div className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
-                <div className="h-64 sm:h-96 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+              <div className="bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-sm border border-slate-200 dark:border-dark-border">
+                <div className="h-64 sm:h-96 bg-slate-200 dark:bg-dark-card-hover relative overflow-hidden">
                   <img
                     src={listing.image || "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?fit=crop&q=80"}
                     alt={listing.name}
@@ -263,7 +263,7 @@ export default function ListingDetails({ params }) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
                   
-                  <span className="absolute top-6 left-6 bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white text-xs font-black uppercase px-4 py-2 rounded-xl shadow-lg border border-white/10 tracking-wider">
+                  <span className="absolute top-6 left-6 bg-white/90 dark:bg-dark-card/90 text-slate-800 dark:text-white text-xs font-black uppercase px-4 py-2 rounded-xl shadow-lg border border-white/10 tracking-wider">
                     {listing.subcategory || listing.category}
                   </span>
                 </div>
@@ -304,7 +304,7 @@ export default function ListingDetails({ params }) {
                       className={`p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer ${
                         isBookmarked
                           ? "bg-red-500 border-red-500 text-white shadow-lg scale-105"
-                          : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-red-500 hover:border-red-200"
+                          : "bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border text-slate-400 hover:text-red-500 hover:border-red-200"
                       }`}
                       aria-label="Bookmark listing"
                     >
@@ -312,7 +312,7 @@ export default function ListingDetails({ params }) {
                     </button>
                   </div>
 
-                  <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+                  <div className="mt-8 pt-8 border-t border-slate-100 dark:border-dark-border">
                     <h3 className="font-black text-lg text-slate-950 dark:text-white mb-3">About the Business</h3>
                     <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line font-bold">
                       {listing.description || `Welcome to ${listing.name}. We provide high quality ${listing.subcategory || listing.category} services in Ghatal. Visit us or contact us to know more details!`}
@@ -322,14 +322,14 @@ export default function ListingDetails({ params }) {
               </div>
 
               {/* Reviews Section */}
-              <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-10 space-y-8">
+              <div className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-200 dark:border-dark-border p-6 sm:p-10 space-y-8">
                 <h3 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
                   <MessageSquare className="w-6 h-6 text-primary-500" />
                   <span>Reviews & Ratings ({reviews.length})</span>
                 </h3>
 
                 {/* Add Review Form */}
-                <form onSubmit={handleReviewSubmit} className="bg-slate-50/50 dark:bg-slate-950/20 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-5">
+                <form onSubmit={handleReviewSubmit} className="bg-slate-50/50 dark:bg-dark-bg/20 p-6 rounded-2xl border border-slate-200 dark:border-dark-border space-y-5">
                   <h4 className="font-black text-slate-800 dark:text-slate-200 text-sm">Write a Review</h4>
                   
                   {/* Stars Input */}
@@ -355,7 +355,7 @@ export default function ListingDetails({ params }) {
                     placeholder="Tell others about your experience with this business..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    className="w-full p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-950 dark:text-white transition-all placeholder-slate-400"
+                    className="w-full p-4 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-950 dark:text-white transition-all placeholder-slate-400"
                   ></textarea>
 
                   <button
@@ -370,12 +370,12 @@ export default function ListingDetails({ params }) {
                 {/* Reviews List */}
                 <div className="space-y-4">
                   {reviews.length === 0 ? (
-                    <div className="text-center py-8 bg-slate-50 dark:bg-slate-950/30 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="text-center py-8 bg-slate-50 dark:bg-dark-bg/30 rounded-2xl border border-slate-200 dark:border-dark-border">
                       <p className="text-slate-400 dark:text-slate-500 italic text-sm font-bold">No reviews written yet. Be the first to share your thoughts!</p>
                     </div>
                   ) : (
                     reviews.map((rev) => (
-                      <div key={rev.id} className="bg-slate-50/50 dark:bg-slate-950/20 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3.5">
+                      <div key={rev.id} className="bg-slate-50/50 dark:bg-dark-bg/20 p-5 rounded-2xl border border-slate-200 dark:border-dark-border space-y-3.5">
                         <div className="flex justify-between items-center gap-4">
                           <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-black text-sm select-none shadow-sm">
@@ -415,13 +415,13 @@ export default function ListingDetails({ params }) {
             <div className="space-y-6 lg:sticky lg:top-24 w-full">
               
               {/* Contact info widget */}
-              <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-800 space-y-6">
+              <div className="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-dark-border space-y-6">
                 <h3 className="font-black text-slate-900 dark:text-white text-lg tracking-tight">Contact Info</h3>
                 
                 <div className="space-y-5 text-sm">
                   {/* Address */}
                   <div className="flex gap-3">
-                    <div className="p-2.5 bg-slate-50 dark:bg-slate-950 rounded-xl text-slate-400 dark:text-slate-500 shrink-0">
+                    <div className="p-2.5 bg-slate-50 dark:bg-dark-bg rounded-xl text-slate-400 dark:text-slate-500 shrink-0">
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
@@ -432,7 +432,7 @@ export default function ListingDetails({ params }) {
 
                   {/* Phone */}
                   {listing.phone && (
-                    <div className="flex gap-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                    <div className="flex gap-3 border-t border-slate-200 dark:border-dark-border pt-5">
                       <div className="p-2.5 bg-primary-50 dark:bg-primary-950/40 text-primary-500 shrink-0 rounded-xl">
                         <Phone className="w-5 h-5" />
                       </div>
@@ -447,7 +447,7 @@ export default function ListingDetails({ params }) {
 
                   {/* Driving Distance */}
                   {roadDistance && (
-                    <div className="flex gap-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                    <div className="flex gap-3 border-t border-slate-200 dark:border-dark-border pt-5">
                       <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-500 shrink-0 rounded-xl">
                         <Car className="w-5 h-5" />
                       </div>
@@ -483,7 +483,7 @@ export default function ListingDetails({ params }) {
       </main>
 
       {/* Sticky Bottom Actions for Mobile viewports */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 p-4 flex gap-4 md:hidden shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-dark-card/90 backdrop-blur-lg border-t border-slate-200 dark:border-dark-border p-4 flex gap-4 md:hidden shadow-lg">
         {listing.phone && (
           <a
             href={`tel:${listing.phone}`}
@@ -498,7 +498,7 @@ export default function ListingDetails({ params }) {
             href={listing.googleMapLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black py-3.5 px-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 text-sm transition-all"
+            className="flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-dark-card-hover dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black py-3.5 px-4 rounded-2xl border border-slate-200 dark:border-dark-border flex items-center justify-center gap-2 text-sm transition-all"
           >
             <Share2 className="w-4.5 h-4.5" />
             <span>Directions</span>

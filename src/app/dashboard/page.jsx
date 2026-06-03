@@ -152,7 +152,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative overflow-hidden">
       <div className="mesh-bg" />
       <Navbar />
 
@@ -175,21 +175,21 @@ export default function Dashboard() {
               className="bg-primary-600 hover:bg-primary-700 text-white font-black px-5 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 flex items-center gap-2 text-sm shrink-0 cursor-pointer active:scale-98 btn-premium-glow"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>List New Shop</span>
+              <span>Add New Listing</span>
             </Link>
           </div>
 
           {/* Stats Summary Cards */}
           {!loading && listings.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8 animate-fade-in">
-              <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+              <div className="bg-white dark:bg-dark-card border border-slate-100 dark:border-dark-border p-5 rounded-2xl shadow-sm flex items-center justify-between">
                 <div>
-                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Shops</p>
+                  <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Listings</p>
                   <p className="text-3xl font-black text-slate-900 dark:text-white mt-1">{listings.length}</p>
                 </div>
                 <div className="w-12 h-12 bg-primary-50 dark:bg-primary-950/40 text-primary-500 rounded-xl flex items-center justify-center border border-primary-100/10"><Store className="w-6 h-6" /></div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+              <div className="bg-white dark:bg-dark-card border border-slate-100 dark:border-dark-border p-5 rounded-2xl shadow-sm flex items-center justify-between">
                 <div>
                   <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Approved</p>
                   <p className="text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
@@ -198,7 +198,7 @@ export default function Dashboard() {
                 </div>
                 <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-500 rounded-xl flex items-center justify-center border border-emerald-100/10"><CheckCircle className="w-6 h-6" /></div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm flex items-center justify-between">
+              <div className="bg-white dark:bg-dark-card border border-slate-100 dark:border-dark-border p-5 rounded-2xl shadow-sm flex items-center justify-between">
                 <div>
                   <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Pending Review</p>
                   <p className="text-3xl font-black text-amber-600 dark:text-amber-450 mt-1">
@@ -215,7 +215,7 @@ export default function Dashboard() {
               <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-500"></div>
             </div>
           ) : listings.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-100 dark:border-dark-border py-16 px-4 text-center max-w-xl mx-auto shadow-sm animate-fade-in">
               <div className="mb-4">
                 <Store className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto" />
               </div>
@@ -223,18 +223,18 @@ export default function Dashboard() {
                 No Listings Found
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 font-bold leading-relaxed">
-                You haven't listed any businesses on Ghatal Guide yet. Connect your storefront today to grow locally!
+                You haven\'t added any listings on Ghatal Guide yet. Add your business or service today to grow locally!
               </p>
               <Link
                 href="/add-business"
                 className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg hover:shadow-primary-500/20 text-sm cursor-pointer btn-premium-glow"
               >
                 <PlusCircle className="w-4 h-4" />
-                <span>Add Your Business</span>
+                <span>Add Your Listing</span>
               </Link>
             </div>
           ) : (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm animate-fade-in">
+            <div className="bg-white dark:bg-dark-card rounded-3xl border border-slate-100 dark:border-dark-border overflow-hidden shadow-sm animate-fade-in">
               <div className="divide-y divide-slate-100 dark:divide-slate-800">
                 {listings.map((l) => (
                   <div key={l.id} className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 transition-colors hover:bg-slate-50/40 dark:hover:bg-slate-950/10">
@@ -264,7 +264,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap items-center gap-3 shrink-0 w-full md:w-auto justify-end border-t md:border-t-0 pt-4 md:pt-0 border-slate-100 dark:border-slate-800">
+                    <div className="flex flex-wrap items-center gap-3 shrink-0 w-full md:w-auto justify-end border-t md:border-t-0 pt-4 md:pt-0 border-slate-100 dark:border-dark-border">
                       
                       {/* Feature Request Actions */}
                       {l.status === "approved" && (
@@ -301,7 +301,7 @@ export default function Dashboard() {
                       {l.status === "approved" && (
                         <Link
                           href={`/listings/${l.id}`}
-                          className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                          className="p-2.5 rounded-xl border border-slate-200 dark:border-dark-border hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
                           title="View Listing"
                         >
                           <Eye className="w-4.5 h-4.5" />
@@ -336,19 +336,19 @@ export default function Dashboard() {
 
       {/* Custom Delete Confirmation Modal */}
       {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 bg-slate-955/65 backdrop-blur-xs flex items-center justify-center p-4 animate-zoom-in-fade">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center animate-bounce-in">
+        <div className="fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-xs flex items-center justify-center p-4 animate-zoom-in-fade">
+          <div className="bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center animate-bounce-in">
             <div className="w-14 h-14 bg-rose-50 dark:bg-rose-950/20 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-100/10">
               <Trash2 className="w-7 h-7" />
             </div>
-            <h3 className="text-xl font-black text-slate-955 dark:text-white mb-2">Delete Storefront Listing?</h3>
+            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Delete Listing?</h3>
             <p className="text-slate-505 dark:text-slate-400 text-xs font-bold leading-relaxed mb-6">
               Are you sure you want to permanently delete this listing? This action cannot be undone and will remove it from the directory.
             </p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setDeleteConfirmId(null)}
-                className="py-3.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-black text-xs uppercase tracking-wider cursor-pointer"
+                className="py-3.5 bg-slate-100 hover:bg-slate-200 dark:bg-dark-card-hover dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-black text-xs uppercase tracking-wider cursor-pointer"
               >
                 Cancel
               </button>

@@ -8,7 +8,7 @@ import ListingCard from "@/components/cards/ListingCard";
 import { categories, sampleListings } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
 import { CategoryIcon } from "@/lib/categoryIcons";
-import { Search, Mic, MicOff, ArrowRight, Star, Calendar, Bus, MapPin, Clock } from "lucide-react";
+import { Search, Mic, MicOff, ArrowRight, Star, Calendar, Bus, MapPin, Clock, Store } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -16,14 +16,28 @@ export default function Home() {
   const [featuredListings, setFeaturedListings] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [isListening, setIsListening] = useState(false);
+  const [voiceLang, setVoiceLang] = useState("bn-IN");
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
+  const [allListings, setAllListings] = useState([]);
+  const [searchFocused, setSearchFocused] = useState(false);
+
+  // Load voice language preference from local storage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("voiceLang");
+      if (savedLang) {
+        setVoiceLang(savedLang);
+      }
+    }
+  }, []);
 
   // Fetch listings and bookmarks on load in parallel
   useEffect(() => {
     async function loadData() {
       try {
-        const [listingsRes, sessionRes] = await Promise.all([
+        const [listingsRes, allListingsRes, sessionRes] = await Promise.all([
           supabase.from("listings").select("*").eq("status", "approved").eq("is_featured", true).limit(3),
+          fetch("/api/listings").then((res) => res.ok ? res.json() : { listings: [] }).catch(() => ({ listings: [] })),
           supabase.auth.getSession().catch(e => {
             console.warn("Failed to get auth session:", e);
             return { data: { session: null } };
@@ -32,6 +46,10 @@ export default function Home() {
 
         let dbListings = listingsRes?.data || [];
         setFeaturedListings(dbListings);
+
+        if (allListingsRes?.listings) {
+          setAllListings(allListingsRes.listings);
+        }
 
         const session = sessionRes?.data?.session;
         if (session?.user) {
@@ -69,8 +87,45 @@ export default function Home() {
     loadData();
   }, []);
 
+  // Compute search suggestions in memory for the homepage
+  const suggestions = React.useMemo(() => {
+    if (!searchFocused || !searchQuery.trim()) return [];
+
+    const q = searchQuery.toLowerCase().trim();
+    const matches = [];
+
+    // Match categories
+    Object.keys(categories).forEach(key => {
+      const cat = categories[key];
+      if (cat.name.toLowerCase().includes(q)) {
+        matches.push({ type: "category", id: key, text: cat.name, subtext: "Category" });
+      }
+    });
+
+    // Match listings (limit to 6 matches)
+    let listingCount = 0;
+    for (const item of allListings) {
+      if (listingCount >= 6) break;
+      if (
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.subcategory && item.subcategory.toLowerCase().includes(q))
+      ) {
+        matches.push({
+          type: "business",
+          id: item.id,
+          text: item.name,
+          subtext: item.subcategory || item.category
+        });
+        listingCount++;
+      }
+    }
+
+    return matches;
+  }, [allListings, searchQuery, searchFocused]);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    document.activeElement?.blur();
     if (searchQuery.trim()) {
       router.push(`/directory?search=${encodeURIComponent(searchQuery.trim())}`);
     } else {
@@ -93,6 +148,19 @@ export default function Home() {
         recognitionRef.current = null;
       }
     };
+  }, []);
+
+  // Helper to switch voice search language and abort current listening session if active
+  const handleToggleVoiceLang = useCallback((lang) => {
+    setVoiceLang(lang);
+    localStorage.setItem("voiceLang", lang);
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.abort();
+      } catch (e) {
+        // Ignore
+      }
+    }
   }, []);
 
   const handleVoiceSearch = useCallback(() => {
@@ -123,7 +191,7 @@ export default function Home() {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "bn-IN"; // Bengali language for better local recognition, falls back to en-US
+    recognition.lang = voiceLang; // Dynamic language based on user selection
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
     recognition.continuous = false;
@@ -147,6 +215,10 @@ export default function Home() {
     };
 
     recognition.onerror = (event) => {
+      if (event.error === "aborted") {
+        // Silently ignore aborted errors (triggered when stop/abort is called programmatically)
+        return;
+      }
       console.error("Speech recognition error:", event.error);
       setIsListening(false);
       recognitionRef.current = null;
@@ -170,7 +242,7 @@ export default function Home() {
       recognitionRef.current = null;
       alert("Could not start voice search. Please try again.");
     }
-  }, [isListening, router]);
+  }, [isListening, router, voiceLang]);
 
   // Bookmark toggle handler
   const handleBookmarkToggle = async (id) => {
@@ -214,7 +286,7 @@ export default function Home() {
   const isBookmarked = (id) => bookmarkedIds.includes(id);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100  relative overflow-hidden">
       
       {/* Ambient glowing bubbles in the background */}
       <div className="blur-bubble bg-indigo-500/10 dark:bg-indigo-500/20 top-20 left-10" />
@@ -239,32 +311,50 @@ export default function Home() {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.08] mb-6 tracking-tight">
               Your Digital Companion
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-650 drop-shadow-sm font-extrabold dark:from-primary-400 dark:to-indigo-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-700 drop-shadow-sm font-extrabold dark:from-primary-400 dark:to-indigo-400">
                 for Ghatal Town
               </span>
             </h1>
             
-            <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-bold">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-800 dark:text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed font-bold">
               Discover verified local services, emergency helplines, transit tables, jobs, and top-rated businesses. Everything you need, in one place.
             </p>
 
             {/* Premium Search Container */}
-            <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto mb-10 animate-slide-up">
-              <div className="flex items-center bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl shadow-xl shadow-primary-500/5 border border-slate-200 dark:border-slate-800 p-2 pl-4 md:pl-6 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500/40 focus-within:border-primary-500 focus-within:scale-[1.01]">
+            <form onSubmit={handleSearchSubmit} className="relative z-40 max-w-2xl mx-auto mb-10 animate-slide-up flex flex-col items-center w-full">
+              
+              <div className="w-full flex items-center bg-white dark:bg-dark-card rounded-2xl md:rounded-3xl shadow-xl shadow-primary-500/5 border border-slate-200 dark:border-dark-border p-2 pl-12 pr-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500/40 focus-within:border-primary-500 focus-within:scale-[1.01] relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500 pointer-events-none" />
                 <input
-                  type="text"
-                  placeholder={isListening ? "Listening to voice..." : "Search doctors, stores, restaurants, services..."}
+                  type="search"
+                  placeholder={
+                    isListening 
+                      ? (voiceLang === "bn-IN" ? "বাংলায় বলুন..." : "Speak now in English...") 
+                      : "Search doctors, stores, restaurants, services..."
+                  }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-grow bg-transparent border-none outline-none text-slate-900 dark:text-white text-base md:text-lg placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 py-3"
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                  className="flex-grow bg-transparent border-none outline-none text-slate-900 dark:text-white text-base md:text-lg placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 py-3 min-w-0"
                   disabled={isListening}
                 />
                 
-                <div className="flex items-center space-x-2 pr-1">
+                <div className="flex items-center space-x-1.5 sm:space-x-2 pr-1 shrink-0">
+                  {/* Language switch button inside search bar */}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleVoiceLang(voiceLang === "bn-IN" ? "en-US" : "bn-IN")}
+                    className="text-[9px] sm:text-[10px] font-black uppercase bg-slate-50 dark:bg-dark-bg hover:bg-slate-100 dark:hover:bg-dark-card-hover px-2.5 py-1.5 rounded-lg text-slate-650 dark:text-slate-300 transition-colors shrink-0 select-none border border-slate-200/40 dark:border-dark-border/40"
+                    title="Switch voice search language"
+                  >
+                    {voiceLang === "bn-IN" ? "বাংলা" : "ENG"}
+                  </button>
+
                   <button
                     type="button"
                     onClick={handleVoiceSearch}
-                    className={`relative p-3 rounded-xl transition-all cursor-pointer ${
+                    className={`relative p-3 rounded-xl transition-all cursor-pointer shrink-0 ${
                       isListening 
                         ? "bg-red-500 text-white shadow-lg shadow-red-500/30" 
                         : "text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950/30"
@@ -278,34 +368,65 @@ export default function Home() {
                     )}
                     {isListening ? <MicOff className="w-5 h-5 relative z-10" /> : <Mic className="w-5 h-5" />}
                   </button>
-                  <button
-                    type="submit"
-                    className="bg-primary-600 hover:bg-primary-700 text-white px-5 md:px-7 py-3 md:py-3.5 rounded-xl md:rounded-2xl font-black transition-all shadow-md flex items-center space-x-2 shrink-0 cursor-pointer btn-premium-glow"
-                  >
-                    <Search className="w-4.5 h-4.5" />
-                    <span className="hidden sm:inline text-sm">Search</span>
-                  </button>
                 </div>
+
+                {/* Autocomplete Suggestions Dropdown */}
+                {searchFocused && suggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 top-[102%] bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden max-h-72 overflow-y-auto animate-fade-in text-slate-900 dark:text-white text-left">
+                    {suggestions.map((suggestion, idx) => (
+                      <button
+                        key={`sug-${idx}`}
+                        type="button"
+                        onMouseDown={() => {
+                          if (suggestion.type === "category") {
+                            router.push(`/directory?category=${suggestion.id}`);
+                          } else {
+                            setSearchQuery(suggestion.text);
+                            router.push(`/directory?search=${encodeURIComponent(suggestion.text)}`);
+                          }
+                          setSearchFocused(false);
+                        }}
+                        className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-bold text-left hover:bg-slate-50 dark:hover:bg-dark-card-hover transition-colors text-slate-800 dark:text-slate-200"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          {suggestion.type === "category" ? (
+                            <div className="p-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 rounded-lg">
+                              <Store className="w-3.5 h-3.5" />
+                            </div>
+                          ) : (
+                            <div className="p-1.5 bg-slate-100 dark:bg-dark-border text-slate-400 rounded-lg">
+                              <Search className="w-3.5 h-3.5" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="truncate font-black text-slate-900 dark:text-white">{suggestion.text}</p>
+                            <p className="text-[9px] text-slate-400 dark:text-slate-500 font-medium truncate">{suggestion.subtext}</p>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </form>
 
             {/* Quick Filters */}
-            <div className="flex flex-wrap justify-center gap-3 animate-slide-up">
+            <div className="flex flex-wrap justify-center gap-3 animate-slide-up relative z-10">
               <Link
                 href="/directory?filter=open-now"
-                className="px-5 py-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
+                className="px-5 py-2.5 bg-white dark:bg-dark-card text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-dark-border hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
               >
                 <Clock className="w-4 h-4 text-emerald-500" /> Open Now
               </Link>
               <Link
                 href="/directory?filter=top-rated"
-                className="px-5 py-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
+                className="px-5 py-2.5 bg-white dark:bg-dark-card text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-dark-border hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
               >
                 <Star className="w-4 h-4 text-amber-500" /> Top Rated
               </Link>
               <Link
                 href="/directory?filter=near-me"
-                className="px-5 py-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
+                className="px-5 py-2.5 bg-white dark:bg-dark-card text-slate-700 dark:text-slate-300 rounded-2xl border border-slate-200 dark:border-dark-border hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2"
               >
                 <MapPin className="w-4 h-4 text-indigo-500" /> Near Me
               </Link>
@@ -314,7 +435,7 @@ export default function Home() {
         </section>
 
         {/* Categories Section */}
-        <section className="py-12 bg-slate-50/50 dark:bg-slate-900/10 border-y border-slate-200/40 dark:border-slate-800/40 relative">
+        <section className="py-12 bg-slate-50/50 dark:bg-dark-bg/10 border-y border-slate-200/40 dark:border-dark-border/40 relative">
           <div className="container-perfect">
             
             <div className="text-center mb-10 space-y-2.5">
@@ -340,13 +461,13 @@ export default function Home() {
                   education: "border-blue-500/10 dark:border-blue-500/20 hover:border-blue-500/40 hover:bg-blue-50/20 dark:hover:bg-blue-950/10 text-blue-600 dark:text-blue-400",
                   emergency: "border-red-500/10 dark:border-red-500/20 hover:border-red-500/40 hover:bg-red-50/20 dark:hover:bg-red-950/10 text-red-600 dark:text-red-400"
                 };
-                const themeClass = themes[key] || "border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-slate-800";
+                const themeClass = themes[key] || "border-slate-200 dark:border-dark-border hover:border-indigo-500 text-slate-800";
                 
                 return (
                   <Link
                     key={key}
                     href={`/directory?category=${key}`}
-                    className={`category-card bg-white dark:bg-slate-900 border ${themeClass} p-8 rounded-3xl text-center flex flex-col items-center justify-center cursor-pointer shadow-sm hover:shadow-lg`}
+                    className={`category-card bg-white dark:bg-dark-card border ${themeClass} p-8 rounded-3xl text-center flex flex-col items-center justify-center cursor-pointer shadow-sm hover:shadow-lg`}
                   >
                     <div className="mb-4 select-none drop-shadow-sm transform transition-transform group-hover:scale-110">
                       <CategoryIcon category={key} className="w-9 h-9" />
@@ -363,25 +484,24 @@ export default function Home() {
         </section>
 
         {/* Featured Section */}
-        <section className="py-12 bg-white dark:bg-slate-950">
+        <section className="py-16 bg-white dark:bg-dark-bg relative">
           <div className="container-perfect">
             
-            <div className="flex flex-col sm:flex-row justify-between items-end mb-8 gap-4">
-              <div className="text-center sm:text-left space-y-2">
-                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-                  Featured Businesses
-                </h2>
-                <div className="h-1.5 w-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
-                <p className="text-slate-500 dark:text-slate-400 font-bold text-sm">
-                  Recommended local places in Ghatal
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-500 dark:text-indigo-400 select-none">
+                  Curated Collection
                 </p>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                  Featured Listings
+                </h2>
               </div>
               <Link
                 href="/directory"
-                className="inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors group shrink-0 text-sm"
+                className="inline-flex items-center gap-1 text-xs font-black text-indigo-650 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors group shrink-0 border-b border-indigo-500/20 hover:border-indigo-500/80 pb-0.5"
               >
                 <span>View Full Directory</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
 
@@ -401,38 +521,37 @@ export default function Home() {
         </section>
 
         {/* Services & Modules Section */}
-        <section className="py-12 bg-slate-50/50 dark:bg-slate-900/10 border-t border-slate-200/40 dark:border-slate-800/40 relative">
+        <section className="py-16 bg-slate-50/50 dark:bg-dark-bg/10 border-t border-slate-200/40 dark:border-dark-border/40 relative">
           <div className="container-perfect">
             
-            <div className="text-center mb-10 space-y-2.5">
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+            <div className="text-center mb-12 space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-indigo-500 dark:text-indigo-400 select-none">
+                More Modules
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 Additional Services
               </h2>
-              <div className="h-1.5 w-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mx-auto" />
-              <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto font-bold text-sm">
-                Explore transportation timetables, local jobs, and news.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               
               {/* Transportation card */}
               <Link
                 href="/transportation"
-                className="bg-white dark:bg-slate-900 p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start gap-6 hover:shadow-xl transition-all duration-350 group"
+                className="bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border/80 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 p-6 rounded-[24px] shadow-sm hover:shadow-md transition-all duration-300 flex items-start gap-5 group"
               >
-                <div className="p-4.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl group-hover:scale-105 transition-transform duration-300 shadow-sm shrink-0 border border-indigo-100/10">
-                  <Bus className="w-8 h-8" />
+                <div className="p-3 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 dark:text-indigo-400 rounded-xl shrink-0">
+                  <Bus className="w-6 h-6" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-slate-950 dark:text-white mb-2">
+                <div className="min-w-0">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-650 dark:group-hover:text-indigo-400 transition-colors">
                     Transit Schedules
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-5 font-bold">
-                    Timings and connecting routes for trains, buses, and local totos across Ghatal and nearby platforms.
+                  <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-relaxed mb-3">
+                    Check train, bus, and toto timings connecting Ghatal to major platforms.
                   </p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-600 dark:text-indigo-400 group-hover:underline">
-                    Check Schedules <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-wider">
+                    Schedules <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </div>
               </Link>
@@ -440,20 +559,20 @@ export default function Home() {
               {/* Events card */}
               <Link
                 href="/events"
-                className="bg-white dark:bg-slate-900 p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start gap-6 hover:shadow-xl transition-all duration-350 group"
+                className="bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border/80 hover:border-rose-500/50 dark:hover:border-rose-500/50 p-6 rounded-[24px] shadow-sm hover:shadow-md transition-all duration-300 flex items-start gap-5 group"
               >
-                <div className="p-4.5 bg-rose-50 dark:bg-rose-950/40 text-rose-650 dark:text-rose-450 rounded-2xl group-hover:scale-105 transition-transform duration-300 shadow-sm shrink-0 border border-rose-100/10">
-                  <Calendar className="w-8 h-8" />
+                <div className="p-3 bg-rose-50 dark:bg-rose-950/40 text-rose-500 dark:text-rose-450 rounded-xl shrink-0">
+                  <Calendar className="w-6 h-6" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-black text-slate-950 dark:text-white mb-2">
+                <div className="min-w-0">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
                     Local Events & News
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-5 font-bold">
-                    Stay up-to-date with book fairs, cultural programs, local health drives, and community news.
+                  <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-relaxed mb-3">
+                    Stay up-to-date with book fairs, cultural programs, and community updates.
                   </p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-black text-rose-600 dark:text-rose-450 group-hover:underline">
-                    Discover Events <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-black text-rose-500 dark:text-rose-450 uppercase tracking-wider">
+                    Events <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </div>
               </Link>
