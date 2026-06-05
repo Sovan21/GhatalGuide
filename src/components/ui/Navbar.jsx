@@ -144,7 +144,7 @@ export default function Navbar() {
             <div className="relative overflow-hidden rounded-xl bg-slate-200 dark:bg-dark-card-hover p-[1.5px] group-hover:bg-primary-500 transition-all duration-300">
               <img src="/logo.png" alt="Ghatal Guide Logo" className="h-10 w-10 sm:h-11 sm:w-11 object-cover bg-white rounded-[10px]" />
             </div>
-            <span className="text-[17px] sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 dark:from-white dark:via-indigo-200 dark:to-indigo-300 bg-clip-text text-transparent group-hover:scale-[1.01] transition-all duration-300 font-outfit select-none">
+            <span className="text-[17px] sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 dark:from-white dark:via-indigo-200 dark:to-indigo-300 bg-clip-text text-transparent group-hover:scale-[1.01] transition-all duration-300 font-kelly-slab select-none">
               Ghatal Guide
             </span>
           </Link>

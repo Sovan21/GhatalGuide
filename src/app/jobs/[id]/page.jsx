@@ -5,7 +5,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { sampleJobs } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
-import { MapPin, DollarSign, ArrowLeft, Calendar, FileText, Send, FileQuestion } from "lucide-react";
+import { MapPin, ArrowLeft, Calendar, FileText, Send, FileQuestion } from "lucide-react";
 
 export default function JobDetails({ params }) {
   const resolvedParams = use(params);
@@ -91,13 +91,13 @@ export default function JobDetails({ params }) {
             
             {/* Header info */}
             <div className="p-6 md:p-8 border-b border-slate-200 dark:border-dark-border bg-slate-50/50 dark:bg-dark-bg/20">
-              <span className="inline-block bg-indigo-55 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/50 dark:border-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-black px-3.5 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">
+              <span className="inline-block bg-indigo-55 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/50 dark:border-indigo-900/30 text-indigo-650 dark:text-indigo-400 text-xs font-black px-3.5 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">
                 {job.job_type || "Full Time"}
               </span>
               <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2 leading-tight tracking-tight">
                 {job.job_title}
               </h1>
-              <p className="text-slate-700 dark:text-slate-300 font-bold text-lg">
+              <p className="text-slate-755 dark:text-slate-300 font-bold text-lg">
                 {job.company_name}
               </p>
               
@@ -107,9 +107,8 @@ export default function JobDetails({ params }) {
                   <span>{job.location}</span>
                 </div>
                 {job.salary_range && (
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="w-4.5 h-4.5 text-emerald-500" />
-                    <span className="text-emerald-600 dark:text-emerald-400">{job.salary_range}</span>
+                  <div className="flex items-center gap-2 text-emerald-660 dark:text-emerald-450 font-black">
+                    <span>Salary: {job.salary_range}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-2">

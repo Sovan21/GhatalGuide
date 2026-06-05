@@ -5,8 +5,8 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import { categories } from "@/lib/sampleData";
-import { 
-  Building, Phone, Clock, MapPin, Link2, FileText, Image as ImageIcon, CheckCircle, 
+import {
+  Building, Phone, Clock, MapPin, Link2, FileText, Image as ImageIcon, CheckCircle,
   ChevronRight, ChevronDown, ArrowLeft, PlusCircle, LayoutDashboard, Compass, Lock, Mail, User, RotateCcw,
   MailOpen, AlertCircle, Info, Save, Eye, EyeOff,
   Activity, Utensils, ShoppingBag, Wrench, GraduationCap, ShieldAlert,
@@ -157,19 +157,19 @@ const googleSvg = (
 
 const facebookSvg = (
   <svg className="w-5 h-5 text-[#1877f2]" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
 
 const linkedinSvg = (
   <svg className="w-5 h-5 text-[#0a66c2]" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
   </svg>
 );
 
 const githubSvg = (
   <svg className="w-5 h-5 text-slate-800 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
   </svg>
 );
 
@@ -202,8 +202,8 @@ function CustomSelect({
 
   const filteredOptions = showSearch
     ? options.filter((opt) =>
-        opt.label.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      opt.label.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : options;
 
   return (
@@ -212,7 +212,7 @@ function CustomSelect({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left cursor-pointer disabled:opacity-55"
+        className="w-full flex items-center justify-between neumorphic-inset !rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left cursor-pointer disabled:opacity-55"
       >
         <span className={`flex items-center gap-2.5 ${selectedOption ? "" : "text-slate-400 dark:text-slate-500"}`}>
           {selectedOption && selectedOption.icon && (
@@ -224,7 +224,7 @@ function CustomSelect({
       </button>
 
       {isOpen && (
-        <div className="absolute z-35 mt-2 w-full bg-[#e0e8f0] dark:bg-dark-card shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-2xl p-2 border border-white/5 max-h-60 overflow-y-auto animate-zoom-in-fade origin-top">
+        <div className="absolute z-50 mt-2 w-full neumorphic-card !rounded-2xl p-2 max-h-60 overflow-y-auto animate-zoom-in-fade origin-top">
           {showSearch && (
             <div className="p-1 mb-2">
               <input
@@ -232,7 +232,7 @@ function CustomSelect({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none"
+                className="w-full neumorphic-inset !rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -248,11 +248,10 @@ function CustomSelect({
                     setIsOpen(false);
                     setSearchQuery("");
                   }}
-                  className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 flex items-center justify-between cursor-pointer ${
-                    opt.value === value
-                      ? "bg-primary-600 text-white shadow-sm"
-                      : "text-slate-700 dark:text-slate-300 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
-                  }`}
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 flex items-center justify-between cursor-pointer ${opt.value === value
+                    ? "bg-primary-600 text-white shadow-sm"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
+                    }`}
                 >
                   <span className="flex items-center gap-2.5 min-w-0">
                     {opt.icon && (
@@ -281,13 +280,13 @@ const generateTimeOptions = () => {
     for (let min of ["00", "30"]) {
       const hStr = hour.toString().padStart(2, '0');
       const timeVal = `${hStr}:${min}`;
-      
+
       // Build 12-hour AM/PM label
       const ampm = hour >= 12 ? 'PM' : 'AM';
       let displayHour = hour % 12;
       if (displayHour === 0) displayHour = 12;
       const label = `${displayHour}:${min} ${ampm}`;
-      
+
       options.push({ value: timeVal, label });
     }
   }
@@ -296,24 +295,8 @@ const generateTimeOptions = () => {
 
 const timeOptions = generateTimeOptions();
 
-function TimePickerDropdown({ value, onChange, label }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const selectedOption = timeOptions.find(opt => opt.value === value);
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const displayLabel = selectedOption ? selectedOption.label : (() => {
+function TimePickerDropdown({ value, onClick, label }) {
+  const displayLabel = (() => {
     if (!value) return "Select";
     const parts = value.split(":");
     if (parts.length !== 2) return value;
@@ -327,38 +310,192 @@ function TimePickerDropdown({ value, onChange, label }) {
   })();
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative inline-block">
       <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">{label}</span>
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="text-xs px-3 py-2 bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left min-w-[100px] flex items-center justify-between cursor-pointer"
+        onClick={onClick}
+        className="text-xs px-3 py-2 neumorphic-inset !rounded-xl text-slate-800 dark:text-slate-200 outline-none transition-all duration-200 text-left min-w-[100px] flex items-center justify-between cursor-pointer"
       >
         <span>{displayLabel}</span>
         <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-1.5 shrink-0" />
       </button>
+    </div>
+  );
+}
 
-      {isOpen && (
-        <div className="absolute z-45 mt-1 w-full bg-[#e0e8f0] dark:bg-dark-card shadow-[4px_4px_12px_#becbdc,_-4px_-4px_12px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-xl p-1 border border-white/5 max-h-48 overflow-y-auto animate-zoom-in-fade origin-top">
-          {timeOptions.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => {
-                onChange(opt.value);
-                setIsOpen(false);
-              }}
-              className={`w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
-                opt.value === value
-                  ? "bg-primary-600 text-white shadow-sm"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-[#d4dfea] dark:hover:bg-[#222a3a]"
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
+function TimePickerModal({ value, onConfirm, onClose, onClear, label }) {
+  const parseTime = (timeStr) => {
+    const defaultVal = { hour: 9, minute: 0, ampm: "AM" };
+    if (!timeStr) return defaultVal;
+    const parts = timeStr.split(":");
+    if (parts.length !== 2) return defaultVal;
+    const h = parseInt(parts[0]);
+    const m = parseInt(parts[1]);
+    if (isNaN(h) || isNaN(m)) return defaultVal;
+    const ampm = h >= 12 ? "PM" : "AM";
+    let dispH = h % 12;
+    if (dispH === 0) dispH = 12;
+    return { hour: dispH, minute: m, ampm };
+  };
+
+  const parsed = parseTime(value);
+  const [selectedHour, setSelectedHour] = useState(parsed.hour);
+  const [selectedMinute, setSelectedMinute] = useState(parsed.minute);
+  const [selectedAmpm, setSelectedAmpm] = useState(parsed.ampm);
+  const [mode, setMode] = useState("hours");
+  const pickerRef = useRef(null);
+
+  useEffect(() => {
+    const p = parseTime(value);
+    setSelectedHour(p.hour);
+    setSelectedMinute(p.minute);
+    setSelectedAmpm(p.ampm);
+    setMode("hours");
+  }, [value]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+        onClose();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onClose]);
+
+  const handleOk = () => {
+    let finalHour = selectedHour;
+    if (selectedAmpm === "PM") {
+      if (finalHour !== 12) finalHour += 12;
+    } else {
+      if (finalHour === 12) finalHour = 0;
+    }
+    const timeStr = `${finalHour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')}`;
+    onConfirm(timeStr);
+  };
+
+  const CENTER = 120;
+  const R = 90;
+
+  const getPos = (val, isHour) => {
+    const angleDeg = isHour ? val * 30 - 90 : val * 6 - 90;
+    const angleRad = (angleDeg * Math.PI) / 180;
+    const x = CENTER + R * Math.cos(angleRad) - 12;
+    const y = CENTER + R * Math.sin(angleRad) - 12;
+    return { left: `${x}px`, top: `${y}px` };
+  };
+
+  const handleClockClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    let angle = Math.atan2(
+      e.clientY - rect.top - CENTER,
+      e.clientX - rect.left - CENTER
+    ) * (180 / Math.PI) + 90;
+    if (angle < 0) angle += 360;
+
+    if (mode === "hours") {
+      let clickedHour = Math.round(angle / 30);
+      if (clickedHour === 0) clickedHour = 12;
+      if (clickedHour > 12) clickedHour -= 12;
+      setSelectedHour(clickedHour);
+      setTimeout(() => setMode("minutes"), 300);
+    } else {
+      let clickedMinute = Math.round(angle / 6);
+      if (clickedMinute >= 60) clickedMinute = 0;
+      const rounded = Math.round(clickedMinute / 5) * 5;
+      setSelectedMinute(rounded >= 60 ? 0 : rounded);
+    }
+  };
+
+  const hoursList = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const minutesList = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+
+  const handAngle = mode === "hours" ? selectedHour * 30 : selectedMinute * 6;
+
+  return (
+    <div ref={pickerRef} className="absolute right-0 top-full mt-2 z-[60] neumorphic-card p-5 w-[280px] text-center bg-[#e0e8f0] dark:bg-[#1b2230]" style={{ animation: 'timePickerFadeIn 0.15s ease-out' }}>
+      <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider text-left block mb-2.5">{label}</span>
+
+      {/* Header: HH : MM  AM/PM */}
+      <div className="flex items-center justify-center gap-1.5 mb-3.5 select-none">
+        <button
+          type="button"
+          onClick={() => setMode("hours")}
+          className={`text-2xl font-extrabold w-14 h-12 rounded-xl flex items-center justify-center transition-all cursor-pointer ${mode === "hours"
+            ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+            : "neumorphic-inset text-slate-800 dark:text-slate-200"
+            }`}
+        >
+          {selectedHour.toString().padStart(2, "0")}
+        </button>
+        <span className="text-xl font-black text-slate-700 dark:text-slate-300">:</span>
+        <button
+          type="button"
+          onClick={() => setMode("minutes")}
+          className={`text-2xl font-extrabold w-14 h-12 rounded-xl flex items-center justify-center transition-all cursor-pointer ${mode === "minutes"
+            ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+            : "neumorphic-inset text-slate-800 dark:text-slate-200"
+            }`}
+        >
+          {selectedMinute.toString().padStart(2, "0")}
+        </button>
+        <div className="flex flex-col neumorphic-inset !rounded-xl overflow-hidden ml-1.5 p-0.5">
+          <button type="button" onClick={() => setSelectedAmpm("AM")} className={`px-2 py-0.5 text-[10px] font-black rounded-lg transition-all cursor-pointer ${selectedAmpm === "AM" ? "bg-indigo-600 text-white shadow-sm" : "text-slate-500 dark:text-slate-400"}`}>AM</button>
+          <button type="button" onClick={() => setSelectedAmpm("PM")} className={`px-2 py-0.5 text-[10px] font-black rounded-lg transition-all cursor-pointer ${selectedAmpm === "PM" ? "bg-indigo-600 text-white shadow-sm" : "text-slate-500 dark:text-slate-400"}`}>PM</button>
         </div>
-      )}
+      </div>
+
+      {/* Clock Face */}
+      <div
+        onClick={handleClockClick}
+        className="w-[240px] h-[240px] rounded-full bg-[#dbe8f5] dark:bg-[#151a24] relative mx-auto neumorphic-inset cursor-pointer flex items-center justify-center select-none"
+      >
+        <div className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-500 absolute z-20" />
+
+        <div
+          className="absolute w-[2px] bg-indigo-600 dark:bg-indigo-500 origin-bottom transition-all duration-150"
+          style={{
+            height: `${R}px`,
+            left: '119px',
+            top: `${CENTER - R}px`,
+            transform: `rotate(${handAngle}deg)`,
+            transformOrigin: '50% 100%'
+          }}
+        >
+          <div className="absolute w-[26px] h-[26px] rounded-full bg-indigo-600 dark:bg-indigo-500 -top-[13px] -left-[12px] z-10" />
+        </div>
+
+        {mode === "hours" ? (
+          hoursList.map((h) => {
+            const pos = getPos(h, true);
+            const isSelected = selectedHour === h;
+            return (
+              <span key={h} className={`absolute w-6 h-6 flex items-center justify-center text-xs font-bold transition-all rounded-full z-10 ${isSelected ? "text-white" : "text-slate-700 dark:text-slate-300"}`} style={pos}>
+                {h}
+              </span>
+            );
+          })
+        ) : (
+          minutesList.map((m) => {
+            const pos = getPos(m, false);
+            const isSelected = selectedMinute === m;
+            return (
+              <span key={m} className={`absolute w-6 h-6 flex items-center justify-center text-[10px] font-bold transition-all rounded-full z-10 ${isSelected ? "text-white" : "text-slate-700 dark:text-slate-300"}`} style={pos}>
+                {m.toString().padStart(2, "0")}
+              </span>
+            );
+          })
+        )}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex items-center mt-3.5">
+        <button type="button" onClick={() => { if (onClear) onClear(); }} className="px-3 py-1.5 text-[10px] font-black text-rose-500 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors cursor-pointer uppercase tracking-wider">Clear</button>
+        <div className="flex-1" />
+        <button type="button" onClick={onClose} className="px-3 py-1.5 text-[10px] font-black text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors cursor-pointer uppercase tracking-wider">Cancel</button>
+        <button type="button" onClick={handleOk} className="px-3 py-1.5 text-[10px] font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600/10 rounded-lg transition-colors cursor-pointer uppercase tracking-wider ml-1">OK</button>
+      </div>
     </div>
   );
 }
@@ -389,6 +526,7 @@ function AddBusinessContent() {
       return acc;
     }, {})
   );
+  const [timePickerModal, setTimePickerModal] = useState(null); // { day, type, value, label }
 
   const [address, setAddress] = useState("");
   const [googleMapLink, setGoogleMapLink] = useState("");
@@ -401,7 +539,7 @@ function AddBusinessContent() {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  
+
   // Inline Auth Overlay States
   const [panelActive, setPanelActive] = useState("left"); // 'left' = signin, 'right' = signup
   const [authStep, setAuthStep] = useState("signin"); // 'signin', 'forgot', 'otp', 'update-password'
@@ -483,7 +621,7 @@ function AddBusinessContent() {
         .single();
 
       if (error || !listing) throw new Error("Could not find this business or listing.");
-      
+
       if (listing.user_id !== currentUser.id) {
         showToast("You don't have permission to edit this business.", "error");
         router.push("/dashboard");
@@ -497,7 +635,7 @@ function AddBusinessContent() {
       setGoogleMapLink(listing.googleMapLink || "");
       setDescription(listing.description || "");
       setExistingImageUrl(listing.image || "");
-      
+
       if (listing.opening_hours) {
         setHoursType(listing.opening_hours.status || "open_24_7");
         if (listing.opening_hours.hours) {
@@ -704,7 +842,7 @@ function AddBusinessContent() {
           .eq("user_id", currentUser.id);
 
         if (error) throw error;
-        
+
         setHasUnsavedChanges(false);
         showToast("Business updated successfully! Pending review re-approval.", "success");
         setTimeout(() => {
@@ -716,7 +854,7 @@ function AddBusinessContent() {
           .insert([businessData]);
 
         if (error) throw error;
-        
+
         setHasUnsavedChanges(false);
         setIsSuccessModalOpen(true);
       }
@@ -734,9 +872,9 @@ function AddBusinessContent() {
     setAuthError("");
     setAuthMessage("");
     try {
-      const { error } = await supabase.auth.signInWithPassword({ 
-        email: authEmail, 
-        password: authPassword 
+      const { error } = await supabase.auth.signInWithPassword({
+        email: authEmail,
+        password: authPassword
       });
       if (error) throw error;
       showToast("Successfully signed in!", "success");
@@ -848,10 +986,10 @@ function AddBusinessContent() {
     setAuthError("");
     setAuthMessage("");
     try {
-      const { error } = await supabase.auth.verifyOtp({ 
-        email: authEmail, 
-        token: authOtpCode, 
-        type: "email" 
+      const { error } = await supabase.auth.verifyOtp({
+        email: authEmail,
+        token: authOtpCode,
+        type: "email"
       });
       if (error) throw error;
       setAuthStep("update-password");
@@ -921,15 +1059,15 @@ function AddBusinessContent() {
   // Not logged in: Show the Overlay Authentication Modal inline
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-[#e0e8f0] dark:bg-[#1a202c] text-slate-900 dark:text-slate-100 flex flex-col relative overflow-hidden ">
-        
+      <div className="min-h-screen flex flex-col neumorphic-canvas text-slate-900 dark:text-slate-100 relative overflow-hidden">
+
         {/* Ambient background layout */}
         <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />
         <div className="blur-bubble bg-indigo-500/5 dark:bg-indigo-500/10 bottom-20 right-10 animate-float" style={{ animationDelay: "2s" }} />
         <div className="mesh-bg opacity-30" />
-        
+
         <Navbar />
-        
+
         <main className="flex-grow pt-24 pb-16 flex items-center justify-center relative z-10 px-2 sm:px-4">
           <div className="w-full max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20">
             <div className="max-w-xl text-center lg:text-left px-2 sm:px-4">
@@ -942,349 +1080,348 @@ function AddBusinessContent() {
             </div>
 
             <div className={`auth-container panel-${panelActive}-active relative w-full max-w-md h-[650px] flex justify-center shrink-0`}>
-            
-            {/* Sign In form container */}
-            <div id="signin-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-dark-card p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border transition-all duration-300">
-                {authStep === "signin" && (
-                  <>
-                    <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Welcome Back</h2>
-                    
-                    <form onSubmit={handleInlineSignIn} className="space-y-6">
-                      {/* Email Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                        <div className="pl-5 text-slate-700 dark:text-slate-400">
-                          <Mail className="w-5 h-5" />
-                        </div>
-                        <input 
-                          type="email" 
-                          required 
-                          value={authEmail} 
-                          onChange={(e) => setAuthEmail(e.target.value)}
-                          placeholder="Email Address"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                        />
-                      </div>
-                      
-                      {/* Password Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                        <div className="pl-5 text-slate-700 dark:text-slate-400">
-                          <Lock className="w-5 h-5" />
-                        </div>
-                        <input 
-                          type={showPassword ? "text" : "password"} 
-                          required 
-                          value={authPassword} 
-                          onChange={(e) => setAuthPassword(e.target.value)}
-                          placeholder="Password"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
-                        >
-                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                        </button>
-                      </div>
 
-                      {/* Remember me & Forgot password link */}
-                      <div className="flex items-center justify-between px-2 text-xs font-bold text-slate-700 dark:text-slate-400 select-none">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input 
-                            type="checkbox" 
-                            defaultChecked
-                            className="w-4 h-4 rounded bg-[#e0e8f0] dark:bg-dark-bg border-none shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/85 text-primary-650 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block" 
+              {/* Sign In form container */}
+              <div id="signin-container" className="auth-panel">
+                <div className="neumorphic-card p-4 sm:p-8">
+                  {authStep === "signin" && (
+                    <>
+                      <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Welcome Back</h2>
+
+                      <form onSubmit={handleInlineSignIn} className="space-y-6">
+                        {/* Email Input */}
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <div className="pl-5 text-slate-700 dark:text-slate-400">
+                            <Mail className="w-5 h-5" />
+                          </div>
+                          <input
+                            type="email"
+                            required
+                            value={authEmail}
+                            onChange={(e) => setAuthEmail(e.target.value)}
+                            placeholder="Email Address"
+                            className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
                           />
-                          <span>Remember me</span>
-                        </label>
-                        <button 
-                          type="button" onClick={() => { setAuthError(""); setAuthStep("forgot"); }}
-                          className="text-primary-650 hover:underline cursor-pointer"
-                        >
-                          Forgot Password?
-                        </button>
-                      </div>
-                      
-                      {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
-                      {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
-                      
-                      <button 
-                        type="submit" disabled={authSubmitLoading}
-                        className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
-                      >
-                        {authSubmitLoading ? "Signing In..." : "Sign In"}
-                      </button>
-                    </form>
+                        </div>
 
-                    <div className="flex justify-between items-center px-2 text-xs font-bold text-slate-700 dark:text-slate-400 mt-6">
-                      <span>Don't have an account?</span>
-                      <button onClick={() => setPanelActive('right')} className="text-primary-650 hover:underline cursor-pointer">
-                        Create account
-                      </button>
-                    </div>
-
-                    {/* Social Sign In Options */}
-                    <div className="mt-6 text-center">
-                      <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-4">Or continue with</span>
-                      <div className="flex justify-center gap-4">
-                        {[
-                          { icon: googleSvg, label: "Google" },
-                          { icon: facebookSvg, label: "Facebook" },
-                          { icon: linkedinSvg, label: "LinkedIn" },
-                          { icon: githubSvg, label: "GitHub" }
-                        ].map((provider) => (
+                        {/* Password Input */}
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <div className="pl-5 text-slate-700 dark:text-slate-400">
+                            <Lock className="w-5 h-5" />
+                          </div>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            required
+                            value={authPassword}
+                            onChange={(e) => setAuthPassword(e.target.value)}
+                            placeholder="Password"
+                            className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                          />
                           <button
-                            key={provider.label}
                             type="button"
-                            onClick={() => showToast(`${provider.label} sign-in option coming soon!`, "info")}
-                            className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none transition-all cursor-pointer"
-                            title={`Sign in with ${provider.label}`}
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
                           >
-                            {provider.icon}
+                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                           </button>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {authStep === "forgot" && (
-                  <>
-                    <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Reset Password</h3>
-                    
-                    <form onSubmit={handleInlineForgotPassword} className="space-y-6">
-                      {/* Email Input */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                        <div className="pl-5 text-slate-700 dark:text-slate-400">
-                          <Mail className="w-5 h-5" />
                         </div>
-                        <input 
-                          type="email" 
-                          required 
-                          value={authEmail} 
-                          onChange={(e) => setAuthEmail(e.target.value)}
-                          placeholder="Email Address"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                        />
-                      </div>
-                      
-                      {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
-                      {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
-                      
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
-                        Send Security Code
-                      </button>
-                      <button type="button" onClick={() => setAuthStep("signin")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
-                        <RotateCcw className="w-3.5 h-3.5" /> Back to Sign In
-                      </button>
-                    </form>
-                  </>
-                )}
 
-                {authStep === "otp" && (
-                  <>
-                    <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Verify Code</h3>
-                    
-                    <form onSubmit={handleInlineVerifyOtp} className="space-y-6">
-                      {/* OTP input field */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                        <input 
-                          type="text" 
-                          required 
-                          maxLength="6" 
-                          placeholder="123456" 
-                          value={authOtpCode} 
-                          onChange={(e) => setAuthOtpCode(e.target.value)}
-                          className="w-full bg-transparent border-none outline-none py-3.5 text-center text-2xl tracking-[0.5em] font-black text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:ring-0 focus:border-none focus:outline-none"
-                        />
-                      </div>
-                      
-                      {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
-                      {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
-                      
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
-                        Verify Code
-                      </button>
-                      <button type="button" onClick={() => setAuthStep("forgot")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
-                        <RotateCcw className="w-3.5 h-3.5" /> Back
-                      </button>
-                    </form>
-                  </>
-                )}
-
-                {authStep === "update-password" && (
-                  <>
-                    <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Set Password</h3>
-                    
-                    <form onSubmit={handleInlineUpdatePassword} className="space-y-6">
-                      {/* Password field */}
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                        <div className="pl-5 text-slate-700 dark:text-slate-400">
-                          <Lock className="w-5 h-5" />
+                        {/* Remember me & Forgot password link */}
+                        <div className="flex items-center justify-between px-2 text-xs font-bold text-slate-700 dark:text-slate-400 select-none">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              defaultChecked
+                              className="w-4 h-4 rounded neumorphic-inset text-primary-650 focus:ring-0 cursor-pointer appearance-none checked:bg-primary-500 checked:border-none flex items-center justify-center after:content-['✓'] after:text-[10px] after:text-white after:font-black after:hidden checked:after:block"
+                            />
+                            <span>Remember me</span>
+                          </label>
+                          <button
+                            type="button" onClick={() => { setAuthError(""); setAuthStep("forgot"); }}
+                            className="text-primary-650 hover:underline cursor-pointer"
+                          >
+                            Forgot Password?
+                          </button>
                         </div>
-                        <input 
-                          type={showPassword ? "text" : "password"} 
-                          required 
-                          minLength="6" 
-                          value={authNewPassword} 
-                          onChange={(e) => setAuthNewPassword(e.target.value)}
-                          placeholder="New Password"
-                          className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                        />
+
+                        {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
+                        {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
+
                         <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
+                          type="submit" disabled={authSubmitLoading}
+                          className="w-full neumorphic-btn py-3.5 text-sm font-extrabold tracking-wide transition-all cursor-pointer disabled:opacity-50"
                         >
-                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {authSubmitLoading ? "Signing In..." : "Sign In"}
+                        </button>
+                      </form>
+
+                      <div className="text-center text-xs font-bold text-slate-700 dark:text-slate-400 mt-6">
+                        <span>Don't have an account? </span>
+                        <button onClick={() => setPanelActive('right')} className="text-primary-650 hover:underline cursor-pointer font-extrabold ml-1">
+                          Create account
                         </button>
                       </div>
-                      
-                      {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
-                      {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
-                      
-                      <button type="submit" className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer">
-                        Update Password
-                      </button>
-                    </form>
-                  </>
-                )}
-              </div>
-            </div>
 
-            {/* Sign Up form container */}
-            <div id="signup-container" className="auth-panel">
-              <div className="bg-[#e0e8f0] dark:bg-dark-card p-4 sm:p-8 rounded-[32px] shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border transition-all duration-300">
-                <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Register</h2>
-                
-                <form onSubmit={handleInlineSignUp} className="space-y-4">
-                  {/* Full Name */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                    <div className="pl-5 text-slate-700 dark:text-slate-400">
-                      <User className="w-5 h-5" />
-                    </div>
-                    <input 
-                      type="text" 
-                      required 
-                      value={authFullName} 
-                      onChange={(e) => setAuthFullName(e.target.value)}
-                      placeholder="Full Name"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                    />
-                  </div>
+                      {/* Social Sign In Options */}
+                      <div className="mt-6 text-center">
+                        <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-4">Or continue with</span>
+                        <div className="flex justify-center gap-4">
+                          {[
+                            { icon: googleSvg, label: "Google" },
+                            { icon: facebookSvg, label: "Facebook" },
+                            { icon: linkedinSvg, label: "LinkedIn" },
+                            { icon: githubSvg, label: "GitHub" }
+                          ].map((provider) => (
+                            <button
+                              key={provider.label}
+                              type="button"
+                              onClick={() => showToast(`${provider.label} sign-in option coming soon!`, "info")}
+                              className="rounded-full w-12 h-12 flex items-center justify-center neumorphic-social-btn transition-all cursor-pointer"
+                              title={`Sign in with ${provider.label}`}
+                            >
+                              {provider.icon}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {authStep === "forgot" && (
+                    <>
+                      <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Reset Password</h3>
 
-                  {/* Email */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                    <div className="pl-5 text-slate-700 dark:text-slate-400">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <input 
-                      type="email" 
-                      required 
-                      value={authEmail} 
-                      onChange={(e) => setAuthEmail(e.target.value)}
-                      placeholder="Email Address"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                    />
-                  </div>
+                      <form onSubmit={handleInlineForgotPassword} className="space-y-6">
+                        {/* Email Input */}
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <div className="pl-5 text-slate-700 dark:text-slate-400">
+                            <Mail className="w-5 h-5" />
+                          </div>
+                          <input
+                            type="email"
+                            required
+                            value={authEmail}
+                            onChange={(e) => setAuthEmail(e.target.value)}
+                            placeholder="Email Address"
+                            className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                          />
+                        </div>
 
-                  {/* Password */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                    <div className="pl-5 text-slate-700 dark:text-slate-400">
-                      <Lock className="w-5 h-5" />
-                    </div>
-                    <input 
-                      type={showPassword ? "text" : "password"} 
-                      required 
-                      minLength="6" 
-                      value={authPassword} 
-                      onChange={(e) => setAuthPassword(e.target.value)}
-                      placeholder="Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
-                    >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
+                        {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
+                        {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
 
-                  {/* Confirm Password */}
-                  <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                    <div className="pl-5 text-slate-700 dark:text-slate-400">
-                      <Lock className="w-5 h-5" />
-                    </div>
-                    <input 
-                      type={showConfirmPassword ? "text" : "password"} 
-                      required 
-                      minLength="6" 
-                      value={authConfirmPassword} 
-                      onChange={(e) => setAuthConfirmPassword(e.target.value)}
-                      placeholder="Confirm Password"
-                      className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
+                        <button type="submit" className="w-full neumorphic-btn py-3.5 text-sm font-extrabold tracking-wide transition-all cursor-pointer">
+                          Send Security Code
+                        </button>
+                        <button type="button" onClick={() => setAuthStep("signin")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
+                          <RotateCcw className="w-3.5 h-3.5" /> Back to Sign In
+                        </button>
+                      </form>
+                    </>
+                  )}
 
-                  {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
-                  {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
+                  {authStep === "otp" && (
+                    <>
+                      <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Verify Code</h3>
 
-                  <button 
-                    type="submit" disabled={authSubmitLoading}
-                    className="w-full bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none hover:scale-[1.01] active:scale-[0.99] active:shadow-[inset_3px_3px_6px_#becbdc,_inset_-3px_-3px_6px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 py-3.5 rounded-full font-black text-sm tracking-wide transition-all cursor-pointer disabled:opacity-50"
-                  >
-                    {authSubmitLoading ? "Creating Account..." : "Sign up"}
-                  </button>
-                </form>
+                      <form onSubmit={handleInlineVerifyOtp} className="space-y-6">
+                        {/* OTP input field */}
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <input
+                            type="text"
+                            required
+                            maxLength="6"
+                            placeholder="123456"
+                            value={authOtpCode}
+                            onChange={(e) => setAuthOtpCode(e.target.value)}
+                            className="w-full bg-transparent border-none outline-none py-3.5 text-center text-2xl tracking-[0.5em] font-black text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:ring-0 focus:border-none focus:outline-none"
+                          />
+                        </div>
 
-                <div className="flex justify-between items-center px-2 text-xs font-bold text-slate-700 dark:text-slate-400 mt-6">
-                  <span>Already have an account?</span>
-                  <button onClick={() => setPanelActive('left')} className="text-primary-650 hover:underline cursor-pointer">
-                    Click here to sign in
-                  </button>
+                        {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
+                        {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
+
+                        <button type="submit" className="w-full neumorphic-btn py-3.5 text-sm font-extrabold tracking-wide transition-all cursor-pointer">
+                          Verify Code
+                        </button>
+                        <button type="button" onClick={() => setAuthStep("forgot")} className="w-full flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 font-bold text-xs cursor-pointer mt-4">
+                          <RotateCcw className="w-3.5 h-3.5" /> Back
+                        </button>
+                      </form>
+                    </>
+                  )}
+
+                  {authStep === "update-password" && (
+                    <>
+                      <h3 className="text-2xl font-extrabold text-center text-slate-800 dark:text-slate-200 mb-6">Set Password</h3>
+
+                      <form onSubmit={handleInlineUpdatePassword} className="space-y-6">
+                        {/* Password field */}
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <div className="pl-5 text-slate-700 dark:text-slate-400">
+                            <Lock className="w-5 h-5" />
+                          </div>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            required
+                            minLength="6"
+                            value={authNewPassword}
+                            onChange={(e) => setAuthNewPassword(e.target.value)}
+                            placeholder="New Password"
+                            className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
+                          >
+                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          </button>
+                        </div>
+
+                        {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
+                        {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
+
+                        <button type="submit" className="w-full neumorphic-btn py-3.5 text-sm font-extrabold tracking-wide transition-all cursor-pointer">
+                          Update Password
+                        </button>
+                      </form>
+                    </>
+                  )}
                 </div>
+              </div>
 
-                {/* Social Sign Up Options */}
-                <div className="mt-6 text-center">
-                  <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-4">Or continue with</span>
-                  <div className="flex justify-center gap-4">
-                    {[
-                      { icon: googleSvg, label: "Google" },
-                      { icon: facebookSvg, label: "Facebook" },
-                      { icon: linkedinSvg, label: "LinkedIn" },
-                      { icon: githubSvg, label: "GitHub" }
-                    ].map((provider) => (
+              {/* Sign Up form container */}
+              <div id="signup-container" className="auth-panel">
+                <div className="neumorphic-card p-4 sm:p-8">
+                  <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight text-slate-800 dark:text-slate-200">Register</h2>
+
+                  <form onSubmit={handleInlineSignUp} className="space-y-4">
+                    {/* Full Name */}
+                    <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                      <div className="pl-5 text-slate-700 dark:text-slate-400">
+                        <User className="w-5 h-5" />
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        value={authFullName}
+                        onChange={(e) => setAuthFullName(e.target.value)}
+                        placeholder="Full Name"
+                        className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                      <div className="pl-5 text-slate-700 dark:text-slate-400">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <input
+                        type="email"
+                        required
+                        value={authEmail}
+                        onChange={(e) => setAuthEmail(e.target.value)}
+                        placeholder="Email Address"
+                        className="w-full bg-transparent border-none outline-none pl-3 pr-5 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Password */}
+                    <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                      <div className="pl-5 text-slate-700 dark:text-slate-400">
+                        <Lock className="w-5 h-5" />
+                      </div>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        required
+                        minLength="6"
+                        value={authPassword}
+                        onChange={(e) => setAuthPassword(e.target.value)}
+                        placeholder="Password"
+                        className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                      />
                       <button
-                        key={provider.label}
                         type="button"
-                        onClick={() => showToast(`${provider.label} sign-up option coming soon!`, "info")}
-                        className="rounded-full w-12 h-12 flex items-center justify-center bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-105 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none transition-all cursor-pointer"
-                        title={`Sign up with ${provider.label}`}
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
                       >
-                        {provider.icon}
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
-                    ))}
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                      <div className="pl-5 text-slate-700 dark:text-slate-400">
+                        <Lock className="w-5 h-5" />
+                      </div>
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        required
+                        minLength="6"
+                        value={authConfirmPassword}
+                        onChange={(e) => setAuthConfirmPassword(e.target.value)}
+                        placeholder="Confirm Password"
+                        className="w-full bg-transparent border-none outline-none pl-3 pr-12 py-3.5 text-sm font-semibold text-slate-705 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-5 text-slate-500 hover:text-slate-700 dark:text-slate-400 cursor-pointer"
+                      >
+                        {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+
+                    {authError && <p className="text-rose-500 text-xs font-bold text-center bg-rose-50 dark:bg-rose-950/20 py-2.5 rounded-lg border border-rose-100/10 animate-shake">{authError}</p>}
+                    {authMessage && <p className="text-emerald-600 dark:text-emerald-400 text-xs font-bold text-center bg-emerald-50 dark:bg-emerald-950/20 py-2.5 rounded-lg border border-emerald-100/10">{authMessage}</p>}
+
+                    <button
+                      type="submit" disabled={authSubmitLoading}
+                      className="w-full neumorphic-btn py-3.5 text-sm font-extrabold tracking-wide transition-all cursor-pointer disabled:opacity-50"
+                    >
+                      {authSubmitLoading ? "Creating Account..." : "Sign up"}
+                    </button>
+                  </form>
+
+                  <div className="text-center text-xs font-bold text-slate-700 dark:text-slate-400 mt-6">
+                    <span>Already have an account? </span>
+                    <button onClick={() => setPanelActive('left')} className="text-primary-650 hover:underline cursor-pointer font-extrabold ml-1">
+                      Click here to sign in
+                    </button>
+                  </div>
+
+                  {/* Social Sign Up Options */}
+                  <div className="mt-6 text-center">
+                    <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-4">Or continue with</span>
+                    <div className="flex justify-center gap-4">
+                      {[
+                        { icon: googleSvg, label: "Google" },
+                        { icon: facebookSvg, label: "Facebook" },
+                        { icon: linkedinSvg, label: "LinkedIn" },
+                        { icon: githubSvg, label: "GitHub" }
+                      ].map((provider) => (
+                        <button
+                          key={provider.label}
+                          type="button"
+                          onClick={() => showToast(`${provider.label} sign-up option coming soon!`, "info")}
+                          className="rounded-full w-12 h-12 flex items-center justify-center neumorphic-social-btn transition-all cursor-pointer"
+                          title={`Sign up with ${provider.label}`}
+                        >
+                          {provider.icon}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           </div>
 
           {/* Polling popup overlay */}
           {isAwaitingConfirmation && (
             <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 animate-zoom-in-fade">
-              <div className="bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[32px] p-8 max-w-sm w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none text-center animate-bounce-in">
+              <div className="neumorphic-card p-8 max-w-sm w-full text-center animate-bounce-in">
                 <div className="relative w-16 h-16 mx-auto mb-5">
                   <span className="absolute inset-0 rounded-full border-4 border-indigo-50 dark:border-indigo-950" />
                   <span className="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin" />
@@ -1296,7 +1433,7 @@ function AddBusinessContent() {
                 <p className="text-slate-500 dark:text-slate-400 mb-5 text-xs font-bold leading-relaxed">
                   We've sent a verification link to <span className="text-primary-650 font-extrabold">{authEmail}</span>. Please click it to verify.
                 </p>
-                <div className="p-3.5 bg-[#e0e8f0]/40 dark:bg-dark-bg/60 rounded-xl shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/40 mb-5 text-[10px] font-black text-slate-500">
+                <div className="p-3.5 neumorphic-inset mb-5 text-[10px] font-black text-slate-500">
                   <p>Verification Polling Active</p>
                   <p className="text-primary-650 dark:text-primary-400 text-lg mt-1 font-black">
                     {Math.floor(pollingCountdown / 60)}:{(pollingCountdown % 60).toString().padStart(2, "0")}
@@ -1307,7 +1444,7 @@ function AddBusinessContent() {
                     if (pollingRef.current) clearInterval(pollingRef.current);
                     setIsAwaitingConfirmation(false);
                   }}
-                  className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
+                  className="w-full py-3.5 neumorphic-btn-secondary rounded-full font-black text-xs tracking-wider uppercase transition-all cursor-pointer"
                 >
                   Cancel Verification
                 </button>
@@ -1320,15 +1457,14 @@ function AddBusinessContent() {
             {toasts.map((t) => (
               <div
                 key={t.id}
-                className={`pointer-events-auto p-4 rounded-2xl shadow-xl border text-xs font-black tracking-wide flex items-center justify-between gap-4 animate-slide-up backdrop-blur-md ${
-                  t.type === "success"
-                    ? "bg-emerald-500/90 text-white border-emerald-500/20"
-                    : t.type === "error"
+                className={`pointer-events-auto p-4 rounded-2xl shadow-xl border text-xs font-black tracking-wide flex items-center justify-between gap-4 animate-slide-up backdrop-blur-md ${t.type === "success"
+                  ? "bg-emerald-500/90 text-white border-emerald-500/20"
+                  : t.type === "error"
                     ? "bg-rose-500/90 text-white border-rose-500/20"
                     : t.type === "warning"
-                    ? "bg-amber-500/90 text-slate-950 border-amber-500/20"
-                    : "bg-primary-600/90 text-white border-primary-650/20"
-                }`}
+                      ? "bg-amber-500/90 text-slate-950 border-amber-500/20"
+                      : "bg-primary-600/90 text-white border-primary-650/20"
+                  }`}
               >
                 <div className="flex items-center gap-2">
                   {t.type === "success" && <CheckCircle className="w-4.5 h-4.5 text-white" />}
@@ -1354,48 +1490,47 @@ function AddBusinessContent() {
 
   // Logged In: Show Multi-step Business Form
   return (
-    <div className="min-h-screen bg-[#e0e8f0] dark:bg-dark-bg text-slate-900 dark:text-slate-100  flex flex-col relative overflow-hidden">
-      
+    <div className="min-h-screen neumorphic-canvas text-slate-900 dark:text-slate-100  flex flex-col relative overflow-hidden">
+
       {/* Ambient background layout */}
       <div className="blur-bubble bg-primary-500/5 dark:bg-primary-500/10 top-20 left-10 animate-float" />
       <div className="blur-bubble bg-indigo-500/5 dark:bg-indigo-500/10 bottom-20 right-10 animate-float" style={{ animationDelay: "2s" }} />
       <div className="mesh-bg opacity-30" />
       <Navbar />
 
-      <main className="flex-grow pt-20 pb-16 relative z-10 px-2 sm:px-4">
+      <main className="flex-grow pt-28 sm:pt-32 pb-16 relative z-10 px-2 sm:px-4">
         <div className="container-perfect max-w-5xl">
-          
+
           {/* Form Header Banner */}
           {!editListingId && (
             <section className="text-center mb-10 animate-fade-in">
-              <div className="inline-flex items-center gap-1.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none text-primary-600 dark:text-primary-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase mb-6 select-none shadow-sm">
+              <div className="inline-flex items-center gap-1.5 bg-[#e0e8f0] dark:bg-[#1b2230] border border-transparent dark:border-dark-border/40 shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0e121b,_-4px_-4px_8px_#283245] text-primary-600 dark:text-primary-400 px-4 py-2 rounded-full text-xs font-black tracking-widest uppercase mb-6 select-none shadow-sm">
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Free Business Listing</span>
               </div>
-              
+
               <h1 id="form-main-title" className="text-4xl sm:text-5xl font-black text-slate-800 dark:text-slate-200 leading-[1.1] mb-4 tracking-tight">
                 List Your Business on
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-indigo-500 font-extrabold">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-indigo-500 font-extrabold font-kelly-slab">
                   Ghatal Guide
                 </span>
               </h1>
-              
+
               <p id="form-subtitle" className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-8 font-bold">
                 Join hundreds of local stores and get discovered by thousands of customers in Ghatal. Setup takes under 5 minutes!
               </p>
-              
+
               {/* Progress Steps Indicator */}
-              <div id="progress-indicator" className="flex flex-wrap items-center justify-center gap-4 max-w-xl mx-auto p-4 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-none rounded-3xl">
+              <div id="progress-indicator" className="flex flex-wrap items-center justify-center gap-4 max-w-xl mx-auto p-4 bg-[#e0e8f0] dark:bg-[#1b2230] border border-transparent dark:border-dark-border/40 shadow-[6px_6px_12px_#becbdc,_-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0e121b,_-6px_-6px_12px_#283245] rounded-3xl">
                 {[1, 2, 3].map((step) => (
                   <div key={step} className="flex items-center gap-2.5">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
-                      currentStep === step 
-                        ? "bg-primary-600 text-white scale-110 shadow-md shadow-primary-500/20" 
-                        : currentStep > step 
-                        ? "bg-emerald-500 text-white" 
-                        : "bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none text-slate-400"
-                    }`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${currentStep === step
+                      ? "bg-primary-600 text-white scale-110 shadow-md shadow-primary-500/20"
+                      : currentStep > step
+                        ? "bg-emerald-500 text-white"
+                        : "bg-[#e0e8f0] dark:bg-[#1b2230] border border-transparent dark:border-dark-border/40 shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0e121b,_inset_-2px_-2px_4px_#283245] text-slate-400"
+                      }`}>
                       {step}
                     </div>
                     {step < 3 && <div className="w-6 h-[2px] bg-slate-300 dark:bg-slate-700 hidden sm:block" />}
@@ -1418,23 +1553,23 @@ function AddBusinessContent() {
           )}
 
           {/* Form Container */}
-          <div className="bg-[#e0e8f0] dark:bg-dark-card shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border rounded-[32px] overflow-hidden animate-slide-up">
-            
+          <div className="neumorphic-card !rounded-2xl animate-slide-up">
+
             {/* Form Steps */}
             <form onSubmit={handleSubmit} className="p-4 sm:p-10 space-y-6 sm:space-y-8">
-              
+
               {/* STEP 1: Details & Operating Hours */}
               {currentStep === 1 && (
-                <div className="space-y-8 animate-fade-in">
+                <div className="space-y-8 animate-fade-in relative z-10">
                   {/* Primary Details Section */}
                   <div className="space-y-6">
                     <h3 className="text-xl font-black text-slate-800 dark:text-slate-200 pb-3 border-b border-black/5 dark:border-white/5 flex items-center gap-2">
                       <Building className="w-5 h-5 text-slate-400" />
                       <span>Business Categories & Primary Details</span>
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      
+
                       {/* Category Selection */}
                       <div className="relative z-20">
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Category *</label>
@@ -1472,13 +1607,13 @@ function AddBusinessContent() {
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                           {getBusinessNameLabel()}
                         </label>
-                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
-                          <input 
-                            type="text" 
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
+                          <input
+                            type="text"
                             value={businessName}
                             onChange={(e) => { setBusinessName(e.target.value); setHasUnsavedChanges(true); }}
                             placeholder={placeholderMap[subcategory] || "Enter business or service name"}
-                            className="w-full bg-transparent border-none outline-none px-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none"
+                            className="w-full bg-transparent border-none outline-none px-5 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1486,12 +1621,12 @@ function AddBusinessContent() {
                       {/* Phone Number */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Phone Number * (10-Digit Mobile)</label>
-                        <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
+                        <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
                           <div className="pl-5 text-slate-700 dark:text-slate-400">
                             <Phone className="w-5 h-5" />
                           </div>
-                          <input 
-                            type="tel" 
+                          <input
+                            type="tel"
                             value={phone}
                             onChange={handlePhoneChange}
                             placeholder="e.g. 9876543210"
@@ -1514,7 +1649,7 @@ function AddBusinessContent() {
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      
+
                       {/* Opening Hours Selector */}
                       <div className="md:col-span-2 relative z-30">
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Opening Hours *</label>
@@ -1532,48 +1667,46 @@ function AddBusinessContent() {
 
                       {/* Custom Hours list */}
                       {hoursType === "custom" && (
-                        <div className="md:col-span-2 p-6 border border-transparent dark:border-dark-border rounded-3xl bg-[#e0e8f0] dark:bg-dark-card shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none space-y-4">
+                        <div className="md:col-span-2 p-6 neumorphic-inset !rounded-3xl space-y-4">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-black/5 dark:border-white/5">
                             <p className="text-xs font-bold text-slate-500 dark:text-slate-400">Specify open and close timings for operating days.</p>
-                            <button 
-                              type="button" 
+                            <button
+                              type="button"
                               onClick={copyMondayHours}
                               className="text-xs font-black text-primary-600 dark:text-primary-400 hover:underline text-left cursor-pointer"
                             >
                               Copy Monday's hours to all days
                             </button>
                           </div>
-                          
+
                           <div className="space-y-2.5">
                             {daysOfWeek.map((day, index) => {
                               const dKey = day.toLowerCase();
                               const isDayOpen = !!(customHours[dKey] && customHours[dKey].open && customHours[dKey].close);
                               return (
-                                <div key={day} style={{ zIndex: daysOfWeek.length - index }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 rounded-2xl bg-[#e0e8f0]/40 dark:bg-dark-bg/40 border border-white/5 shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none transition-all duration-300 gap-3">
+                                <div key={day} style={{ zIndex: daysOfWeek.length - index }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 neumorphic-inset !bg-[#e0e8f0]/40 dark:!bg-[#1b2230]/40 !rounded-2xl transition-all duration-300 gap-3">
                                   <div className="flex items-center justify-between sm:justify-start gap-4 min-w-[150px]">
                                     <span className="text-sm font-black text-slate-700 dark:text-slate-200">{day}</span>
-                                    
+
                                     {/* Segmented control Open/Closed */}
-                                    <div className="flex rounded-lg p-0.5 bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none">
+                                    <div className="flex neumorphic-inset !rounded-lg p-0.5">
                                       <button
                                         type="button"
                                         onClick={() => { if (!isDayOpen) handleToggleDayOpen(dKey); }}
-                                        className={`px-3 py-1 rounded-md text-[10px] font-black uppercase transition-all duration-200 cursor-pointer ${
-                                          isDayOpen 
-                                            ? "bg-emerald-500 text-white shadow-sm" 
-                                            : "text-slate-500 dark:text-slate-400 hover:text-slate-700"
-                                        }`}
+                                        className={`px-3 py-1 rounded-md text-[10px] font-black uppercase transition-all duration-200 cursor-pointer ${isDayOpen
+                                          ? "bg-emerald-500 text-white shadow-sm"
+                                          : "text-slate-500 dark:text-slate-400 hover:text-slate-700"
+                                          }`}
                                       >
                                         Open
                                       </button>
                                       <button
                                         type="button"
                                         onClick={() => { if (isDayOpen) handleToggleDayOpen(dKey); }}
-                                        className={`px-3 py-1 rounded-md text-[10px] font-black uppercase transition-all duration-200 cursor-pointer ${
-                                          !isDayOpen 
-                                            ? "bg-rose-500 text-white shadow-sm" 
-                                            : "text-slate-500 dark:text-slate-400 hover:text-slate-700"
-                                        }`}
+                                        className={`px-3 py-1 rounded-md text-[10px] font-black uppercase transition-all duration-200 cursor-pointer ${!isDayOpen
+                                          ? "bg-rose-500 text-white shadow-sm"
+                                          : "text-slate-500 dark:text-slate-400 hover:text-slate-700"
+                                          }`}
                                       >
                                         Closed
                                       </button>
@@ -1581,17 +1714,42 @@ function AddBusinessContent() {
                                   </div>
 
                                   {isDayOpen ? (
-                                    <div className="flex items-center gap-3 animate-fade-in">
-                                      <TimePickerDropdown 
-                                        label="From"
-                                        value={customHours[dKey]?.open || "09:00"}
-                                        onChange={(val) => handleCustomHoursChange(dKey, "open", val)}
-                                      />
-                                      <TimePickerDropdown 
-                                        label="To"
-                                        value={customHours[dKey]?.close || "18:00"}
-                                        onChange={(val) => handleCustomHoursChange(dKey, "close", val)}
-                                      />
+                                    <div className="animate-fade-in relative">
+                                      <div className="flex items-center gap-3">
+                                        <TimePickerDropdown
+                                          label="From"
+                                          value={customHours[dKey]?.open || "09:00"}
+                                          onClick={() => setTimePickerModal(
+                                            timePickerModal?.day === dKey && timePickerModal?.type === "open"
+                                              ? null
+                                              : { day: dKey, type: "open", value: customHours[dKey]?.open || "09:00", label: `${day} Open Time` }
+                                          )}
+                                        />
+                                        <TimePickerDropdown
+                                          label="To"
+                                          value={customHours[dKey]?.close || "18:00"}
+                                          onClick={() => setTimePickerModal(
+                                            timePickerModal?.day === dKey && timePickerModal?.type === "close"
+                                              ? null
+                                              : { day: dKey, type: "close", value: customHours[dKey]?.close || "18:00", label: `${day} Close Time` }
+                                          )}
+                                        />
+                                      </div>
+                                      {timePickerModal && timePickerModal.day === dKey && (
+                                        <TimePickerModal
+                                          value={timePickerModal.value}
+                                          label={timePickerModal.label}
+                                          onClose={() => setTimePickerModal(null)}
+                                          onClear={() => {
+                                            handleCustomHoursChange(timePickerModal.day, timePickerModal.type, "");
+                                            setTimePickerModal(null);
+                                          }}
+                                          onConfirm={(newValue) => {
+                                            handleCustomHoursChange(timePickerModal.day, timePickerModal.type, newValue);
+                                            setTimePickerModal(null);
+                                          }}
+                                        />
+                                      )}
                                     </div>
                                   ) : (
                                     <span className="text-xs font-bold text-slate-400 dark:text-slate-500 italic pr-2">Closed for the day</span>
@@ -1619,13 +1777,13 @@ function AddBusinessContent() {
                     {/* Full Address */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Full Address *</label>
-                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-1 transition-all duration-200">
-                        <textarea 
-                          rows="2" 
+                      <div className="relative w-full neumorphic-inset !rounded-[20px] p-1 transition-all duration-200">
+                        <textarea
+                          rows="2"
                           value={address}
                           onChange={(e) => { setAddress(e.target.value); setHasUnsavedChanges(true); }}
                           placeholder="Enter full business address, landmarks, and area details..."
-                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 focus:border-none focus:outline-none resize-none"
+                          className="w-full bg-transparent border-none outline-none px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-550 focus:ring-0 focus:border-none focus:outline-none resize-none"
                         />
                       </div>
                     </div>
@@ -1633,12 +1791,12 @@ function AddBusinessContent() {
                     {/* Google Maps Link */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Google Maps Share Link</label>
-                      <div className="relative w-full rounded-full bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-0.5 flex items-center transition-all duration-200">
+                      <div className="relative w-full neumorphic-inset p-0.5 flex items-center transition-all duration-200">
                         <div className="pl-4 text-slate-700 dark:text-slate-400">
                           <Link2 className="w-4 h-4" />
                         </div>
-                        <input 
-                          type="url" 
+                        <input
+                          type="url"
                           value={googleMapLink}
                           onChange={(e) => { setGoogleMapLink(e.target.value); setHasUnsavedChanges(true); }}
                           placeholder="e.g. https://maps.app.goo.gl/..."
@@ -1650,9 +1808,9 @@ function AddBusinessContent() {
                     {/* Business Image Upload */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Business Storefront Image</label>
-                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-dark-border rounded-[24px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none hover:bg-[#d4dfea] dark:hover:bg-dark-card transition-all duration-250 cursor-pointer relative group text-center">
-                        <input 
-                          type="file" 
+                      <div className="flex flex-col items-center justify-center p-5 border border-dashed border-slate-300 dark:border-slate-700/50 neumorphic-inset !rounded-[24px] hover:scale-[0.99] transition-all duration-250 cursor-pointer relative group text-center">
+                        <input
+                          type="file"
                           accept="image/png, image/jpeg, image/webp"
                           onChange={handleImageChange}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
@@ -1660,14 +1818,14 @@ function AddBusinessContent() {
                         <ImageIcon className="w-6 h-6 text-slate-400 group-hover:text-primary-500 transition-colors mb-1.5" />
                         <p className="text-xs font-black text-slate-700 dark:text-slate-300">Click or drag image here to upload</p>
                       </div>
-                      
+
                       {/* Image Preview */}
                       {(imagePreviewUrl || existingImageUrl) && (
-                        <div className="mt-2.5 p-2 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[20px] max-w-xs shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none animate-fade-in">
+                        <div className="mt-2.5 p-2 neumorphic-card !rounded-[20px] max-w-xs animate-fade-in">
                           <p className="text-[9.5px] font-black uppercase text-slate-500 mb-1.5">Image Preview:</p>
-                          <img 
-                            src={imagePreviewUrl || existingImageUrl} 
-                            alt="Business Cover Preview" 
+                          <img
+                            src={imagePreviewUrl || existingImageUrl}
+                            alt="Business Cover Preview"
                             className="rounded-xl max-h-32 w-full object-cover shadow-sm"
                           />
                         </div>
@@ -1677,9 +1835,9 @@ function AddBusinessContent() {
                     {/* Business Description */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Business Description</label>
-                      <div className="relative w-full rounded-[20px] bg-[#e0e8f0] dark:bg-dark-bg shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none border border-transparent dark:border-dark-border/60 p-1 transition-all duration-200">
-                        <textarea 
-                          rows="2" 
+                      <div className="relative w-full neumorphic-inset !rounded-[20px] p-1 transition-all duration-200">
+                        <textarea
+                          rows="2"
                           maxLength="500"
                           value={description}
                           onChange={(e) => { setDescription(e.target.value); setHasUnsavedChanges(true); }}
@@ -1700,8 +1858,8 @@ function AddBusinessContent() {
                     <span>Review Business Information</span>
                   </h3>
 
-                  <div className="p-6 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-3xl shadow-[inset_4px_4px_8px_#becbdc,_inset_-4px_-4px_8px_#ffffff] dark:shadow-none divide-y divide-black/5 dark:divide-white/5 space-y-4">
-                    
+                  <div className="p-6 neumorphic-inset !rounded-3xl divide-y divide-black/5 dark:divide-white/5 space-y-4">
+
                     <div className="pt-0 flex flex-col sm:flex-row gap-2">
                       <p className="w-full sm:w-1/3 font-black text-slate-500 text-xs uppercase tracking-wide">{getBusinessNameLabel().replace(" *", "")}</p>
                       <p className="w-full sm:w-2/3 text-sm font-bold text-slate-800 dark:text-slate-200">{businessName}</p>
@@ -1724,13 +1882,13 @@ function AddBusinessContent() {
                       <div className="w-full sm:w-2/3 text-sm font-bold text-slate-800 dark:text-slate-200">
                         <p>{hoursType === "open_24_7" ? "Open 24/7" : hoursType === "temporarily_closed" ? "Temporarily Closed" : "Custom Timetable Set"}</p>
                         {hoursType === "custom" && (
-                          <div className="mt-2 text-xs space-y-1 bg-[#d4dfea]/30 dark:bg-dark-card/30 p-3 rounded-xl">
+                          <div className="mt-2 text-xs space-y-1 bg-[#d4dfea]/30 dark:bg-[#1b2230]/30 p-3 rounded-xl">
                             {daysOfWeek.map((day) => {
                               const dKey = day.toLowerCase();
                               const isDayOpen = !!(customHours[dKey] && customHours[dKey].open && customHours[dKey].close);
                               const openTime = customHours[dKey]?.open;
                               const closeTime = customHours[dKey]?.close;
-                              
+
                               const formatTime = (timeStr) => {
                                 if (!timeStr) return "";
                                 const parts = timeStr.split(":");
@@ -1766,11 +1924,11 @@ function AddBusinessContent() {
               {/* Navigation Actions Footer */}
               <div className="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/5">
                 {currentStep > 1 ? (
-                  <button 
+                  <button
                     key="prev-btn"
-                    type="button" 
+                    type="button"
                     onClick={(e) => { e.preventDefault(); handlePrevStep(); }}
-                    className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer animate-fade-in"
+                    className="inline-flex items-center gap-1.5 px-6 py-3.5 neumorphic-btn-secondary !rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer animate-fade-in"
                   >
                     <ArrowLeft className="w-4 h-4" /> Previous
                   </button>
@@ -1779,22 +1937,22 @@ function AddBusinessContent() {
                 )}
 
                 {currentStep < 3 ? (
-                  <button 
+                  <button
                     key="next-btn"
-                    type="button" 
+                    type="button"
                     onClick={(e) => { e.preventDefault(); handleNextStep(); }}
-                    className="inline-flex items-center gap-1.5 px-8 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer ml-auto"
+                    className="inline-flex items-center gap-1.5 px-8 py-3.5 neumorphic-btn !rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer ml-auto"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4 text-slate-500" />
                   </button>
                 ) : (
-                  <button 
+                  <button
                     key="submit-btn"
-                    type="button" 
+                    type="button"
                     onClick={handleSubmit}
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 px-10 py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-[1.02] active:scale-[0.98] active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-800 dark:text-slate-200 rounded-full font-black text-sm transition-all cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-10 py-3.5 neumorphic-btn !rounded-full font-black text-sm transition-all cursor-pointer disabled:opacity-50"
                   >
                     {submitting ? (
                       <>
@@ -1819,25 +1977,25 @@ function AddBusinessContent() {
       {/* Success Modal (Popup Manager) */}
       {isSuccessModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-zoom-in-fade">
-          <div className="bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border rounded-[32px] p-8 max-w-md w-full shadow-[12px_12px_24px_#becbdc,_-12px_-12px_24px_#ffffff] dark:shadow-none text-center animate-bounce-in">
-            <div className="w-16 h-16 bg-[#e0e8f0] dark:bg-dark-bg border border-transparent dark:border-dark-border shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:shadow-none text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="neumorphic-card p-8 max-w-md w-full text-center animate-bounce-in">
+            <div className="w-16 h-16 neumorphic-inset text-emerald-500 flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-black text-slate-800 dark:text-slate-200 mb-2.5">Business Submitted!</h3>
             <p className="text-slate-500 dark:text-slate-400 text-xs font-bold leading-relaxed mb-6">
               Thank you for listing your storefront. It is now pending review and will appear live on the Ghatal Guide directory once verified.
             </p>
-            
+
             <div className="flex flex-col gap-3">
-              <button 
+              <button
                 onClick={resetForm}
-                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
+                className="w-full py-3.5 neumorphic-btn-secondary font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
               >
                 Add Another Business
               </button>
-              <button 
+              <button
                 onClick={() => { setIsSuccessModalOpen(false); router.push("/dashboard"); }}
-                className="w-full py-3.5 bg-[#e0e8f0] dark:bg-dark-card border border-transparent dark:border-dark-border shadow-[4px_4px_8px_#becbdc,_-4px_-4px_8px_#ffffff] dark:shadow-none hover:scale-101 active:shadow-[inset_2px_2px_4px_#becbdc,_inset_-2px_-2px_4px_#ffffff] dark:active:shadow-none text-slate-700 dark:text-slate-300 rounded-full font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
+                className="w-full py-3.5 neumorphic-btn-secondary font-black text-xs uppercase tracking-wider transition-all cursor-pointer"
               >
                 Go to Dashboard
               </button>
@@ -1846,20 +2004,21 @@ function AddBusinessContent() {
         </div>
       )}
 
+
+
       {/* Toast notifications */}
       <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none">
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`pointer-events-auto p-4 rounded-2xl shadow-xl border text-xs font-black tracking-wide flex items-center justify-between gap-4 animate-slide-up backdrop-blur-md ${
-              t.type === "success"
-                ? "bg-emerald-500/90 text-white border-emerald-500/20"
-                : t.type === "error"
+            className={`pointer-events-auto p-4 rounded-2xl shadow-xl border text-xs font-black tracking-wide flex items-center justify-between gap-4 animate-slide-up backdrop-blur-md ${t.type === "success"
+              ? "bg-emerald-500/90 text-white border-emerald-500/20"
+              : t.type === "error"
                 ? "bg-rose-500/90 text-white border-rose-500/20"
                 : t.type === "warning"
-                ? "bg-amber-500/90 text-slate-950 border-amber-500/20"
-                : "bg-primary-600/90 text-white border-primary-650/20"
-            }`}
+                  ? "bg-amber-500/90 text-slate-950 border-amber-500/20"
+                  : "bg-primary-600/90 text-white border-primary-650/20"
+              }`}
           >
             <div className="flex items-center gap-2">
               {t.type === "success" && <CheckCircle className="w-4.5 h-4.5 text-white" />}
@@ -1868,7 +2027,7 @@ function AddBusinessContent() {
               {t.type === "info" && <Info className="w-4.5 h-4.5 text-white" />}
               <span>{t.message}</span>
             </div>
-            <button 
+            <button
               onClick={() => setToasts((prev) => prev.filter((toast) => toast.id !== t.id))}
               className="text-white hover:opacity-80 font-extrabold focus:outline-none text-base cursor-pointer"
             >

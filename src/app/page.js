@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
-import ListingCard from "@/components/cards/ListingCard";
-import { categories, sampleListings } from "@/lib/sampleData";
+import FeaturedListingCard from "@/components/cards/FeaturedListingCard";
+import { categories } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
 import { CategoryIcon } from "@/lib/categoryIcons";
-import { Search, Mic, MicOff, ArrowRight, Star, Calendar, Bus, MapPin, Clock, Store } from "lucide-react";
+import { Search, Mic, MicOff, ArrowRight, Star, Calendar, Bus, MapPin, Clock, Store, Sparkles } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -20,6 +20,9 @@ export default function Home() {
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
   const [allListings, setAllListings] = useState([]);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [isLoadingFeatured, setIsLoadingFeatured] = useState(true);
+  const [suggestionsLoaded, setSuggestionsLoaded] = useState(false);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
   // Load voice language preference from local storage
   useEffect(() => {
@@ -31,13 +34,33 @@ export default function Home() {
     }
   }, []);
 
-  // Fetch listings and bookmarks on load in parallel
+  // Decoupled logic to load autocomplete suggestions in the background
+  const loadSuggestions = useCallback(async () => {
+    if (suggestionsLoaded || loadingSuggestions) return;
+    setLoadingSuggestions(true);
+    try {
+      const res = await fetch("/api/listings");
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.listings) {
+          setAllListings(data.listings);
+          setSuggestionsLoaded(true);
+        }
+      }
+    } catch (err) {
+      console.warn("Error loading autocomplete suggestions", err);
+    } finally {
+      setLoadingSuggestions(false);
+    }
+  }, [suggestionsLoaded, loadingSuggestions]);
+
+  // Fetch only featured listings and bookmarks on load (Fast Path)
   useEffect(() => {
     async function loadData() {
+      setIsLoadingFeatured(true);
       try {
-        const [listingsRes, allListingsRes, sessionRes] = await Promise.all([
+        const [listingsRes, sessionRes] = await Promise.all([
           supabase.from("listings").select("*").eq("status", "approved").eq("is_featured", true).limit(3),
-          fetch("/api/listings").then((res) => res.ok ? res.json() : { listings: [] }).catch(() => ({ listings: [] })),
           supabase.auth.getSession().catch(e => {
             console.warn("Failed to get auth session:", e);
             return { data: { session: null } };
@@ -46,10 +69,6 @@ export default function Home() {
 
         let dbListings = listingsRes?.data || [];
         setFeaturedListings(dbListings);
-
-        if (allListingsRes?.listings) {
-          setAllListings(allListingsRes.listings);
-        }
 
         const session = sessionRes?.data?.session;
         if (session?.user) {
@@ -69,9 +88,11 @@ export default function Home() {
         }
       } catch (err) {
         console.warn("Error loading homepage data", err);
+      } finally {
+        setIsLoadingFeatured(false);
       }
 
-      // 3. Request geolocation
+      // Request geolocation (non-blocking)
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
@@ -86,6 +107,14 @@ export default function Home() {
     }
     loadData();
   }, []);
+
+  // Pre-fetch suggestions in background after 1.2s to not block initial load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadSuggestions();
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [loadSuggestions]);
 
   // Compute search suggestions in memory for the homepage
   const suggestions = React.useMemo(() => {
@@ -334,7 +363,10 @@ export default function Home() {
                   }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setSearchFocused(true)}
+                  onFocus={() => {
+                    setSearchFocused(true);
+                    loadSuggestions();
+                  }}
                   onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                   className="flex-grow bg-transparent border-none outline-none text-slate-900 dark:text-white text-base md:text-lg placeholder-slate-400 dark:placeholder-slate-500 focus:ring-0 py-3 min-w-0"
                   disabled={isListening}
@@ -484,37 +516,63 @@ export default function Home() {
         </section>
 
         {/* Featured Section */}
-        <section className="py-16 bg-white dark:bg-dark-bg relative">
-          <div className="container-perfect">
+        <section className="py-20 bg-white dark:bg-dark-bg relative overflow-hidden border-t border-slate-100/40 dark:border-dark-border/20">
+          
+          {/* Subtle neon mesh backdrops */}
+          <div className="blur-bubble bg-indigo-500/5 dark:bg-indigo-500/10 top-1/4 left-1/3 w-[500px] h-[500px] pointer-events-none" />
+          <div className="blur-bubble bg-emerald-500/5 dark:bg-emerald-500/10 bottom-1/4 right-1/3 w-[500px] h-[500px] pointer-events-none" />
+
+          <div className="container-perfect relative z-10">
             
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
-              <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-500 dark:text-indigo-400 select-none">
-                  Curated Collection
-                </p>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                  Featured Listings
+            {/* Redesigned Premium Title Block */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-6 relative z-10 border-b border-slate-100 dark:border-dark-border/40 pb-6">
+              <div className="space-y-2.5">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 dark:bg-indigo-400/15 border border-indigo-200/40 dark:border-indigo-800/30 text-indigo-650 dark:text-indigo-400 rounded-full text-[10px] font-black uppercase tracking-wider select-none">
+                  <Sparkles className="w-3 h-3 text-indigo-500 dark:text-indigo-400 fill-indigo-500 dark:fill-indigo-400/20 animate-pulse" />
+                  <span>Featured Partners</span>
+                </div>
+                <h2 className="text-3xl sm:text-4.5xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                  Discover Top Businesses
                 </h2>
+                <p className="text-xs sm:text-sm text-slate-550 dark:text-slate-400 font-bold max-w-xl leading-relaxed">
+                  Handpicked premier options and trusted services highly rated by the community in Ghatal Town.
+                </p>
               </div>
               <Link
                 href="/directory"
-                className="inline-flex items-center gap-1 text-xs font-black text-indigo-650 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors group shrink-0 border-b border-indigo-500/20 hover:border-indigo-500/80 pb-0.5"
+                className="inline-flex items-center gap-2 text-xs font-black text-indigo-655 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all group shrink-0 bg-slate-50 dark:bg-dark-card hover:bg-slate-100 dark:hover:bg-dark-card-hover border border-slate-200/60 dark:border-dark-border/80 px-5 py-3.5 rounded-2xl shadow-sm"
               >
                 <span>View Full Directory</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredListings.map((listing) => (
-                <ListingCard
-                  key={listing.id}
-                  listing={listing}
-                  userLocation={userLocation}
-                  isBookmarked={isBookmarked(listing.id)}
-                  onBookmarkToggle={handleBookmarkToggle}
-                />
-              ))}
+            {/* Premium Grid layout for Featured Cards & Skeletons */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {isLoadingFeatured ? (
+                Array.from({ length: 3 }).map((_, idx) => (
+                  <FeaturedListingCardSkeleton key={`skeleton-${idx}`} />
+                ))
+              ) : featuredListings.length > 0 ? (
+                featuredListings.map((listing) => (
+                  <FeaturedListingCard
+                    key={listing.id}
+                    listing={listing}
+                    userLocation={userLocation}
+                    isBookmarked={isBookmarked(listing.id)}
+                    onBookmarkToggle={handleBookmarkToggle}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full py-16 text-center border-2 border-dashed border-slate-200 dark:border-dark-border rounded-3xl bg-slate-50/50 dark:bg-dark-card/20">
+                  <div className="p-3 bg-slate-100 dark:bg-dark-border text-slate-400 rounded-2xl inline-block mb-3">
+                    <Store className="w-8 h-8" />
+                  </div>
+                  <p className="text-sm font-black text-slate-550 dark:text-slate-400 uppercase tracking-wide">
+                    No featured listings active
+                  </p>
+                </div>
+              )}
             </div>
 
           </div>
@@ -583,6 +641,45 @@ export default function Home() {
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+// Premium Skeleton Loader mimicking the custom FeaturedListingCard spacing & content density
+function FeaturedListingCardSkeleton() {
+  return (
+    <div className="flex flex-col overflow-hidden rounded-[24px] border border-slate-200/60 dark:border-dark-border/70 bg-white dark:bg-dark-card h-full shadow-sm animate-pulse select-none">
+      {/* Image Banner Shimmer */}
+      <div className="h-56 w-full bg-slate-200 dark:bg-dark-border/50 relative" />
+      
+      {/* Content Shimmer */}
+      <div className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          {/* Subcategory & Rating Shimmer */}
+          <div className="flex justify-between items-center gap-4 mb-4">
+            <div className="h-5 w-20 bg-slate-100 dark:bg-dark-border/40 rounded-md" />
+            <div className="h-5 w-16 bg-slate-100 dark:bg-dark-border/40 rounded-md" />
+          </div>
+          
+          {/* Title Shimmer */}
+          <div className="h-7 w-3/4 bg-slate-200 dark:bg-dark-border/50 rounded-lg mb-3.5" />
+          
+          {/* Address Shimmer */}
+          <div className="space-y-2 mb-4">
+            <div className="h-4 w-full bg-slate-200/60 dark:bg-dark-border/40 rounded-md" />
+            <div className="h-4 w-5/6 bg-slate-200/60 dark:bg-dark-border/40 rounded-md" />
+          </div>
+          
+          {/* Distance Shimmer */}
+          <div className="h-6 w-32 bg-slate-100 dark:bg-dark-border/40 rounded-lg mb-2" />
+        </div>
+        
+        {/* Footer Shimmer */}
+        <div className="mt-4 pt-4 border-t border-slate-100 dark:border-dark-border/50 flex justify-between items-center">
+          <div className="h-4 w-20 bg-slate-200 dark:bg-dark-border/40 rounded-md" />
+          <div className="h-9 w-24 bg-slate-200 dark:bg-dark-border/50 rounded-full" />
+        </div>
+      </div>
     </div>
   );
 }

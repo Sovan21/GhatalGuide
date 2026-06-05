@@ -1,4 +1,4 @@
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Kelly_Slab } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,6 +9,12 @@ const inter = Inter({
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+});
+
+const kellySlab = Kelly_Slab({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-kelly-slab",
 });
 
 export const metadata = {
@@ -28,7 +34,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${kellySlab.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

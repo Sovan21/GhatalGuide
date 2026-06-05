@@ -5,6 +5,7 @@
 @theme inline {
   --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
   --font-outfit: var(--font-outfit), sans-serif;
+  --font-kelly-slab: var(--font-kelly-slab), serif;
   
   /* Premium Primary Colors - Tailored HSL Blue Palette */
   --color-primary-50: #eff6ff;
@@ -103,8 +104,8 @@ textarea {
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
 }
 
 @media (min-width: 900px) {
@@ -499,4 +500,184 @@ textarea:focus {
 
 .btn-premium-glow:hover::after {
   transform: skewX(-20deg) translateX(100%);
+}
+
+/* === Neumorphic Soft UI Styling System === */
+
+.neumorphic-canvas {
+  background-color: #e0e8f0;
+  transition: background-color 0.3s ease;
+}
+
+.dark .neumorphic-canvas {
+  background-color: #1b2230;
+}
+
+/* Main Form Card */
+.neumorphic-card {
+  background-color: #e0e8f0;
+  box-shadow: 12px 12px 24px #becbdc, -12px -12px 24px #ffffff;
+  border-radius: 32px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .neumorphic-card {
+  background-color: #1b2230;
+  box-shadow: 10px 10px 20px #0e121b, -10px -10px 20px #283245;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Recessed Input Fields */
+.neumorphic-inset {
+  background-color: #e0e8f0;
+  box-shadow: inset 4px 4px 8px #becbdc, inset -4px -4px 8px #ffffff;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .neumorphic-inset {
+  background-color: #1b2230;
+  box-shadow: inset 4px 4px 8px #0e121b, inset -4px -4px 8px #283245;
+}
+
+.neumorphic-inset:focus-within {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.dark .neumorphic-inset:focus-within {
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+/* 3D Convex Primary Buttons - Premium Gradient & Hover */
+.neumorphic-btn {
+  position: relative;
+  background: linear-gradient(135deg, #a0b2c6 0%, #7d93a8 100%);
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 800;
+  border-radius: 9999px;
+  box-shadow: 4px 4px 10px #becbdc, -4px -4px 10px #ffffff;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  border: none;
+  z-index: 1;
+}
+
+.dark .neumorphic-btn {
+  background: linear-gradient(135deg, #2a3547 0%, #1e2530 100%);
+  color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 4px 4px 10px #0e121b, -4px -4px 10px #283245;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.neumorphic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  border-radius: 9999px;
+}
+
+.dark .neumorphic-btn::before {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+}
+
+.neumorphic-btn:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5), 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.dark .neumorphic-btn:hover {
+  color: #ffffff !important;
+  box-shadow: 0 8px 25px rgba(29, 78, 216, 0.6), 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+.neumorphic-btn:hover::before {
+  opacity: 1;
+}
+
+.neumorphic-btn:active {
+  transform: translateY(0.5px) scale(0.99);
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark .neumorphic-btn:active {
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Secondary Neumorphic Convex Buttons */
+.neumorphic-btn-secondary {
+  background-color: #e0e8f0;
+  color: #64748b !important;
+  font-weight: 800;
+  border-radius: 9999px;
+  box-shadow: 6px 6px 12px #becbdc, -6px -6px 12px #ffffff;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.dark .neumorphic-btn-secondary {
+  background-color: #1b2230;
+  color: #94a3b8 !important;
+  box-shadow: 6px 6px 12px #0e121b, -6px -6px 12px #283245;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.neumorphic-btn-secondary:hover {
+  transform: translateY(-1px) scale(1.01);
+  color: #475569 !important;
+}
+
+.dark .neumorphic-btn-secondary:hover {
+  color: #cbd5e1 !important;
+}
+
+.neumorphic-btn-secondary:active {
+  box-shadow: inset 3px 3px 6px #becbdc, inset -3px -3px 6px #ffffff;
+  transform: translateY(0.5px) scale(0.99);
+}
+
+.dark .neumorphic-btn-secondary:active {
+  box-shadow: inset 3px 3px 6px #0e121b, inset -3px -3px 6px #283245;
+  transform: translateY(0.5px) scale(0.99);
+}
+
+/* Recessed Social Media Circle Slots */
+.neumorphic-social-btn {
+  background-color: #e0e8f0;
+  border-radius: 9999px;
+  box-shadow: inset 3px 3px 6px #becbdc, inset -3px -3px 6px #ffffff;
+  transition: all 0.2s ease;
+}
+
+.dark .neumorphic-social-btn {
+  background-color: #1b2230;
+  box-shadow: inset 3px 3px 6px #0e121b, inset -3px -3px 6px #283245;
+}
+
+.neumorphic-social-btn:hover {
+  transform: scale(1.05);
+}
+
+.neumorphic-social-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes timePickerFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

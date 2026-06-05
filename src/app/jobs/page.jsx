@@ -5,7 +5,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { sampleJobs } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
-import { Briefcase, MapPin, DollarSign, ArrowRight } from "lucide-react";
+import { Briefcase, MapPin, ArrowRight } from "lucide-react";
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -94,7 +94,7 @@ export default function Jobs() {
                   className="bg-white dark:bg-dark-card rounded-3xl shadow-sm border border-slate-200 dark:border-dark-border p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-lg transition-all duration-300 group"
                 >
                   <div className="flex-grow min-w-0">
-                    <span className="inline-block bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/30 dark:border-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-3 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">
+                    <span className="inline-block bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100/30 dark:border-indigo-900/30 text-indigo-650 dark:text-indigo-405 text-[10px] font-black px-3 py-1.5 rounded-xl mb-3 tracking-widest uppercase shadow-sm">
                       {job.job_type || "Full Time"}
                     </span>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-1 tracking-tight group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
@@ -111,8 +111,7 @@ export default function Jobs() {
                       </span>
                       {job.salary_range && (
                         <span className="flex items-center gap-1">
-                          <DollarSign className="w-4 h-4 text-emerald-500" />
-                          <span className="text-emerald-600 dark:text-emerald-400 font-black">{job.salary_range}</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 font-black">Salary: {job.salary_range}</span>
                         </span>
                       )}
                     </div>

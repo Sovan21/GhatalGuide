@@ -38,7 +38,7 @@ export default function Footer() {
                 <div className="relative rounded-xl bg-gradient-to-tr from-primary-500 via-primary-600 to-indigo-500 p-0.5 shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/45 transition-all duration-500">
                   <img src="/logo.png" alt="Ghatal Guide Logo" className="h-9 w-9 bg-white rounded-[9px]" />
                 </div>
-                <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white font-outfit select-none">
+                <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white font-kelly-slab select-none">
                   Ghatal Guide
                 </span>
               </Link>

@@ -355,13 +355,23 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
       </div>
 
       {/* Cover Image Area (full width, touches edges) */}
-      <div className="h-48 w-full relative bg-slate-900 dark:bg-dark-bg overflow-hidden shrink-0 border-y border-slate-100 dark:border-dark-border">
-        <img
-          src={getImageUrl(listing.image)}
-          alt={listing.name}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="lazy"
-        />
+      <div className="h-48 w-full relative bg-slate-900 dark:bg-dark-bg overflow-hidden shrink-0 border-y border-slate-100 dark:border-dark-border flex items-center justify-center">
+        {listing.image ? (
+          <img
+            src={getImageUrl(listing.image)}
+            alt={listing.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-950/20 dark:to-purple-950/20 flex flex-col items-center justify-center p-6 text-center select-none group-hover:from-indigo-550/15 group-hover:to-purple-550/15 transition-all duration-500 relative">
+            {/* Soft background category watermark icon */}
+            <CategoryIcon className={`absolute w-28 h-28 opacity-[0.04] dark:opacity-[0.03] pointer-events-none rotate-12 ${theme.iconColor}`} />
+            <span className="text-slate-900 dark:text-slate-100 font-black uppercase text-base sm:text-lg tracking-tight line-clamp-2 leading-snug px-4.5 relative z-10 transition-transform duration-500 group-hover:scale-[1.03]">
+              {listing.name}
+            </span>
+          </div>
+        )}
 
         {/* Open/Closed Badge on top-right of image */}
         {isOpen !== undefined && (
