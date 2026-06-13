@@ -289,7 +289,7 @@ export default function Dashboard() {
                           ) : (
                             <button
                               onClick={() => handleRequestFeature(l.id)}
-                              className="px-3.5 py-2 rounded-xl bg-primary-50 hover:bg-primary-100 dark:bg-primary-955/20 dark:hover:bg-primary-900/30 border border-primary-200 dark:border-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-black transition-colors cursor-pointer"
+                              className="px-3.5 py-2 rounded-xl bg-primary-50 hover:bg-primary-100 dark:bg-primary-950/20 dark:hover:bg-primary-900/30 border border-primary-200 dark:border-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-black transition-colors cursor-pointer"
                               title="Request Feature Status"
                             >
                               Request Feature
@@ -342,7 +342,7 @@ export default function Dashboard() {
               <Trash2 className="w-7 h-7" />
             </div>
             <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">Delete Listing?</h3>
-            <p className="text-slate-505 dark:text-slate-400 text-xs font-bold leading-relaxed mb-6">
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-bold leading-relaxed mb-6">
               Are you sure you want to permanently delete this listing? This action cannot be undone and will remove it from the directory.
             </p>
             <div className="grid grid-cols-2 gap-3">

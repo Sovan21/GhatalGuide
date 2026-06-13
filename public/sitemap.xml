@@ -1,24 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Purpose: Defines the structure and priority of public pages for search engines.
-  Note: admin.html and test.html are intentionally excluded to keep them private.
+  Note: admin and private routes are intentionally excluded to keep them private.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <!-- 1. Homepage (Highest Priority) -->
   <url>
     <loc>https://ghatalguide.netlify.app/</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- 2. Add Business Page (Secondary Priority) -->
+  <!-- 2. Directory Page -->
   <url>
-    <loc>https://ghatalguide.netlify.app/add-business.html</loc>
-    <lastmod>2026-05-01</lastmod>
+    <loc>https://ghatalguide.netlify.app/directory</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 3. Add Business Page -->
+  <url>
+    <loc>https://ghatalguide.netlify.app/add-business</loc>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- 4. Transportation Schedules -->
+  <url>
+    <loc>https://ghatalguide.netlify.app/transportation</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 5. Events Page -->
+  <url>
+    <loc>https://ghatalguide.netlify.app/events</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 6. Blog page -->
+  <url>
+    <loc>https://ghatalguide.netlify.app/blog</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 7. Job Board -->
+  <url>
+    <loc>https://ghatalguide.netlify.app/jobs</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

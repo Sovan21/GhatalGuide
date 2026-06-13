@@ -8,49 +8,97 @@ import { categories } from "@/lib/sampleData";
 import {
   Building, Phone, Clock, MapPin, Link2, FileText, Image as ImageIcon, CheckCircle,
   ChevronRight, ChevronDown, ArrowLeft, PlusCircle, LayoutDashboard, Compass, Lock, Mail, User, RotateCcw,
-  MailOpen, AlertCircle, Info, Save, Eye, EyeOff,
+  MailOpen, AlertCircle, Info, Save, Eye, EyeOff, Ban, Settings,
   Activity, Utensils, ShoppingBag, Wrench, GraduationCap, ShieldAlert,
   Hospital, Stethoscope, Pill, Coffee, Candy, IceCream, Shirt, Smartphone,
   ShoppingBasket, BookOpen, Zap, Droplet, Car, School, Shield, Ambulance, Flame, Heart
 } from "lucide-react";
 
+const SweetIcon = ({ className, ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    {/* Bowl base */}
+    <path d="M2 17h20" />
+    <path d="M4 17a8 8 0 0 0 16 0" />
+    <path d="M9 22h6" />
+    
+    {/* Sweets (stacked laddus) */}
+    {/* Bottom row */}
+    <path d="M3 17a3 3 0 0 1 6 0" />
+    <path d="M9 17a3 3 0 0 1 6 0" />
+    <path d="M15 17a3 3 0 0 1 6 0" />
+    {/* Middle row */}
+    <path d="M6 14a3 3 0 0 1 6 0" />
+    <path d="M12 14a3 3 0 0 1 6 0" />
+    {/* Top circle */}
+    <circle cx="12" cy="8" r="3" />
+  </svg>
+);
+
+const DessertIcon = ({ className, ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M4.37 11.9c-1.3-.47-2.26-1.56-2.36-2.91-.12-1.7 1.3-3.26 3.12-3.5 1.25-.17 2.45.38 3.13 1.35.43-2.12 2.37-3.71 4.74-3.71s4.31 1.59 4.74 3.71c.68-.97 1.88-1.52 3.13-1.35 1.82.24 3.24 1.8 3.12 3.5-.1 1.35-1.06 2.44-2.36 2.91"/>
+    <path d="M6 12l1.6 8.32a2 2 0 0 0 1.96 1.63h4.88a2 2 0 0 0 1.96-1.63L18 12"/>
+    <line x1="12" x2="12" y1="12" y2="22"/>
+    <line x1="8.5" x2="9" y1="12" y2="22"/>
+    <line x1="15.5" x2="15" y1="12" y2="22"/>
+  </svg>
+);
+
 const categoryIconMap = {
-  health: <Activity className="w-4 h-4" />,
-  food: <Utensils className="w-4 h-4" />,
-  shopping: <ShoppingBag className="w-4 h-4" />,
-  services: <Wrench className="w-4 h-4" />,
-  education: <GraduationCap className="w-4 h-4" />,
-  emergency: <ShieldAlert className="w-4 h-4" />,
+  health: <Activity className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />,
+  food: <Utensils className="w-4 h-4 text-orange-500 dark:text-orange-400" />,
+  shopping: <ShoppingBag className="w-4 h-4 text-blue-500 dark:text-blue-400" />,
+  services: <Wrench className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />,
+  education: <GraduationCap className="w-4 h-4 text-purple-500 dark:text-purple-400" />,
+  emergency: <ShieldAlert className="w-4 h-4 text-rose-500 dark:text-rose-400" />,
 };
 
 const subcategoryIconMap = {
   // Health
-  "Hospitals": <Hospital className="w-4 h-4" />,
-  "Doctors": <Stethoscope className="w-4 h-4" />,
-  "Pharmacy": <Pill className="w-4 h-4" />,
+  "Hospitals": <Hospital className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />,
+  "Doctors": <Stethoscope className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />,
+  "Pharmacy": <Pill className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />,
   // Food
-  "Restaurants": <Utensils className="w-4 h-4" />,
-  "Cafes": <Coffee className="w-4 h-4" />,
-  "Sweets": <Candy className="w-4 h-4" />,
-  "Desserts": <IceCream className="w-4 h-4" />,
+  "Restaurants": <Utensils className="w-4 h-4 text-orange-500 dark:text-orange-400" />,
+  "Cafes": <Coffee className="w-4 h-4 text-orange-500 dark:text-orange-400" />,
+  "Sweets": <SweetIcon className="w-4 h-4 text-orange-500 dark:text-orange-400" />,
+  "Desserts": <DessertIcon className="w-4 h-4 text-orange-500 dark:text-orange-400" />,
   // Shopping
-  "Apparel": <Shirt className="w-4 h-4" />,
-  "Electronics": <Smartphone className="w-4 h-4" />,
-  "Groceries": <ShoppingBasket className="w-4 h-4" />,
-  "Book Store": <BookOpen className="w-4 h-4" />,
+  "Apparel": <Shirt className="w-4 h-4 text-blue-500 dark:text-blue-400" />,
+  "Electronics": <Smartphone className="w-4 h-4 text-blue-500 dark:text-blue-400" />,
+  "Groceries": <ShoppingBasket className="w-4 h-4 text-blue-500 dark:text-blue-400" />,
+  "Book Store": <BookOpen className="w-4 h-4 text-blue-500 dark:text-blue-400" />,
   // Services
-  "Electricians": <Zap className="w-4 h-4" />,
-  "Plumbers": <Droplet className="w-4 h-4" />,
-  "Mechanics": <Car className="w-4 h-4" />,
+  "Electricians": <Zap className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />,
+  "Plumbers": <Droplet className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />,
+  "Mechanics": <Car className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />,
   // Education
-  "Schools": <School className="w-4 h-4" />,
-  "Colleges": <GraduationCap className="w-4 h-4" />,
-  "Coaching Centers": <BookOpen className="w-4 h-4" />,
+  "Schools": <School className="w-4 h-4 text-purple-500 dark:text-purple-400" />,
+  "Colleges": <GraduationCap className="w-4 h-4 text-purple-500 dark:text-purple-400" />,
+  "Coaching Centers": <BookOpen className="w-4 h-4 text-purple-500 dark:text-purple-400" />,
   // Emergency
-  "Police": <Shield className="w-4 h-4" />,
-  "Ambulance": <Ambulance className="w-4 h-4" />,
-  "Fire Station": <Flame className="w-4 h-4" />,
-  "Blood Banks": <Heart className="w-4 h-4" />,
+  "Police": <Shield className="w-4 h-4 text-rose-500 dark:text-rose-400" />,
+  "Ambulance": <Ambulance className="w-4 h-4 text-rose-500 dark:text-rose-400" />,
+  "Fire Station": <Flame className="w-4 h-4 text-rose-500 dark:text-rose-400" />,
+  "Blood Banks": <Heart className="w-4 h-4 text-rose-500 dark:text-rose-400" />,
 };
 
 const labelMap = {
@@ -216,7 +264,7 @@ function CustomSelect({
       >
         <span className={`flex items-center gap-2.5 ${selectedOption ? "" : "text-slate-400 dark:text-slate-500"}`}>
           {selectedOption && selectedOption.icon && (
-            <span className="shrink-0 text-indigo-500 dark:text-indigo-400">{selectedOption.icon}</span>
+            <span className="shrink-0">{selectedOption.icon}</span>
           )}
           <span>{selectedOption ? selectedOption.label : placeholder}</span>
         </span>
@@ -255,8 +303,11 @@ function CustomSelect({
                 >
                   <span className="flex items-center gap-2.5 min-w-0">
                     {opt.icon && (
-                      <span className={`shrink-0 ${opt.value === value ? "text-white" : "text-indigo-500 dark:text-indigo-400"}`}>
-                        {opt.icon}
+                      <span className="shrink-0">
+                        {opt.value === value 
+                          ? React.cloneElement(opt.icon, { className: `${(opt.icon.props.className || "").replace(/\b(text|dark:text)-[a-z0-9-]+/g, "")} text-white` }) 
+                          : opt.icon
+                        }
                       </span>
                     )}
                     <span className="truncate">{opt.label}</span>
@@ -324,7 +375,7 @@ function TimePickerDropdown({ value, onClick, label }) {
   );
 }
 
-function TimePickerModal({ value, onConfirm, onClose, onClear, label }) {
+function TimePickerModal({ value, onConfirm, onClose, onClear, label, direction = "down" }) {
   const parseTime = (timeStr) => {
     const defaultVal = { hour: 9, minute: 0, ampm: "AM" };
     if (!timeStr) return defaultVal;
@@ -414,7 +465,7 @@ function TimePickerModal({ value, onConfirm, onClose, onClear, label }) {
   const handAngle = mode === "hours" ? selectedHour * 30 : selectedMinute * 6;
 
   return (
-    <div ref={pickerRef} className="absolute right-0 top-full mt-2 z-[60] neumorphic-card p-5 w-[280px] text-center bg-[#e0e8f0] dark:bg-[#1b2230]" style={{ animation: 'timePickerFadeIn 0.15s ease-out' }}>
+    <div ref={pickerRef} className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 md:left-auto md:translate-x-0 md:right-6 z-[60] neumorphic-card p-5 w-[280px] text-center bg-[#e0e8f0] dark:bg-[#1b2230]" style={{ animation: 'timePickerFadeIn 0.15s ease-out' }}>
       <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider text-left block mb-2.5">{label}</span>
 
       {/* Header: HH : MM  AM/PM */}
@@ -1597,7 +1648,6 @@ function AddBusinessContent() {
                             icon: subcategoryIconMap[sub]
                           }))}
                           placeholder={category ? "Select a Sub-Category" : "Please select a Category first"}
-                          showSearch={true}
                           disabled={!category}
                         />
                       </div>
@@ -1657,9 +1707,9 @@ function AddBusinessContent() {
                           value={hoursType}
                           onChange={(val) => { setHoursType(val); setHasUnsavedChanges(true); }}
                           options={[
-                            { value: "open_24_7", label: "Open 24/7" },
-                            { value: "temporarily_closed", label: "Temporarily Closed" },
-                            { value: "custom", label: "Set Custom Hours" }
+                            { value: "open_24_7", label: "Open 24/7", icon: <Clock className="w-4 h-4 text-emerald-500" /> },
+                            { value: "temporarily_closed", label: "Temporarily Closed", icon: <Ban className="w-4 h-4 text-rose-500" /> },
+                            { value: "custom", label: "Set Custom Hours", icon: <Settings className="w-4 h-4 text-blue-500" /> }
                           ]}
                           placeholder="Select Hours Option"
                         />
@@ -1667,7 +1717,7 @@ function AddBusinessContent() {
 
                       {/* Custom Hours list */}
                       {hoursType === "custom" && (
-                        <div className="md:col-span-2 p-6 neumorphic-inset !rounded-3xl space-y-4">
+                        <div className="md:col-span-2 p-6 neumorphic-inset !rounded-3xl space-y-4 relative">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-black/5 dark:border-white/5">
                             <p className="text-xs font-bold text-slate-500 dark:text-slate-400">Specify open and close timings for operating days.</p>
                             <button
@@ -1683,8 +1733,12 @@ function AddBusinessContent() {
                             {daysOfWeek.map((day, index) => {
                               const dKey = day.toLowerCase();
                               const isDayOpen = !!(customHours[dKey] && customHours[dKey].open && customHours[dKey].close);
+                              const isActive = timePickerModal?.day === dKey;
+                              const rowZIndex = isActive ? 50 : daysOfWeek.length - index;
+                              const openDirection = index >= 4 ? "up" : "down";
+
                               return (
-                                <div key={day} style={{ zIndex: daysOfWeek.length - index }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 neumorphic-inset !bg-[#e0e8f0]/40 dark:!bg-[#1b2230]/40 !rounded-2xl transition-all duration-300 gap-3">
+                                <div key={day} style={{ zIndex: rowZIndex }} className="relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 px-4 neumorphic-inset !bg-[#e0e8f0]/40 dark:!bg-[#1b2230]/40 !rounded-2xl transition-all duration-300 gap-3">
                                   <div className="flex items-center justify-between sm:justify-start gap-4 min-w-[150px]">
                                     <span className="text-sm font-black text-slate-700 dark:text-slate-200">{day}</span>
 
@@ -1735,21 +1789,6 @@ function AddBusinessContent() {
                                           )}
                                         />
                                       </div>
-                                      {timePickerModal && timePickerModal.day === dKey && (
-                                        <TimePickerModal
-                                          value={timePickerModal.value}
-                                          label={timePickerModal.label}
-                                          onClose={() => setTimePickerModal(null)}
-                                          onClear={() => {
-                                            handleCustomHoursChange(timePickerModal.day, timePickerModal.type, "");
-                                            setTimePickerModal(null);
-                                          }}
-                                          onConfirm={(newValue) => {
-                                            handleCustomHoursChange(timePickerModal.day, timePickerModal.type, newValue);
-                                            setTimePickerModal(null);
-                                          }}
-                                        />
-                                      )}
                                     </div>
                                   ) : (
                                     <span className="text-xs font-bold text-slate-400 dark:text-slate-500 italic pr-2">Closed for the day</span>
@@ -1758,6 +1797,22 @@ function AddBusinessContent() {
                               );
                             })}
                           </div>
+
+                          {timePickerModal && (
+                            <TimePickerModal
+                              value={timePickerModal.value}
+                              label={timePickerModal.label}
+                              onClose={() => setTimePickerModal(null)}
+                              onClear={() => {
+                                handleCustomHoursChange(timePickerModal.day, timePickerModal.type, "");
+                                setTimePickerModal(null);
+                              }}
+                              onConfirm={(newValue) => {
+                                handleCustomHoursChange(timePickerModal.day, timePickerModal.type, newValue);
+                                setTimePickerModal(null);
+                              }}
+                            />
+                          )}
                         </div>
                       )}
                     </div>

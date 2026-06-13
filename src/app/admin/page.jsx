@@ -5,17 +5,54 @@ import {
   ShieldAlert, Check, X, Trash2, LayoutDashboard, Database, MessageSquare, LogOut, Star, Clock, 
   Plus, Search, Filter, Edit2, Info, Calendar, MapPin, Briefcase, User, Eye, EyeOff, Train, 
   Bus, Settings, Activity, Utensils, ShoppingBag, Wrench, GraduationCap, Copy, ChevronRight, 
-  Moon, Sun, HelpCircle, FileText, ChevronLeft, Menu, Bell, Compass
+  Moon, Sun, HelpCircle, FileText, ChevronLeft, Menu, Bell, Compass, Lock, Phone, PhoneOff, Ban, ChevronDown, Tag, ArrowUpDown,
+  Hospital, Stethoscope, Pill, Coffee, Candy, IceCream, Shirt, Smartphone, ShoppingBasket, BookOpen, Zap, Droplet, Car, School, Shield, Ambulance, Flame, Heart
 } from "lucide-react";
 
 // Categories definition
 const categories = {
-  health: { name: "Health & Wellness", icon: Activity, color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-950/20" },
-  food: { name: "Food & Dining", icon: Utensils, color: "text-orange-500", bg: "bg-orange-50 dark:bg-orange-950/20" },
-  shopping: { name: "Shopping", icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-950/20" },
-  services: { name: "Local Services", icon: Wrench, color: "text-indigo-500", bg: "bg-indigo-50 dark:bg-indigo-950/20" },
-  education: { name: "Education", icon: GraduationCap, color: "text-violet-500", bg: "bg-violet-50 dark:bg-violet-950/20" },
-  emergency: { name: "Emergency", icon: ShieldAlert, color: "text-rose-500", bg: "bg-rose-50 dark:bg-rose-950/20" }
+  health: { 
+    name: "Health & Wellness", 
+    icon: Activity, 
+    color: "text-emerald-500", 
+    bg: "bg-emerald-50 dark:bg-emerald-950/20",
+    subcategories: ["Hospitals", "Doctors", "Pharmacy"]
+  },
+  food: { 
+    name: "Food & Dining", 
+    icon: Utensils, 
+    color: "text-orange-500", 
+    bg: "bg-orange-50 dark:bg-orange-950/20",
+    subcategories: ["Restaurants", "Cafes", "Sweets", "Desserts"]
+  },
+  shopping: { 
+    name: "Shopping", 
+    icon: ShoppingBag, 
+    color: "text-blue-500", 
+    bg: "bg-blue-50 dark:bg-blue-950/20",
+    subcategories: ["Apparel", "Electronics", "Groceries", "Book Store"]
+  },
+  services: { 
+    name: "Local Services", 
+    icon: Wrench, 
+    color: "text-indigo-500", 
+    bg: "bg-indigo-50 dark:bg-indigo-950/20",
+    subcategories: ["Electricians", "Plumbers", "Mechanics"]
+  },
+  education: { 
+    name: "Education", 
+    icon: GraduationCap, 
+    color: "text-violet-500", 
+    bg: "bg-violet-50 dark:bg-violet-950/20",
+    subcategories: ["Schools", "Colleges", "Coaching Centers"]
+  },
+  emergency: { 
+    name: "Emergency", 
+    icon: ShieldAlert, 
+    color: "text-rose-500", 
+    bg: "bg-rose-50 dark:bg-rose-950/20",
+    subcategories: ["Police", "Ambulance", "Fire Station", "Blood Banks"]
+  }
 };
 
 // Map subcategory to specific business name label
@@ -67,7 +104,62 @@ const generateSlug = (title) => {
     .replace(/^-+|-+$/g, '');
 };
 
+const DessertIcon = ({ className, ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M4.37 11.9c-1.3-.47-2.26-1.56-2.36-2.91-.12-1.7 1.3-3.26 3.12-3.5 1.25-.17 2.45.38 3.13 1.35.43-2.12 2.37-3.71 4.74-3.71s4.31 1.59 4.74 3.71c.68-.97 1.88-1.52 3.13-1.35 1.82.24 3.24 1.8 3.12 3.5-.1 1.35-1.06 2.44-2.36 2.91"/>
+    <path d="M6 12l1.6 8.32a2 2 0 0 0 1.96 1.63h4.88a2 2 0 0 0 1.96-1.63L18 12"/>
+    <line x1="12" x2="12" y1="12" y2="22"/>
+    <line x1="8.5" x2="9" y1="12" y2="22"/>
+    <line x1="15.5" x2="15" y1="12" y2="22"/>
+  </svg>
+);
+
+// Map subcategory to specific Lucide icons
+const getSubcategoryIcon = (subcategory) => {
+  if (!subcategory) return Tag;
+  const sub = subcategory.toLowerCase();
+  
+  if (sub.includes("hospital")) return Hospital;
+  if (sub.includes("doctor")) return Stethoscope;
+  if (sub.includes("pharmacy")) return Pill;
+  
+  if (sub.includes("restaurant")) return Utensils;
+  if (sub.includes("cafe")) return Coffee;
+  if (sub.includes("sweet")) return Candy;
+  if (sub.includes("dessert")) return DessertIcon;
+  
+  if (sub.includes("apparel")) return Shirt;
+  if (sub.includes("electronic")) return Smartphone;
+  if (sub.includes("grocer")) return ShoppingBasket;
+  if (sub.includes("book")) return BookOpen;
+  
+  if (sub.includes("electrician")) return Zap;
+  if (sub.includes("plumber")) return Droplet;
+  if (sub.includes("mechanic")) return Car;
+  
+  if (sub.includes("school")) return School;
+  if (sub.includes("college")) return GraduationCap;
+  if (sub.includes("coaching") || sub.includes("institute")) return BookOpen;
+  
+  if (sub.includes("police")) return Shield;
+  if (sub.includes("ambulance")) return Ambulance;
+  if (sub.includes("fire")) return Flame;
+  if (sub.includes("blood")) return Heart;
+  
+  return Tag;
+};
+
 export default function AdminDashboard() {
+  const authSubscriptionRef = React.useRef(null);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
@@ -78,6 +170,8 @@ export default function AdminDashboard() {
 
   // Layout states
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [adminUser, setAdminUser] = useState(null);
 
   // Active view states
@@ -99,7 +193,11 @@ export default function AdminDashboard() {
 
   // Filters & Sorting for Listings
   const [listingsCategory, setListingsCategory] = useState("all");
+  const [listingsSubcategory, setListingsSubcategory] = useState("all");
   const [listingsSort, setListingsSort] = useState("newest");
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+  const [isSubcategoryDropdownOpen, setIsSubcategoryDropdownOpen] = useState(false);
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
   // Selection states (for bulk actions)
   const [selectedListingIds, setSelectedListingIds] = useState([]);
@@ -132,6 +230,7 @@ export default function AdminDashboard() {
   });
 
   // Modal forms states
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const [addListingModalOpen, setAddListingModalOpen] = useState(false);
   const [addListingData, setAddListingData] = useState({
     name: "", category: "health", subcategory: "Hospitals", phone: "", address: "", 
@@ -205,16 +304,23 @@ export default function AdminDashboard() {
         console.warn("Failed to retrieve auth session:", e);
       });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user) {
-        setIsAdminLoggedIn(true);
-        setAdminUser(session.user);
-        loadAllAdminData();
-      } else {
-        setIsAdminLoggedIn(false);
-        setAdminUser(null);
+    try {
+      const res = supabase.auth.onAuthStateChange((event, session) => {
+        if (session?.user) {
+          setIsAdminLoggedIn(true);
+          setAdminUser(session.user);
+          loadAllAdminData();
+        } else {
+          setIsAdminLoggedIn(false);
+          setAdminUser(null);
+        }
+      });
+      if (res && res.data) {
+        authSubscriptionRef.current = res.data.subscription;
       }
-    });
+    } catch (e) {
+      console.warn("Failed to listen to auth state changes:", e);
+    }
 
     // Dark Mode load
     const savedTheme = localStorage.getItem("adminDarkMode");
@@ -228,7 +334,9 @@ export default function AdminDashboard() {
     }
 
     return () => {
-      subscription.unsubscribe();
+      if (authSubscriptionRef.current && typeof authSubscriptionRef.current.unsubscribe === "function") {
+        authSubscriptionRef.current.unsubscribe();
+      }
     };
   }, []);
 
@@ -1056,12 +1164,12 @@ export default function AdminDashboard() {
           
           return (
             <div key={category} className="space-y-1.5">
-              <div className="flex justify-between items-center text-xs font-bold text-slate-550 dark:text-slate-400">
+              <div className="flex justify-between items-center text-xs font-bold text-slate-500 dark:text-slate-400">
                 <span className="flex items-center gap-2">
                   <span className={`p-1 rounded-lg ${cat.bg} ${cat.color}`}>
                     <Icon className="w-3.5 h-3.5" />
                   </span>
-                  <span className="text-slate-700 dark:text-slate-350">{cat.name}</span>
+                  <span className="text-slate-700 dark:text-slate-200">{cat.name}</span>
                 </span>
                 <span className="font-extrabold text-slate-900 dark:text-white">{count}</span>
               </div>
@@ -1197,15 +1305,15 @@ export default function AdminDashboard() {
                   cx={p.x} cy={p.y} r="3"
                   className="fill-primary-500 stroke-white dark:stroke-dark-card stroke-2 hover:r-5 transition-all duration-150 cursor-pointer"
                 />
-                <title>{`${new Date(p.date).toLocaleDateString()}: ${p.count} submissions`}</title>
+                <title>{`${new Date(p.date).toLocaleDateString("en-US")}: ${p.count} submissions`}</title>
               </g>
             ))}
           </svg>
         </div>
-        <div className="flex justify-between text-[9px] font-black text-slate-400 dark:text-slate-555 px-2 uppercase tracking-wider">
-          <span>{new Date(data[0]?.date).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</span>
-          <span>{new Date(data[Math.floor(data.length / 2)]?.date).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</span>
-          <span>{new Date(data[data.length - 1]?.date).toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}</span>
+        <div className="flex justify-between text-[9px] font-black text-slate-400 dark:text-slate-500 dark:text-slate-400 px-2 uppercase tracking-wider">
+          <span>{new Date(data[0]?.date).toLocaleDateString("en-US", {month: 'short', day: 'numeric'})}</span>
+          <span>{new Date(data[Math.floor(data.length / 2)]?.date).toLocaleDateString("en-US", {month: 'short', day: 'numeric'})}</span>
+          <span>{new Date(data[data.length - 1]?.date).toLocaleDateString("en-US", {month: 'short', day: 'numeric'})}</span>
         </div>
       </div>
     );
@@ -1432,15 +1540,34 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100 flex flex-col font-sans relative overflow-x-hidden">
+    <div className="h-screen w-full bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100 flex flex-col font-sans relative overflow-hidden">
       <div className="mesh-bg" />
 
       {/* --- LOGIN SCREEN --- */}
       {!isAdminLoggedIn ? (
-        <div className="flex-grow flex items-center justify-center p-4 relative z-10">
-          <div className="bg-white/80 dark:bg-dark-card/85 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-200/50 dark:border-dark-border p-8 max-w-md w-full animate-scale-up">
+        <div className="flex-grow flex items-center justify-center p-4 relative z-10 overflow-y-auto">
+          {/* Floating Theme Switcher */}
+          <div className="absolute top-6 right-6">
+            <button
+              onClick={toggleTheme}
+              className="p-3 rounded-2xl border border-slate-200/50 dark:border-dark-border/40 bg-white/80 dark:bg-dark-card/80 backdrop-blur-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 dark:text-slate-400 transition-all shadow-md cursor-pointer flex items-center justify-center"
+              title="Toggle Light/Dark Mode"
+            >
+              {isDarkMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-indigo-500" />}
+            </button>
+          </div>
+
+          {/* Background Decorative Glow Blobs */}
+          <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-primary-400/10 dark:bg-primary-500/5 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-72 h-72 rounded-full bg-rose-400/10 dark:bg-rose-500/5 blur-3xl pointer-events-none" />
+
+          {/* Login Card */}
+          <div className="bg-white/80 dark:bg-dark-card/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/60 dark:border-white/10 p-8 max-w-md w-full relative overflow-hidden animate-bounce-in">
+            {/* Top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-500 via-primary-500 to-indigo-500" />
+            
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-tr from-rose-500 to-primary-500 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-md rotate-12 transition-transform duration-350 hover:rotate-0">
+              <div className="w-16 h-16 bg-gradient-to-tr from-rose-500 via-rose-600 to-primary-550 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg rotate-12 transition-transform duration-350 hover:rotate-0">
                 <ShieldAlert className="w-8 h-8 text-white -rotate-12 group-hover:rotate-0" />
               </div>
               <h3 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white">Admin Control Access</h3>
@@ -1448,39 +1575,43 @@ export default function AdminDashboard() {
             </div>
             
             {loginError && (
-              <div className="mb-5 p-4 bg-rose-50 dark:bg-rose-950/20 border border-rose-200/40 dark:border-rose-900/30 rounded-xl text-xs text-rose-600 dark:text-rose-455 font-bold">
+              <div className="mb-5 p-4 bg-rose-50 dark:bg-rose-950/20 border border-rose-200/40 dark:border-rose-900/30 rounded-xl text-xs text-rose-600 dark:text-rose-400 font-bold">
                 {loginError}
               </div>
             )}
 
             <form onSubmit={handleAdminLogin} className="space-y-5">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Admin Email</label>
-                <input
-                  type="email"
-                  required
-                  value={adminEmail}
-                  onChange={(e) => setAdminEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all"
-                  placeholder="admin@ghatalguide.com"
-                />
+                <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Admin Email</label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    value={adminEmail}
+                    onChange={(e) => setAdminEmail(e.target.value)}
+                    className="w-full pl-11 pr-4 py-3.5 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all"
+                    placeholder="admin@ghatalguide.com"
+                  />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500" />
+                </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Password</label>
+                <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
                     required
                     value={adminPassword}
                     onChange={(e) => setAdminPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-10 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all"
+                    className="w-full pl-11 pr-10 py-3.5 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all"
                     placeholder="••••••••"
                   />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500" />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-400 cursor-pointer"
                   >
                     {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
                   </button>
@@ -1490,7 +1621,7 @@ export default function AdminDashboard() {
               <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 rounded-2xl transition-all shadow-md shadow-rose-500/10 text-sm mt-6 cursor-pointer flex justify-center items-center gap-2"
+                className="w-full bg-gradient-to-r from-rose-500 to-primary-500 hover:from-rose-600 hover:to-primary-600 text-white font-extrabold py-3.5 rounded-2xl transition-all shadow-md shadow-rose-500/10 hover:shadow-lg hover:shadow-primary-500/20 text-sm mt-6 cursor-pointer flex justify-center items-center gap-2 transform active:scale-[0.98]"
               >
                 {loginLoading ? "Authorizing..." : "Access Control"}
               </button>
@@ -1499,35 +1630,75 @@ export default function AdminDashboard() {
         </div>
       ) : (
         /* --- PREMIUM SaaS DASHBOARD CONTAINER --- */
-        <div className="flex-grow flex relative z-10 w-full overflow-hidden min-h-[calc(100vh-73px)]">
+        <div className="flex-grow flex relative z-10 w-full overflow-hidden h-full">
+          {/* Mobile Sidebar Backdrop overlay */}
+          {isMobileSidebarOpen && (
+            <div 
+              className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-25 sm:hidden"
+              onClick={() => setIsMobileSidebarOpen(false)}
+            />
+          )}
           
           {/* 1. SIDEBAR NAVIGATION */}
-          <aside className={`bg-white/80 dark:bg-dark-card/90 backdrop-blur-md border-r border-slate-200/50 dark:border-dark-border flex flex-col justify-between transition-all duration-300 z-30 select-none ${
-            isSidebarCollapsed ? "w-20" : "w-64"
-          }`}>
+          <aside className={`fixed sm:relative inset-y-0 left-0 bg-white/95 dark:bg-dark-card/95 backdrop-blur-md border-r border-slate-200/50 dark:border-dark-border flex flex-col justify-between transition-all duration-300 z-30 select-none ${
+            isSidebarCollapsed ? "sm:w-20" : "sm:w-64"
+          } ${isMobileSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full sm:translate-x-0"}`}>
             <div className="flex flex-col gap-6 pt-5">
               {/* Logo block */}
-              <div className="px-5 flex items-center justify-between">
-                <div className={`flex items-center gap-3 overflow-hidden transition-all ${
-                  isSidebarCollapsed ? "opacity-0 w-0" : "opacity-100"
-                }`}>
-                  <div className="p-2 bg-primary-500 rounded-xl text-white shadow-sm flex-shrink-0">
-                    <Compass className="w-4.5 h-4.5 animate-spin-slow" />
+              <div className={`px-4 flex items-center pt-1.5 ${
+                isSidebarCollapsed ? "justify-center" : "justify-between"
+              }`}>
+                <div 
+                  onClick={() => isSidebarCollapsed && setIsSidebarCollapsed(false)}
+                  className={`flex items-center gap-2.5 overflow-hidden ${
+                    isSidebarCollapsed ? "cursor-pointer hover:scale-105 transition-transform" : ""
+                  }`}
+                  title={isSidebarCollapsed ? "Expand Sidebar" : "Admin Panel"}
+                >
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm border border-slate-200/50 dark:border-dark-border bg-white dark:bg-dark-bg flex items-center justify-center">
+                    <img 
+                      src="/admin-logo.png" 
+                      alt="Admin Logo" 
+                      className="w-full h-full object-contain p-1" 
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        const fallback = e.target.parentNode.querySelector('.logo-fallback');
+                        if (fallback) fallback.classList.remove('hidden');
+                      }}
+                    />
+                    <Compass className="w-5 h-5 text-primary-500 hidden logo-fallback animate-spin-slow" />
                   </div>
-                  <span className="font-black text-slate-900 dark:text-white text-base tracking-tight whitespace-nowrap">Ghatal Guide</span>
+                  {!isSidebarCollapsed && (
+                    <span className="font-black text-slate-950 dark:text-white text-base tracking-tight whitespace-nowrap">
+                      Admin Panel
+                    </span>
+                  )}
                 </div>
                 
-                {/* Collapse button */}
-                <button
-                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                  className="p-1.5 rounded-lg border border-slate-200/50 dark:border-dark-border/60 bg-slate-50 dark:bg-dark-bg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-550 dark:text-slate-400 transition-all cursor-pointer"
-                >
-                  {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-                </button>
+                {/* Collapse button for desktop, Close button for mobile */}
+                {!isSidebarCollapsed && (
+                  <div className="flex items-center gap-1">
+                    {/* Desktop Toggle */}
+                    <button
+                      onClick={() => setIsSidebarCollapsed(true)}
+                      className="hidden sm:inline-flex p-1.5 rounded-lg border border-slate-200/50 dark:border-dark-border/60 bg-slate-50 dark:bg-dark-bg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+                      title="Collapse Sidebar"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    {/* Mobile Close Button */}
+                    <button
+                      onClick={() => setIsMobileSidebarOpen(false)}
+                      className="inline-flex sm:hidden p-1.5 rounded-lg border border-slate-200/50 dark:border-dark-border/60 bg-slate-50 dark:bg-dark-bg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Sidebar Menu items */}
-              <nav className="px-3 space-y-1">
+              <nav className="px-3 space-y-1.5 sm:space-y-1">
                 {[
                   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
                   { id: "listings", label: "Listings", icon: Database, badge: stats.pendingListings },
@@ -1535,29 +1706,46 @@ export default function AdminDashboard() {
                   { id: "blog", label: "Blog Posts", icon: FileText },
                   { id: "jobs", label: "Job Postings", icon: Briefcase },
                   { id: "events", label: "Events", icon: Calendar },
-                  { id: "transportation", label: "Transportation", icon: Train }
+                  { id: "transportation", label: "Transportation", icon: Train },
+                  { id: "logout", label: "Sign Out", icon: LogOut }
                 ].map(item => {
+                  const isLogout = item.id === "logout";
                   const isActive = activeTab === item.id;
                   const Icon = item.icon;
                   return (
                     <button
                       key={item.id}
-                      onClick={() => setActiveTab(item.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-black transition-all cursor-pointer relative group ${
+                      onClick={() => {
+                        if (isLogout) {
+                          handleAdminLogout();
+                        } else {
+                          setActiveTab(item.id);
+                          setIsMobileSidebarOpen(false);
+                        }
+                      }}
+                      className={`w-full flex items-center rounded-2xl font-semibold transition-all cursor-pointer relative group text-base sm:text-sm ${
+                        isSidebarCollapsed ? "flex justify-start gap-3.5 px-5 py-4 sm:justify-center sm:px-0 sm:py-3.5" : "gap-3.5 px-5 py-4 sm:px-4 sm:py-3.5"
+                      } ${
                         isActive
                           ? "bg-primary-500 text-white shadow-lg shadow-primary-500/10"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-850"
+                          : isLogout
+                            ? "text-rose-600 dark:text-rose-450 hover:bg-rose-50 dark:hover:bg-rose-950/20 hover:text-rose-700 dark:hover:text-rose-350"
+                            : "text-slate-650 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
                       }`}
                     >
-                      <Icon className={`w-4.5 h-4.5 flex-shrink-0 transition-transform group-hover:scale-110 ${isActive ? "text-white" : "text-slate-450 dark:text-slate-500"}`} />
+                      <Icon className={`w-5.5 h-5.5 sm:w-4.5 sm:h-4.5 flex-shrink-0 transition-transform group-hover:scale-110 ${isActive ? "text-white" : isLogout ? "text-rose-500 dark:text-rose-450" : "text-slate-500 dark:text-slate-500"}`} />
                       
-                      {!isSidebarCollapsed && (
-                        <span className="whitespace-nowrap transition-all duration-200">{item.label}</span>
-                      )}
+                      <span className={`whitespace-nowrap transition-all duration-200 ${
+                        isSidebarCollapsed ? "block sm:hidden" : "block"
+                      }`}>
+                        {item.label}
+                      </span>
 
                       {/* Pill active left line */}
-                      {isActive && !isSidebarCollapsed && (
-                        <span className="absolute left-0 top-1/3 bottom-1/3 w-1 bg-white rounded-r" />
+                      {isActive && (
+                        <span className={`absolute left-0 top-1/3 bottom-1/3 w-1 bg-white rounded-r ${
+                          isSidebarCollapsed ? "hidden sm:hidden block" : "block"
+                        }`} />
                       )}
 
                       {/* Badge count overlay */}
@@ -1583,14 +1771,16 @@ export default function AdminDashboard() {
 
             {/* Bottom admin details */}
             <div className="p-3 border-t border-slate-200/50 dark:border-dark-border/60">
-              <div className="flex items-center gap-3 p-2 bg-slate-50/50 dark:bg-dark-bg/40 rounded-2xl overflow-hidden">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 to-primary-500 text-white font-black flex items-center justify-center flex-shrink-0 text-xs shadow-sm">
+              <div className={`flex items-center p-2 bg-slate-100/50 dark:bg-dark-bg/40 rounded-2xl overflow-hidden ${
+                isSidebarCollapsed ? "justify-center" : "gap-3"
+              }`}>
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 to-primary-500 text-white font-black flex items-center justify-center flex-shrink-0 text-xs shadow-sm" title={adminUser?.email}>
                   {adminUser?.email?.charAt(0).toUpperCase() || "A"}
                 </div>
                 {!isSidebarCollapsed && (
                   <div className="overflow-hidden">
                     <p className="text-xs font-black text-slate-800 dark:text-white truncate">Administrator</p>
-                    <p className="text-[10px] font-bold text-slate-450 dark:text-slate-500 truncate mt-0.5">{adminUser?.email}</p>
+                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 truncate mt-0.5">{adminUser?.email}</p>
                   </div>
                 )}
               </div>
@@ -1598,43 +1788,93 @@ export default function AdminDashboard() {
           </aside>
 
           {/* 2. DYNAMIC WORKSPACE COMPONENT */}
-          <div className="flex-grow flex flex-col overflow-y-auto">
+          <div className="flex-grow flex flex-col overflow-y-auto overflow-x-hidden">
             
             {/* STICKY FLOATING GLASS HEADER */}
-            <header className="glass sticky top-0 z-20 px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200/50 dark:border-dark-border/40">
-              {/* Breadcrumb bread trail */}
-              <div className="flex items-center gap-1.5 text-xs font-black text-slate-400 dark:text-slate-500 select-none">
-                {getBreadcrumbPath().map((path, idx, arr) => (
-                  <React.Fragment key={path}>
-                    <span className={idx === arr.length - 1 ? "text-primary-500" : "hover:text-slate-650 dark:hover:text-slate-350"}>
-                      {path}
-                    </span>
-                    {idx < arr.length - 1 && <ChevronRight className="w-3 h-3 text-slate-300 dark:text-slate-700" />}
-                  </React.Fragment>
-                ))}
+            <header className="glass sticky top-0 z-20 px-4 sm:px-6 py-4 flex flex-row justify-between items-center gap-4 border-b border-slate-200/50 dark:border-dark-border/40 h-20 w-full relative">
+              {/* Left Section: Menu Toggle + Breadcrumbs (hidden on mobile if search is focused) */}
+              <div className={`flex items-center gap-3 sm:gap-4 select-none overflow-hidden truncate ${
+                isSearchFocused ? "hidden sm:flex" : "flex"
+              }`}>
+                {/* Mobile Menu Toggle Button */}
+                <button
+                  onClick={() => setIsMobileSidebarOpen(true)}
+                  className="inline-flex sm:hidden p-2.5 rounded-xl border border-slate-200/50 dark:border-dark-border/60 bg-white dark:bg-dark-card hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer flex-shrink-0 w-11 h-11 items-center justify-center shadow-sm"
+                  title="Open Navigation"
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+                
+                {/* Responsive Path Display */}
+                <div className="flex items-center gap-1.5 truncate text-sm sm:text-base font-bold text-slate-400 dark:text-slate-500">
+                  {getBreadcrumbPath().map((path, idx, arr) => (
+                    <React.Fragment key={path}>
+                      {/* On mobile, only show the last segment of the breadcrumbs to avoid crowding */}
+                      <span className={`${
+                        idx === arr.length - 1 
+                          ? "text-primary-500 font-extrabold" 
+                          : "hover:text-slate-650 dark:hover:text-slate-400 hidden xs:inline"
+                      } truncate max-w-[120px] sm:max-w-none`}>
+                        {path}
+                      </span>
+                      {idx < arr.length - 1 && (
+                        <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-600 flex-shrink-0 hidden xs:inline" />
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
 
-              {/* Sub-tab nested Search Input (compacts content view space) */}
-              {activeTab !== "dashboard" && (
-                <div className="relative w-full md:w-80">
-                  <input
-                    type="text"
-                    placeholder={`Search ${activeTab}...`}
-                    value={getActiveTabSearchValue()}
-                    onChange={(e) => handleActiveTabSearchChange(e.target.value)}
-                    className="w-full pl-9 pr-8 py-2 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all shadow-sm"
-                  />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  {getActiveTabSearchValue() && (
-                    <button
-                      onClick={() => handleActiveTabSearchChange("")}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 cursor-pointer"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  )}
-                </div>
-              )}
+              {/* Right Section: Compact Search Input + Action Items */}
+              <div className={`flex items-center gap-2.5 sm:gap-3 justify-end flex-shrink-0 transition-all duration-200 ${
+                isSearchFocused ? "w-full absolute inset-x-0 px-4 bg-white/95 dark:bg-dark-bg/95 z-30 h-full sm:relative sm:w-auto sm:px-0 sm:bg-transparent" : "w-auto"
+              }`}>
+                {isSearchFocused && (
+                  <button
+                    onMouseDown={() => setIsSearchFocused(false)}
+                    className="p-2.5 rounded-xl border border-slate-200/50 dark:border-dark-border/60 bg-slate-50 dark:bg-dark-bg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer sm:hidden flex-shrink-0 mr-1.5 w-11 h-11 items-center justify-center"
+                    title="Close Search"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+
+                {activeTab !== "dashboard" && (
+                  <div className={`relative ${
+                    isSearchFocused ? "w-full" : "w-32 xs:w-48 sm:w-64"
+                  } transition-all duration-300`}>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={getActiveTabSearchValue()}
+                      onChange={(e) => handleActiveTabSearchChange(e.target.value)}
+                      onFocus={() => setIsSearchFocused(true)}
+                      onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
+                      className="w-full pl-10 pr-9 py-2.5 sm:py-2 bg-slate-50/50 dark:bg-dark-bg/60 border border-slate-200 dark:border-dark-border rounded-xl text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white transition-all shadow-sm"
+                    />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500 pointer-events-none" />
+                    {getActiveTabSearchValue() && (
+                      <button
+                        onMouseDown={() => handleActiveTabSearchChange("")}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 cursor-pointer"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* Theme Toggle Button */}
+                <button
+                  onClick={toggleTheme}
+                  className={`rounded-xl border border-slate-200/50 dark:border-dark-border/40 bg-white/50 dark:bg-dark-card/50 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-all cursor-pointer shadow-sm items-center justify-center w-11 h-11 sm:w-10 h-10 ${
+                    isSearchFocused ? "hidden sm:flex" : "flex"
+                  }`}
+                  title="Toggle Light/Dark Mode"
+                >
+                  {isDarkMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-indigo-500" />}
+                </button>
+              </div>
             </header>
 
             {/* MAIN INNER CONTAINER VIEW */}
@@ -1702,7 +1942,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* TIMELINE VIEW (Re-organized Recent activities) */}
-                  <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-6 shadow-sm space-y-6">
+                  <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-4 sm:p-5 shadow-sm space-y-4">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">Timeline Activity Feed</h3>
                       <span className="text-[10px] font-black text-amber-500 uppercase bg-amber-55/10 px-2 py-0.5 rounded-lg">
@@ -1711,38 +1951,38 @@ export default function AdminDashboard() {
                     </div>
 
                     {listings.filter(l => l.status === "pending_review").length === 0 ? (
-                      <p className="text-xs text-slate-450 dark:text-slate-500 italic py-4">No recent activity requiring moderations.</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-550 italic py-4">No recent activity requiring moderations.</p>
                     ) : (
-                      <div className="relative border-l border-slate-150 dark:border-dark-border ml-3.5 pl-6 space-y-6 py-2">
+                      <div className="relative border-l border-slate-150 dark:border-dark-border ml-2 pl-4 space-y-4 py-1">
                         {listings.filter(l => l.status === "pending_review").slice(0, 5).map(listing => (
                           <div key={listing.id} className="relative group">
                             {/* Dot timeline anchor */}
-                            <span className="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-amber-550 border-3 border-white dark:border-dark-card ring-4 ring-amber-500/10 group-hover:scale-110 transition-transform" />
+                            <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full bg-amber-550 border-3 border-white dark:border-dark-card ring-4 ring-amber-500/10 group-hover:scale-110 transition-transform" />
                             
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
                               <div>
                                 <h4 className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-primary-500 transition-colors">
                                   {listing.name}
                                 </h4>
-                                <p className="text-xs text-slate-450 dark:text-slate-500 mt-0.5">
-                                  Category: <span className="font-bold text-slate-650 dark:text-slate-350">{listing.subcategory || listing.category}</span> &bull; Submitted on {new Date(listing.created_at).toLocaleDateString()}
+                                <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-550 mt-0.5">
+                                  Category: <span className="font-bold text-slate-600 dark:text-slate-305 dark:text-slate-300">{listing.subcategory || listing.category}</span> &bull; Submitted on {new Date(listing.created_at).toLocaleDateString("en-US")}
                                 </p>
                               </div>
                               
                               <div className="flex gap-2">
+                                <button
+                                  onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
+                                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-600 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1"
+                                >
+                                  <X className="w-3 h-3" />
+                                  <span>Reject</span>
+                                </button>
                                 <button
                                   onClick={() => triggerListingStatusConfirm(listing.id, "approved")}
                                   className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-emerald-500/10 flex items-center gap-1"
                                 >
                                   <Check className="w-3 h-3" />
                                   <span>Approve</span>
-                                </button>
-                                <button
-                                  onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
-                                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1"
-                                >
-                                  <X className="w-3 h-3" />
-                                  <span>Reject</span>
                                 </button>
                               </div>
                             </div>
@@ -1780,36 +2020,204 @@ export default function AdminDashboard() {
                       <span>Add Business</span>
                     </button>
                   </div>
-
-                  {/* Listings header controls */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className={`grid grid-cols-1 gap-4 ${listingsCategory !== "all" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
                     {/* Category Filter */}
                     <div className="relative">
-                      <select
-                        value={listingsCategory}
-                        onChange={(e) => setListingsCategory(e.target.value)}
-                        className="w-full pl-9 pr-4 py-3 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white shadow-sm appearance-none cursor-pointer"
+                      <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none z-10">
+                        {listingsCategory === "all" ? (
+                          <Filter className="w-4 h-4" />
+                        ) : (
+                          (() => {
+                            const cat = categories[listingsCategory];
+                            const Icon = cat.icon || HelpCircle;
+                            return <Icon className={`w-4 h-4 ${cat.color}`} />;
+                          })()
+                        )}
+                      </div>
+                      <button
+                        onClick={() => {
+                          setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
+                          setIsSortDropdownOpen(false);
+                          setIsSubcategoryDropdownOpen(false);
+                        }}
+                        className="w-full pl-10 pr-10 py-3 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold text-slate-800 dark:text-slate-100 shadow-sm flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500/20 text-left transition-all h-[42px]"
                       >
-                        <option value="all">All Categories</option>
-                        {Object.entries(categories).map(([key, value]) => (
-                          <option key={key} value={key}>{value.name}</option>
-                        ))}
-                      </select>
-                      <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                        <span className="truncate text-xs font-black">
+                          {listingsCategory === "all" ? "All Categories" : categories[listingsCategory].name}
+                        </span>
+                        <ChevronRight className={`w-3.5 h-3.5 text-slate-400 dark:text-slate-500 transition-transform duration-200 ${isCategoryDropdownOpen ? "rotate-90" : "rotate-0"}`} />
+                      </button>
+
+                      {/* Dropdown Options overlay */}
+                      {isCategoryDropdownOpen && (
+                        <>
+                          <div 
+                            className="fixed inset-0 z-40" 
+                            onClick={() => setIsCategoryDropdownOpen(false)}
+                          />
+                          <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 py-1.5 bg-white dark:bg-dark-card border border-slate-200/60 dark:border-dark-border rounded-xl shadow-xl shadow-slate-900/5 dark:shadow-black/30 overflow-hidden animate-scale-up max-h-72 overflow-y-auto">
+                            <button
+                              onClick={() => {
+                                  setListingsCategory("all");
+                                  setListingsSubcategory("all");
+                                  setIsCategoryDropdownOpen(false);
+                              }}
+                              className={`w-full px-4 py-3.5 text-left text-xs font-semibold flex items-center gap-2.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer ${
+                                listingsCategory === "all" ? "text-primary-500 bg-primary-50/25 dark:bg-primary-950/10 font-bold" : "text-slate-700 dark:text-slate-200"
+                              }`}
+                            >
+                              <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                              <span className="font-black">All Categories</span>
+                            </button>
+
+                            {Object.entries(categories).map(([key, value]) => {
+                              const Icon = value.icon;
+                              const isSelected = listingsCategory === key;
+                              return (
+                                <button
+                                  key={key}
+                                  onClick={() => {
+                                    setListingsCategory(key);
+                                    setListingsSubcategory("all");
+                                    setIsCategoryDropdownOpen(false);
+                                  }}
+                                  className={`w-full px-4 py-3.5 text-left text-xs font-semibold flex items-center gap-2.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer ${
+                                    isSelected ? "text-primary-500 bg-primary-50/25 dark:bg-primary-950/10 font-bold" : "text-slate-700 dark:text-slate-200"
+                                  }`}
+                                >
+                                  <Icon className={`w-4 h-4 ${value.color}`} />
+                                  <span className="font-black">{value.name}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
                     </div>
+
+                    {/* Subcategory Filter (Conditional) */}
+                    {listingsCategory !== "all" && (
+                      <div className="relative">
+                        <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none z-10">
+                          {(() => {
+                            const Icon = listingsSubcategory === "all" ? Tag : getSubcategoryIcon(listingsSubcategory);
+                            return <Icon className="w-4 h-4 text-primary-500" />;
+                          })()}
+                        </div>
+                        <button
+                          onClick={() => {
+                            setIsSubcategoryDropdownOpen(!isSubcategoryDropdownOpen);
+                            setIsCategoryDropdownOpen(false);
+                            setIsSortDropdownOpen(false);
+                          }}
+                          className="w-full pl-10 pr-10 py-3 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold text-slate-800 dark:text-slate-100 shadow-sm flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500/20 text-left transition-all h-[42px]"
+                        >
+                          <span className="truncate text-xs font-black">
+                            {listingsSubcategory === "all" ? "All Subcategories" : listingsSubcategory}
+                          </span>
+                          <ChevronRight className={`w-3.5 h-3.5 text-slate-400 dark:text-slate-500 transition-transform duration-200 ${isSubcategoryDropdownOpen ? "rotate-90" : "rotate-0"}`} />
+                        </button>
+
+                        {isSubcategoryDropdownOpen && (
+                          <>
+                            <div 
+                              className="fixed inset-0 z-40" 
+                              onClick={() => setIsSubcategoryDropdownOpen(false)}
+                            />
+                            <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 py-1.5 bg-white dark:bg-dark-card border border-slate-200/60 dark:border-dark-border rounded-xl shadow-xl shadow-slate-900/5 dark:shadow-black/30 overflow-hidden animate-scale-up max-h-72 overflow-y-auto">
+                              <button
+                                onClick={() => {
+                                  setListingsSubcategory("all");
+                                  setIsSubcategoryDropdownOpen(false);
+                                }}
+                                className={`w-full px-4 py-3.5 text-left text-xs font-semibold flex items-center gap-2.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer ${
+                                  listingsSubcategory === "all" ? "text-primary-500 bg-primary-50/25 dark:bg-primary-950/10 font-bold" : "text-slate-700 dark:text-slate-200"
+                                }`}
+                              >
+                                <Tag className="w-4 h-4 text-slate-400" />
+                                <span className="font-black">All Subcategories</span>
+                              </button>
+
+                              {(categories[listingsCategory]?.subcategories || []).map(sub => {
+                                const isSelected = listingsSubcategory === sub;
+                                const Icon = getSubcategoryIcon(sub);
+                                return (
+                                  <button
+                                    key={sub}
+                                    onClick={() => {
+                                      setListingsSubcategory(sub);
+                                      setIsSubcategoryDropdownOpen(false);
+                                    }}
+                                    className={`w-full px-4 py-3.5 text-left text-xs font-semibold flex items-center gap-2.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer ${
+                                      isSelected ? "text-primary-500 bg-primary-50/25 dark:bg-primary-950/10 font-bold" : "text-slate-700 dark:text-slate-200"
+                                    }`}
+                                  >
+                                    <Icon className="w-3.5 h-3.5 text-slate-400" />
+                                    <span className="font-black">{sub}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
 
                     {/* Sorting selector */}
                     <div className="relative">
-                      <select
-                        value={listingsSort}
-                        onChange={(e) => setListingsSort(e.target.value)}
-                        className="w-full pl-9 pr-4 py-3 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white shadow-sm appearance-none cursor-pointer"
+                      <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none z-10">
+                        <ArrowUpDown className="w-4 h-4" />
+                      </div>
+                      <button
+                        onClick={() => {
+                          setIsSortDropdownOpen(!isSortDropdownOpen);
+                          setIsCategoryDropdownOpen(false);
+                          setIsSubcategoryDropdownOpen(false);
+                        }}
+                        className="w-full pl-10 pr-10 py-3 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold text-slate-800 dark:text-slate-100 shadow-sm flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-500/20 text-left transition-all h-[42px]"
                       >
-                        <option value="newest">Sort by: Newest First</option>
-                        <option value="oldest">Sort by: Oldest First</option>
-                        <option value="name_asc">Sort by: Name (A-Z)</option>
-                      </select>
-                      <Settings className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                        <span className="truncate text-xs font-black">
+                          {listingsSort === "newest" && "Sort by: Newest First"}
+                          {listingsSort === "oldest" && "Sort by: Oldest First"}
+                          {listingsSort === "name_asc" && "Sort by: Name (A-Z)"}
+                        </span>
+                        <ChevronRight className={`w-3.5 h-3.5 text-slate-400 dark:text-slate-500 transition-transform duration-200 ${isSortDropdownOpen ? "rotate-90" : "rotate-0"}`} />
+                      </button>
+
+                      {/* Dropdown Options overlay */}
+                      {isSortDropdownOpen && (
+                        <>
+                          <div 
+                            className="fixed inset-0 z-40" 
+                            onClick={() => setIsSortDropdownOpen(false)}
+                          />
+                          <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 py-1.5 bg-white dark:bg-dark-card border border-slate-200/60 dark:border-dark-border rounded-xl shadow-xl shadow-slate-900/5 dark:shadow-black/30 overflow-hidden animate-scale-up">
+                            {[
+                              { value: "newest", label: "Sort by: Newest First", icon: Clock },
+                              { value: "oldest", label: "Sort by: Oldest First", icon: Calendar },
+                              { value: "name_asc", label: "Sort by: Name (A-Z)", icon: ArrowUpDown }
+                            ].map(item => {
+                              const isSelected = listingsSort === item.value;
+                              const Icon = item.icon;
+                              return (
+                                <button
+                                  key={item.value}
+                                  onClick={() => {
+                                    setListingsSort(item.value);
+                                    setIsSortDropdownOpen(false);
+                                  }}
+                                  className={`w-full px-4 py-3.5 text-left text-xs font-semibold flex items-center gap-2.5 transition-all hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer ${
+                                    isSelected ? "text-primary-500 bg-primary-50/25 dark:bg-primary-950/10 font-bold" : "text-slate-700 dark:text-slate-200"
+                                  }`}
+                                >
+                                  <Icon className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                                  <span className="font-black">{item.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
 
@@ -1832,7 +2240,7 @@ export default function AdminDashboard() {
                       >
                         <span>{tab.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          listingsFilter === tab.filter ? "bg-primary-50 text-primary-655 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-655"
+                          listingsFilter === tab.filter ? "bg-primary-50 text-primary-600 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                         }`}>
                           {tab.count}
                         </span>
@@ -1850,6 +2258,9 @@ export default function AdminDashboard() {
                     }
                     if (listingsCategory !== "all") {
                       filteredListings = filteredListings.filter(l => l.category === listingsCategory);
+                      if (listingsSubcategory !== "all") {
+                        filteredListings = filteredListings.filter(l => l.subcategory === listingsSubcategory);
+                      }
                     }
                     if (listingsSearch) {
                       const searchLower = listingsSearch.toLowerCase();
@@ -1871,11 +2282,11 @@ export default function AdminDashboard() {
                       <div className="space-y-4">
                         {/* Bulk Action Header bar */}
                         {filteredListings.length > 0 && (
-                          <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white/70 dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-2xl shadow-sm">
+                          <div className="flex items-center justify-between gap-3 p-4 bg-white/70 dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-2xl shadow-sm">
                             <div className="flex items-center gap-3">
                               <button
                                 onClick={() => selectAllFilteredListings(filteredListings)}
-                                className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-dark-bg dark:hover:bg-slate-800 border border-slate-200 dark:border-dark-border text-[11px] font-black text-slate-655 dark:text-slate-400 cursor-pointer"
+                                className="px-3.5 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-dark-bg dark:hover:bg-slate-800 border border-slate-200 dark:border-dark-border text-[11px] font-black text-slate-600 dark:text-slate-300 dark:text-slate-400 cursor-pointer transition-colors"
                               >
                                 {selectedListingIds.length === filteredListings.length ? "Deselect All" : "Select All"}
                               </button>
@@ -1883,254 +2294,291 @@ export default function AdminDashboard() {
                                 {selectedListingIds.length} listings selected
                               </span>
                             </div>
-
-                            {selectedListingIds.length > 0 && (
-                              <div className="flex gap-2">
-                                {listingsFilter === "pending_review" && (
-                                  <>
-                                    <button
-                                      onClick={() => triggerConfirm({
-                                        title: "Bulk Approve Listings",
-                                        message: `Are you sure you want to approve the ${selectedListingIds.length} selected listings?`,
-                                        type: "success",
-                                        onConfirm: () => handleBulkListingStatus("approved")
-                                      })}
-                                      className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                    >
-                                      Approve Selected
-                                    </button>
-                                    <button
-                                      onClick={() => triggerConfirm({
-                                        title: "Bulk Reject Listings",
-                                        message: `Are you sure you want to reject the ${selectedListingIds.length} selected listings?`,
-                                        type: "danger",
-                                        showReasonInput: true,
-                                        onConfirm: (reason) => handleBulkListingStatus("rejected", reason)
-                                      })}
-                                      className="px-3.5 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                    >
-                                      Reject Selected
-                                    </button>
-                                  </>
-                                )}
-
-                                {listingsFilter === "rejected" && (
-                                  <button
-                                    onClick={() => triggerConfirm({
-                                      title: "Bulk Approve Listings",
-                                      message: `Are you sure you want to approve the ${selectedListingIds.length} selected listings?`,
-                                      type: "success",
-                                      onConfirm: () => handleBulkListingStatus("approved")
-                                    })}
-                                    className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                  >
-                                    Approve Selected
-                                  </button>
-                                )}
-
-                                <button
-                                  onClick={() => triggerConfirm({
-                                    title: "Bulk Delete Listings",
-                                    message: `Are you sure you want to permanently delete the ${selectedListingIds.length} selected listings? This cannot be undone.`,
-                                    type: "danger",
-                                    onConfirm: handleBulkListingDelete
-                                  })}
-                                  className="px-3.5 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/35 rounded-xl text-xs font-black transition-all cursor-pointer"
-                                >
-                                  Delete Selected
-                                </button>
-                              </div>
-                            )}
                           </div>
                         )}
 
                         {/* Listings Cards Container */}
                         {filteredListings.length === 0 ? (
                           <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                            <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                            <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                             <p className="font-bold text-slate-800 dark:text-slate-200">No listings found</p>
-                            <p className="text-slate-450 dark:text-slate-500 text-xs mt-1">Refine your categories or search query parameters.</p>
+                            <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-xs mt-1">Refine your categories or search query parameters.</p>
                           </div>
                         ) : (
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {filteredListings.map(listing => {
                               const isSelected = selectedListingIds.includes(listing.id);
                               const cat = categories[listing.category] || { name: listing.category, icon: HelpCircle, bg: "bg-slate-50", color: "text-slate-500" };
-                              const CatIcon = cat.icon;
                               
                               return (
-                                <div
-                                  key={listing.id}
-                                  onClick={() => toggleSelectListing(listing.id)}
-                                  className={`group bg-white dark:bg-dark-card border rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-350 flex flex-col cursor-pointer relative ${
-                                    isSelected ? "border-primary-500 ring-2 ring-primary-500/25" : "border-slate-200/70 dark:border-dark-border hover:border-slate-350 dark:hover:border-slate-700"
-                                  }`}
-                                >
-                                  {/* Select Checkbox Anchor */}
-                                  <div className="absolute top-4 left-4 z-20">
-                                    <div className={`w-5 h-5 rounded-lg flex items-center justify-center border transition-all ${
-                                      isSelected ? "bg-primary-500 border-primary-500 text-white" : "bg-white/90 border-slate-300 dark:bg-dark-card/90 dark:border-dark-border"
-                                    }`}>
-                                      {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                                    </div>
-                                  </div>
-
-                                  {/* Features label */}
-                                  {listing.is_featured && (
-                                    <span className="absolute top-4 right-4 z-20 flex items-center gap-1 bg-amber-500 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                                      <Star className="w-2.5 h-2.5 fill-white text-white" />
-                                      <span>Featured</span>
-                                    </span>
-                                  )}
-
-                                  {/* Visual Thumbnail */}
-                                  <div className="h-44 w-full bg-slate-100 dark:bg-slate-900 relative flex-shrink-0 overflow-hidden flex items-center justify-center">
-                                    {listing.image ? (
-                                      <img
-                                        src={listing.image}
-                                        alt={listing.name}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        loading="lazy"
-                                      />
-                                    ) : (
-                                      <div className="w-full h-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-950/20 dark:to-purple-950/20 flex flex-col items-center justify-center p-6 text-center select-none group-hover:from-indigo-550/15 group-hover:to-purple-550/15 transition-all duration-500 relative">
-                                        <CatIcon className={`absolute w-24 h-24 opacity-[0.04] dark:opacity-[0.03] pointer-events-none rotate-12 ${cat.color}`} />
-                                        <span className="text-slate-900 dark:text-slate-100 font-black uppercase text-sm sm:text-base tracking-tight line-clamp-2 leading-snug px-4.5 relative z-10 transition-transform duration-500 group-hover:scale-[1.03]">
-                                          {listing.name}
-                                        </span>
-                                      </div>
-                                    )}
-                                    <span className={`absolute bottom-3 left-4 z-10 px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 ${cat.bg}`}>
-                                      {listing.subcategory || cat.name}
-                                    </span>
-                                  </div>
-
-                                  {/* Card contents */}
-                                  <div className="p-5 flex-grow flex flex-col justify-between">
-                                    <div className="space-y-2">
-                                      <div className="flex justify-between items-center text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-                                        <span className="flex items-center gap-1">
-                                          <CatIcon className="w-3 h-3 text-primary-500" />
-                                          <span>{cat.name}</span>
-                                        </span>
-                                        <span>{new Date(listing.created_at).toLocaleDateString()}</span>
-                                      </div>
-                                      <h4 className="font-extrabold text-slate-950 dark:text-white text-base leading-snug line-clamp-1">{listing.name}</h4>
-                                      <p className="text-slate-500 dark:text-slate-400 text-xs line-clamp-2 leading-relaxed font-semibold">{listing.address}</p>
+                                  <div
+                                    key={listing.id}
+                                    onClick={() => toggleSelectListing(listing.id)}
+                                    className={`group bg-white dark:bg-[#131926] border rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-350 flex flex-col cursor-pointer relative ${
+                                      isSelected 
+                                        ? "border-primary-500 ring-2 ring-primary-500/20 shadow-md shadow-primary-500/5 dark:shadow-primary-950/20 scale-[1.01]" 
+                                        : "border-slate-200/70 dark:border-[#1e293b] hover:border-slate-350 dark:hover:border-slate-700"
+                                    }`}
+                                  >
+                                    {/* Image Banner */}
+                                    <div className="w-full h-40 bg-slate-100 dark:bg-slate-900/50 overflow-hidden relative border-b border-slate-100 dark:border-[#1e293b]/40">
+                                      {listing.image ? (
+                                        <img 
+                                          src={listing.image} 
+                                          alt={listing.name} 
+                                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                        />
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-[#0f172a]/40 text-slate-350 dark:text-slate-700">
+                                          {React.createElement(cat.icon || HelpCircle, { className: "w-10 h-10 stroke-[1.5]" })}
+                                        </div>
+                                      )}
                                       
-                                      <div className="pt-3 border-t border-slate-100 dark:border-dark-border/40 space-y-1.5 text-xs font-semibold text-slate-650 dark:text-slate-350">
-                                        <p className="flex items-center gap-2">
-                                          <Clock className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
-                                          <span>{listing.phone || "No contact number"}</span>
-                                        </p>
-                                        {userEmails[listing.user_id] && (
-                                          <p className="flex items-center gap-2 truncate">
-                                            <User className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
-                                            <a href={`mailto:${userEmails[listing.user_id]}`} className="hover:underline text-primary-500 truncate">{userEmails[listing.user_id]}</a>
+                                      {/* Select Checkbox Anchor */}
+                                      <div className="absolute top-4 left-4 z-20">
+                                        <div className={`w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
+                                          isSelected 
+                                            ? "bg-primary-500 border-primary-500 text-white scale-110 shadow-md shadow-primary-500/25" 
+                                            : "bg-white/90 border-slate-350 dark:bg-[#131926]/90 dark:border-[#1e293b] opacity-0 group-hover:opacity-100 scale-90 hover:scale-100"
+                                        }`}>
+                                          {isSelected ? (
+                                            <Check className="w-3.5 h-3.5 stroke-[3.5]" />
+                                          ) : (
+                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      {/* Features label */}
+                                      {listing.is_featured && (
+                                        <span className="absolute top-4 right-4 z-20 flex items-center gap-1 bg-amber-500 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                          <Star className="w-2.5 h-2.5 fill-white text-white" />
+                                          <span>Featured</span>
+                                        </span>
+                                      )}
+                                    </div>
+
+                                    {/* Card Content body */}
+                                    <div className="p-6 flex-grow flex flex-col justify-between">
+                                      <div>
+                                        {/* Header Row: Category & Date */}
+                                        <div className="flex justify-between items-center text-xs font-black tracking-wider uppercase mb-3 select-none">
+                                          <span className="text-blue-500 dark:text-blue-400">
+                                            {listing.subcategory?.toUpperCase() || cat.name.toUpperCase()}
+                                          </span>
+                                          <span className="text-slate-400 dark:text-slate-500 font-medium normal-case">
+                                            {new Date(listing.created_at).toLocaleDateString("en-US")}
+                                          </span>
+                                        </div>
+
+                                        {/* Title & Address */}
+                                        <div className="space-y-1">
+                                          <h4 className="font-extrabold text-slate-900 dark:text-white text-xl leading-snug line-clamp-1">
+                                            {listing.name}
+                                          </h4>
+                                          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed font-semibold">
+                                            {listing.address}
+                                          </p>
+                                        </div>
+
+                                        {/* Contact & Owner Metadata */}
+                                        <div className="pt-3 mt-3 border-t border-slate-100 dark:border-[#1e293b]/50 space-y-2 text-xs font-semibold text-slate-605 dark:text-slate-400">
+                                          {/* Phone Number */}
+                                          <div className="flex items-center gap-2">
+                                            {listing.phone ? (
+                                              <>
+                                                <Phone className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                                                <span>{listing.phone}</span>
+                                              </>
+                                            ) : (
+                                              <>
+                                                <PhoneOff className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                                                <span className="italic">not available</span>
+                                              </>
+                                            )}
+                                          </div>
+
+                                          {/* Owner Status */}
+                                          <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                                            {userEmails[listing.user_id] ? (
+                                              <span className="flex items-center gap-2 truncate">
+                                                <User className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
+                                                <a href={`mailto:${userEmails[listing.user_id]}`} className="hover:underline text-primary-500 truncate">{userEmails[listing.user_id]}</a>
+                                              </span>
+                                            ) : (
+                                              <span className="text-red-500 dark:text-rose-400 font-bold">
+                                                User not found or deleted.
+                                              </span>
+                                            )}
+                                          </div>
+
+                                          {/* Rejection reason details */}
+                                          {listing.rejection_reason && listing.status === "rejected" && (
+                                            <p className="text-rose-600 dark:text-rose-400 bg-rose-50/50 dark:bg-rose-950/10 p-2.5 rounded-xl border border-rose-100/10 mt-1">
+                                              <strong>Rejection reason:</strong> {listing.rejection_reason}
+                                            </p>
+                                          )}
+                                        </div>
+
+                                        {/* Description */}
+                                        {listing.description && (
+                                          <p className="italic text-slate-600 dark:text-slate-400 text-xs mt-3 border-t border-slate-100 dark:border-[#1e293b]/50 pt-3 line-clamp-3 leading-relaxed">
+                                            "{listing.description}"
                                           </p>
                                         )}
-                                        {listing.rejection_reason && listing.status === "rejected" && (
-                                          <p className="text-rose-500 dark:text-rose-450 bg-rose-50/50 dark:bg-rose-950/10 p-2 rounded-xl border border-rose-100/10 mt-1">
-                                            <strong>Rejection reason:</strong> {listing.rejection_reason}
-                                          </p>
+
+                                        {/* Google Maps Embed Link */}
+                                        {listing.googleMapLink && (
+                                          <div className="mt-3">
+                                            <a 
+                                              href={listing.googleMapLink}
+                                              target="_blank" 
+                                              rel="noopener noreferrer" 
+                                              onClick={(e) => e.stopPropagation()} 
+                                              className="text-xs font-bold text-blue-500 hover:text-blue-650 dark:text-blue-400 dark:hover:text-blue-300 hover:underline inline-flex items-center gap-1"
+                                            >
+                                              Map Link
+                                            </a>
+                                          </div>
+                                        )}
+                                      </div>
+
+                                      {/* Footer Actions (2x2 Grid) */}
+                                      <div 
+                                        className="grid grid-cols-2 gap-2 pt-4 mt-4 border-t border-slate-100 dark:border-[#1e293b]/50"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        {listingsFilter === "pending_review" && (
+                                          <>
+                                            <button
+                                              onClick={() => openEditListingModal(listing)}
+                                              className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Edit2 className="w-3.5 h-3.5" />
+                                              <span>Edit</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingDeleteConfirm(listing.id)}
+                                              className="py-2.5 px-3 bg-red-500 hover:bg-red-650 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
+                                            >
+                                              <Trash2 className="w-3.5 h-3.5" />
+                                              <span>Delete</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
+                                              className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 text-rose-500 border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Ban className="w-3.5 h-3.5" />
+                                              <span>Reject</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingStatusConfirm(listing.id, "approved")}
+                                              className="py-2.5 px-3 bg-emerald-500 hover:bg-emerald-600 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-emerald-500/10 flex items-center justify-center gap-1.5"
+                                            >
+                                              <Check className="w-3.5 h-3.5" />
+                                              <span>Approve</span>
+                                            </button>
+                                          </>
+                                        )}
+
+                                        {listingsFilter === "approved" && (
+                                          <>
+                                            <button
+                                              onClick={() => handleToggleFeatured(listing.id, listing.is_featured)}
+                                              className={`py-2.5 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                                                listing.is_featured
+                                                  ? "bg-amber-500 border border-amber-500 text-white hover:bg-amber-600 shadow-sm"
+                                                  : "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border-0 text-slate-700 dark:text-slate-200"
+                                              }`}
+                                            >
+                                              <Star className={`w-3.5 h-3.5 ${listing.is_featured ? "fill-white text-white" : ""}`} />
+                                              <span>{listing.is_featured ? "Featured" : "Feature"}</span>
+                                            </button>
+                                            <button
+                                              onClick={() => openEditListingModal(listing)}
+                                              className="py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Edit2 className="w-3.5 h-3.5" />
+                                              <span>Edit</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
+                                              className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Ban className="w-3.5 h-3.5" />
+                                              <span>To Rejected</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingDeleteConfirm(listing.id)}
+                                              className="py-2.5 px-3 bg-red-500 hover:bg-red-655 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                                            >
+                                              <Trash2 className="w-3.5 h-3.5" />
+                                              <span>Delete</span>
+                                            </button>
+                                          </>
+                                        )}
+
+                                        {listingsFilter === "rejected" && (
+                                          <>
+                                            <button
+                                              onClick={() => openEditListingModal(listing)}
+                                              className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Edit2 className="w-3.5 h-3.5" />
+                                              <span>Edit</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingDeleteConfirm(listing.id)}
+                                              className="py-2.5 px-3 bg-red-500 hover:bg-red-655 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Trash2 className="w-3.5 h-3.5" />
+                                              <span>Delete</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingStatusConfirm(listing.id, "approved")}
+                                              className="col-span-2 py-2.5 px-3 bg-emerald-500 hover:bg-emerald-600 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Check className="w-3.5 h-3.5" />
+                                              <span>Move to Approved</span>
+                                            </button>
+                                          </>
+                                        )}
+
+                                        {listingsFilter === "feature_requests" && (
+                                          <>
+                                            <button
+                                              onClick={() => handleFeatureRequestUpdate(listing.id, true)}
+                                              className="py-2.5 px-3 bg-emerald-500 hover:bg-emerald-600 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Check className="w-3.5 h-3.5" />
+                                              <span>Approve Feature</span>
+                                            </button>
+                                            <button
+                                              onClick={() => handleFeatureRequestUpdate(listing.id, false)}
+                                              className="py-2.5 px-3 bg-rose-50 hover:bg-rose-600 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <X className="w-3.5 h-3.5" />
+                                              <span>Deny</span>
+                                            </button>
+                                            <button
+                                              onClick={() => openEditListingModal(listing)}
+                                              className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Edit2 className="w-3.5 h-3.5" />
+                                              <span>Edit</span>
+                                            </button>
+                                            <button
+                                              onClick={() => triggerListingDeleteConfirm(listing.id)}
+                                              className="py-2.5 px-3 bg-red-500 hover:bg-red-655 text-white border-0 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                            >
+                                              <Trash2 className="w-3.5 h-3.5" />
+                                              <span>Delete</span>
+                                            </button>
+                                          </>
                                         )}
                                       </div>
                                     </div>
-
-                                    {/* Footer Actions */}
-                                    <div 
-                                      className="flex flex-wrap gap-2 pt-4 mt-4 border-t border-slate-100 dark:border-dark-border/40"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      {listingsFilter === "pending_review" && (
-                                        <>
-                                          <button
-                                            onClick={() => triggerListingStatusConfirm(listing.id, "approved")}
-                                            className="flex-grow flex items-center justify-center gap-1.5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-emerald-500/10"
-                                          >
-                                            <Check className="w-4 h-4" />
-                                            <span>Approve</span>
-                                          </button>
-                                          <button
-                                            onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
-                                            className="flex-grow flex items-center justify-center gap-1.5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-rose-500/10"
-                                          >
-                                            <X className="w-4 h-4" />
-                                            <span>Reject</span>
-                                          </button>
-                                        </>
-                                      )}
-
-                                      {listingsFilter === "approved" && (
-                                        <>
-                                          <button
-                                            onClick={() => handleToggleFeatured(listing.id, listing.is_featured)}
-                                            className={`px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer border flex items-center gap-1 ${
-                                              listing.is_featured
-                                                ? "bg-amber-500 border-amber-500 text-white hover:bg-amber-600 shadow-sm"
-                                                : "bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-805"
-                                            }`}
-                                          >
-                                            <Star className={`w-3.5 h-3.5 ${listing.is_featured ? "fill-white text-white" : ""}`} />
-                                            <span>{listing.is_featured ? "Featured" : "Feature"}</span>
-                                          </button>
-                                          <button
-                                            onClick={() => openEditListingModal(listing)}
-                                            className="flex-grow py-2 bg-primary-50 hover:bg-primary-100 dark:bg-primary-950/20 dark:hover:bg-primary-950/40 text-primary-500 border border-primary-200/40 dark:border-primary-900/30 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1"
-                                          >
-                                            <Edit2 className="w-3.5 h-3.5" />
-                                            <span>Edit</span>
-                                          </button>
-                                          <button
-                                            onClick={() => triggerListingStatusConfirm(listing.id, "rejected")}
-                                            className="py-2 px-3 bg-slate-50 dark:bg-dark-card-hover border border-slate-200 dark:border-dark-border text-rose-500 rounded-xl text-xs font-black transition-all cursor-pointer hover:bg-rose-50 dark:hover:bg-rose-950/15"
-                                            title="Move to rejected"
-                                          >
-                                            <X className="w-3.5 h-3.5" />
-                                          </button>
-                                        </>
-                                      )}
-
-                                      {listingsFilter === "rejected" && (
-                                        <>
-                                          <button
-                                            onClick={() => triggerListingStatusConfirm(listing.id, "approved")}
-                                            className="flex-grow flex items-center justify-center gap-1.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                          >
-                                            <Check className="w-3.5 h-3.5" />
-                                            <span>Move to Approved</span>
-                                          </button>
-                                          <button
-                                            onClick={() => triggerListingDeleteConfirm(listing.id)}
-                                            className="p-2 bg-red-50 hover:bg-red-100 dark:bg-red-950/20 text-red-500 border border-red-200 dark:border-red-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
-                                            title="Delete permanently"
-                                          >
-                                            <Trash2 className="w-3.5 h-3.5" />
-                                          </button>
-                                        </>
-                                      )}
-
-                                      {listingsFilter === "feature_requests" && (
-                                        <>
-                                          <button
-                                            onClick={() => handleFeatureRequestUpdate(listing.id, true)}
-                                            className="flex-grow py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1"
-                                          >
-                                            <Check className="w-3.5 h-3.5" />
-                                            <span>Approve Feature</span>
-                                          </button>
-                                          <button
-                                            onClick={() => handleFeatureRequestUpdate(listing.id, false)}
-                                            className="flex-grow py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1"
-                                          >
-                                            <X className="w-3.5 h-3.5" />
-                                            <span>Deny</span>
-                                          </button>
-                                        </>
-                                      )}
-                                    </div>
                                   </div>
-                                </div>
                               );
                             })}
                           </div>
@@ -2168,7 +2616,7 @@ export default function AdminDashboard() {
                       >
                         <span>{tab.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          reviewsFilter === tab.filter ? "bg-primary-50 text-primary-655 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-655"
+                          reviewsFilter === tab.filter ? "bg-primary-50 text-primary-600 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                         }`}>
                           {tab.count}
                         </span>
@@ -2191,11 +2639,11 @@ export default function AdminDashboard() {
                       <div className="space-y-4">
                         {/* Bulk Action Header bar */}
                         {filteredReviews.length > 0 && (
-                          <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white/70 dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-2xl shadow-sm">
+                          <div className="flex items-center justify-between gap-3 p-4 bg-white/70 dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-2xl shadow-sm">
                             <div className="flex items-center gap-3">
                               <button
                                 onClick={() => selectAllFilteredReviews(filteredReviews)}
-                                className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-dark-bg dark:hover:bg-slate-800 border border-slate-200 dark:border-dark-border text-[11px] font-black text-slate-655 dark:text-slate-400 cursor-pointer"
+                                className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-100 dark:bg-dark-bg dark:hover:bg-slate-800 border border-slate-200 dark:border-dark-border text-[11px] font-black text-slate-650 dark:text-slate-300 dark:text-slate-400 cursor-pointer transition-colors"
                               >
                                 {selectedReviewIds.length === filteredReviews.length ? "Deselect All" : "Select All"}
                               </button>
@@ -2203,75 +2651,18 @@ export default function AdminDashboard() {
                                 {selectedReviewIds.length} reviews selected
                               </span>
                             </div>
-
-                            {selectedReviewIds.length > 0 && (
-                              <div className="flex gap-2">
-                                {reviewsFilter === "pending" && (
-                                  <>
-                                    <button
-                                      onClick={() => triggerConfirm({
-                                        title: "Bulk Approve Reviews",
-                                        message: `Are you sure you want to approve the ${selectedReviewIds.length} selected reviews?`,
-                                        type: "success",
-                                        onConfirm: () => handleBulkReviewStatus("approved")
-                                      })}
-                                      className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                    >
-                                      Approve Selected
-                                    </button>
-                                    <button
-                                      onClick={() => triggerConfirm({
-                                        title: "Bulk Reject Reviews",
-                                        message: `Are you sure you want to reject the ${selectedReviewIds.length} selected reviews?`,
-                                        type: "danger",
-                                        onConfirm: () => handleBulkReviewStatus("rejected")
-                                      })}
-                                      className="px-3.5 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                    >
-                                      Reject Selected
-                                    </button>
-                                  </>
-                                )}
-                                
-                                {reviewsFilter === "rejected" && (
-                                  <button
-                                    onClick={() => triggerConfirm({
-                                      title: "Bulk Approve Reviews",
-                                      message: `Are you sure you want to approve the ${selectedReviewIds.length} selected reviews?`,
-                                      type: "success",
-                                      onConfirm: () => handleBulkReviewStatus("approved")
-                                    })}
-                                    className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer"
-                                  >
-                                    Approve Selected
-                                  </button>
-                                )}
-
-                                <button
-                                  onClick={() => triggerConfirm({
-                                    title: "Bulk Delete Reviews",
-                                    message: `Are you sure you want to permanently delete the ${selectedReviewIds.length} selected reviews? This cannot be undone.`,
-                                    type: "danger",
-                                    onConfirm: handleBulkReviewDelete
-                                  })}
-                                  className="px-3.5 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/35 rounded-xl text-xs font-black transition-all cursor-pointer"
-                                >
-                                  Delete Selected
-                                </button>
-                              </div>
-                            )}
                           </div>
                         )}
 
                         {/* Reviews list */}
                         {filteredReviews.length === 0 ? (
                           <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                            <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                            <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                             <p className="font-bold text-slate-800 dark:text-slate-200">No reviews found</p>
-                            <p className="text-slate-450 dark:text-slate-500 text-xs mt-1">Refine your search input values.</p>
+                            <p className="text-slate-500 dark:text-slate-400 dark:text-slate-500 text-xs mt-1">Refine your search input values.</p>
                           </div>
                         ) : (
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {filteredReviews.map(review => {
                               const isSelected = selectedReviewIds.includes(review.id);
                               const listName = listings.find(l => l.id === review.listing_id)?.name || "Unknown Business";
@@ -2281,14 +2672,22 @@ export default function AdminDashboard() {
                                   key={review.id}
                                   onClick={() => toggleSelectReview(review.id)}
                                   className={`group bg-white dark:bg-dark-card border rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-350 flex flex-col justify-between cursor-pointer relative ${
-                                    isSelected ? "border-primary-500 ring-2 ring-primary-500/25" : "border-slate-200/70 dark:border-dark-border hover:border-slate-350 dark:hover:border-slate-700"
+                                    isSelected 
+                                      ? "border-primary-500 ring-2 ring-primary-500/20 shadow-md shadow-primary-500/5 dark:shadow-primary-950/20 scale-[1.01]" 
+                                      : "border-slate-200/70 dark:border-dark-border hover:border-slate-350 dark:hover:border-slate-700"
                                   }`}
                                 >
                                   <div className="absolute top-4 left-4 z-20">
-                                    <div className={`w-5 h-5 rounded-lg flex items-center justify-center border transition-all ${
-                                      isSelected ? "bg-primary-500 border-primary-500 text-white" : "bg-white/90 border-slate-300 dark:bg-dark-card/90 dark:border-dark-border"
+                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
+                                      isSelected 
+                                        ? "bg-primary-500 border-primary-500 text-white scale-110 shadow-md shadow-primary-500/25" 
+                                        : "bg-white/90 border-slate-350 dark:bg-dark-card/90 dark:border-dark-border opacity-0 group-hover:opacity-100 scale-90 hover:scale-100"
                                     }`}>
-                                      {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                                      {isSelected ? (
+                                        <Check className="w-3.5 h-3.5 stroke-[3.5]" />
+                                      ) : (
+                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+                                      )}
                                     </div>
                                   </div>
 
@@ -2300,8 +2699,8 @@ export default function AdminDashboard() {
                                           For: {listName}
                                         </p>
                                       </div>
-                                      <span className="text-slate-450 dark:text-slate-550 text-[10px] font-bold">
-                                        {new Date(review.created_at).toLocaleDateString()}
+                                      <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500 dark:text-slate-400 text-[10px] font-bold">
+                                        {new Date(review.created_at).toLocaleDateString("en-US")}
                                       </span>
                                     </div>
 
@@ -2312,7 +2711,7 @@ export default function AdminDashboard() {
                                       ))}
                                     </div>
 
-                                    <p className="text-slate-650 dark:text-slate-300 text-xs italic font-semibold leading-relaxed mt-2 whitespace-pre-wrap pl-7 line-clamp-4">
+                                    <p className="text-slate-600 dark:text-slate-300 dark:text-slate-300 text-xs italic font-semibold leading-relaxed mt-2 whitespace-pre-wrap pl-7 line-clamp-4">
                                       "{review.comment}"
                                     </p>
                                   </div>
@@ -2324,18 +2723,18 @@ export default function AdminDashboard() {
                                     {reviewsFilter === "pending" && (
                                       <>
                                         <button
-                                          onClick={() => handleReviewStatusUpdate(review.id, "approved")}
-                                          className="flex-grow flex items-center justify-center gap-1.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-emerald-500/10"
-                                        >
-                                          <Check className="w-3.5 h-3.5" />
-                                          <span>Approve</span>
-                                        </button>
-                                        <button
                                           onClick={() => handleReviewStatusUpdate(review.id, "rejected")}
                                           className="flex-grow flex items-center justify-center gap-1.5 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-rose-500/10"
                                         >
                                           <X className="w-3.5 h-3.5" />
                                           <span>Reject</span>
+                                        </button>
+                                        <button
+                                          onClick={() => handleReviewStatusUpdate(review.id, "approved")}
+                                          className="flex-grow flex items-center justify-center gap-1.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-black transition-all cursor-pointer shadow-sm shadow-emerald-500/10"
+                                        >
+                                          <Check className="w-3.5 h-3.5" />
+                                          <span>Approve</span>
                                         </button>
                                       </>
                                     )}
@@ -2351,7 +2750,7 @@ export default function AdminDashboard() {
                                         </button>
                                         <button
                                           onClick={() => handleReviewStatusUpdate(review.id, "rejected")}
-                                          className="py-2 px-3 bg-slate-50 dark:bg-dark-card-hover border border-slate-200 dark:border-dark-border text-rose-500 rounded-xl text-xs font-black transition-all cursor-pointer hover:bg-rose-50 dark:hover:bg-rose-955/15"
+                                          className="py-2 px-3 bg-slate-50 dark:bg-dark-card-hover border border-slate-200 dark:border-dark-border text-rose-500 rounded-xl text-xs font-black transition-all cursor-pointer hover:bg-rose-50 dark:hover:bg-rose-950/15"
                                           title="Move to rejected"
                                         >
                                           <X className="w-3.5 h-3.5" />
@@ -2428,7 +2827,7 @@ export default function AdminDashboard() {
                       >
                         <span>{tab.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          postsFilter === tab.filter ? "bg-primary-50 text-primary-655 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-655"
+                          postsFilter === tab.filter ? "bg-primary-50 text-primary-600 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                         }`}>
                           {tab.count}
                         </span>
@@ -2446,7 +2845,7 @@ export default function AdminDashboard() {
 
                     return filteredPosts.length === 0 ? (
                       <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                        <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                        <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                         <p className="font-bold text-slate-800 dark:text-slate-200">No blog posts found</p>
                       </div>
                     ) : (
@@ -2462,15 +2861,15 @@ export default function AdminDashboard() {
                               className="w-full md:w-44 h-32 object-cover rounded-2xl bg-slate-100 dark:bg-slate-900 flex-shrink-0"
                             />
                             <div className="flex-grow space-y-2.5">
-                              <div className="flex justify-between items-center text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-widest">
+                              <div className="flex justify-between items-center text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                                 <span className="flex items-center gap-1">
                                   <User className="w-3.5 h-3.5 text-primary-500" />
                                   <span>{post.author_name || "Admin"}</span>
                                 </span>
-                                <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                                <span>{new Date(post.created_at).toLocaleDateString("en-US")}</span>
                               </div>
                               <h3 className="font-black text-slate-950 dark:text-white text-base md:text-lg leading-snug">{post.title}</h3>
-                              <p className="text-slate-600 dark:text-slate-450 text-xs font-semibold leading-relaxed line-clamp-2">
+                              <p className="text-slate-600 dark:text-slate-500 dark:text-slate-400 text-xs font-semibold leading-relaxed line-clamp-2">
                                 {post.content ? post.content.replace(/[#*`_]/g, "").substring(0, 150) + "..." : "No content yet"}
                               </p>
 
@@ -2489,7 +2888,7 @@ export default function AdminDashboard() {
                                     type: "danger",
                                     onConfirm: () => handlePostDelete(post.id)
                                   })}
-                                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-955/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1"
+                                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                   <span>Delete</span>
@@ -2538,7 +2937,7 @@ export default function AdminDashboard() {
                       >
                         <span>{tab.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          jobsFilter === tab.filter ? "bg-primary-50 text-primary-655 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-655"
+                          jobsFilter === tab.filter ? "bg-primary-50 text-primary-600 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                         }`}>
                           {tab.count}
                         </span>
@@ -2559,7 +2958,7 @@ export default function AdminDashboard() {
 
                     return filteredJobs.length === 0 ? (
                       <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                        <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                        <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                         <p className="font-bold text-slate-800 dark:text-slate-200">No jobs found</p>
                       </div>
                     ) : (
@@ -2572,7 +2971,7 @@ export default function AdminDashboard() {
                             <div className="space-y-2.5">
                               <div className="flex justify-between items-start text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                                 <span className="bg-primary-50 dark:bg-primary-950/25 text-primary-500 px-2 py-0.5 rounded-lg">{job.job_type || "Full-time"}</span>
-                                <span>{new Date(job.created_at).toLocaleDateString()}</span>
+                                <span>{new Date(job.created_at).toLocaleDateString("en-US")}</span>
                               </div>
                               <h3 className="font-black text-slate-950 dark:text-white text-base leading-snug">{job.job_title}</h3>
                               <p className="text-primary-500 text-xs font-bold flex items-center gap-1">
@@ -2606,7 +3005,7 @@ export default function AdminDashboard() {
                                   type: "danger",
                                   onConfirm: () => handleJobDelete(job.id)
                                 })}
-                                className="px-3 py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-955/20 text-rose-505 border border-rose-205 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
+                                className="px-3 py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-600 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
                                 title="Delete permanently"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -2654,7 +3053,7 @@ export default function AdminDashboard() {
                       >
                         <span>{tab.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          eventsFilter === tab.filter ? "bg-primary-50 text-primary-655 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-655"
+                          eventsFilter === tab.filter ? "bg-primary-50 text-primary-600 dark:bg-primary-950/20" : "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
                         }`}>
                           {tab.count}
                         </span>
@@ -2675,7 +3074,7 @@ export default function AdminDashboard() {
 
                     return filteredEvents.length === 0 ? (
                       <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                        <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                        <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                         <p className="font-bold text-slate-800 dark:text-slate-200">No events found</p>
                       </div>
                     ) : (
@@ -2688,17 +3087,17 @@ export default function AdminDashboard() {
                             <div className="space-y-2.5">
                               <div className="flex justify-between items-start text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                                 <span className="bg-primary-50 dark:bg-primary-950/25 text-primary-500 px-2 py-0.5 rounded-lg">{event.category || "General"}</span>
-                                <span>{new Date(event.created_at).toLocaleDateString()}</span>
+                                <span>{new Date(event.created_at).toLocaleDateString("en-US")}</span>
                               </div>
-                              <h3 className="font-black text-slate-955 dark:text-white text-base leading-snug">{event.title}</h3>
+                              <h3 className="font-black text-slate-950 dark:text-white text-base leading-snug">{event.title}</h3>
                               <p className="text-primary-500 text-xs font-bold flex items-center gap-1">
                                 <MapPin className="w-3.5 h-3.5" />
                                 <span>{event.location}</span>
                               </p>
                               
-                              <div className="pt-3 border-t border-slate-100 dark:border-dark-border/40 space-y-1.5 text-xs text-slate-655 dark:text-slate-300 font-semibold">
+                              <div className="pt-3 border-t border-slate-100 dark:border-dark-border/40 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 dark:text-slate-300 font-semibold">
                                 <p className="flex items-center gap-1.5">
-                                  <Clock className="w-3.5 h-3.5 text-slate-450" />
+                                  <Clock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                                   <span>{event.date} at {event.time}</span>
                                 </p>
                                 {event.description && (
@@ -2724,7 +3123,7 @@ export default function AdminDashboard() {
                                   type: "danger",
                                   onConfirm: () => handleEventDelete(event.id)
                                 })}
-                                className="px-3 py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-955/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
+                                className="px-3 py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
                                 title="Delete permanently"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -2796,7 +3195,7 @@ export default function AdminDashboard() {
 
                     return list.length === 0 ? (
                       <div className="bg-white dark:bg-dark-card border border-slate-200/50 dark:border-dark-border rounded-3xl p-12 text-center shadow-sm">
-                        <Info className="w-10 h-10 text-slate-350 dark:text-slate-650 mx-auto mb-3" />
+                        <Info className="w-10 h-10 text-slate-400 dark:text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                         <p className="font-bold text-slate-800 dark:text-slate-200">No records found</p>
                       </div>
                     ) : (
@@ -2811,7 +3210,7 @@ export default function AdminDashboard() {
                                 <>
                                   <h3 className="font-black text-slate-950 dark:text-white text-base">{item.name}</h3>
                                   <p className="text-primary-500 text-xs font-bold">{item.from_station} to {item.to_station}</p>
-                                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-450 pt-1.5">
+                                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 pt-1.5">
                                     Departs: <span className="text-slate-800 dark:text-slate-200 font-extrabold">{item.time}</span> &bull; Platform: {item.platform} &bull; Runs: {item.days}
                                   </p>
                                 </>
@@ -2819,9 +3218,9 @@ export default function AdminDashboard() {
 
                               {transportType === "buses" && (
                                 <>
-                                  <h3 className="font-black text-slate-955 dark:text-white text-base">{item.route}</h3>
+                                  <h3 className="font-black text-slate-950 dark:text-white text-base">{item.route}</h3>
                                   <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">Intervals: {item.frequency}</p>
-                                  <p className="text-[11px] font-bold text-slate-450 dark:text-slate-500 pt-1">
+                                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 pt-1">
                                     First Bus: <span className="text-slate-800 dark:text-slate-200">{item.first_bus}</span> &bull; Last Bus: <span className="text-slate-800 dark:text-slate-200">{item.last_bus}</span>
                                   </p>
                                 </>
@@ -2829,7 +3228,7 @@ export default function AdminDashboard() {
 
                               {transportType === "toto_routes" && (
                                 <>
-                                  <h3 className="font-black text-slate-955 dark:text-white text-base">{item.route}</h3>
+                                  <h3 className="font-black text-slate-950 dark:text-white text-base">{item.route}</h3>
                                   <p className="text-emerald-600 dark:text-emerald-500 text-sm font-black mt-1">One-Way Fare: {item.fare}</p>
                                 </>
                               )}
@@ -2850,7 +3249,7 @@ export default function AdminDashboard() {
                                   type: "danger",
                                   onConfirm: () => handleTransportDelete(transportType, item.id)
                                 })}
-                                className="p-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-955/20 text-rose-500 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
+                                className="p-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 text-rose-600 border border-rose-200 dark:border-rose-900/30 rounded-xl text-xs font-black transition-all cursor-pointer"
                                 title="Delete"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -2878,11 +3277,11 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-dark-border/40">
               <div>
                 <h3 className="text-xl font-black text-slate-950 dark:text-white">Add Business Listing</h3>
-                <p className="text-[10px] text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Submit new business to directory</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Submit new business to directory</p>
               </div>
               <button
                 onClick={() => setAddListingModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -2900,36 +3299,96 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-2 gap-4">
                     {/* Category */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Category *</label>
-                      <select
-                        value={addListingData.category}
-                        onChange={(e) => handleFormCategoryChange(e.target.value, "add")}
-                        className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                      >
-                        {Object.entries(categories).map(([key, value]) => (
-                          <option key={key} value={key}>{value.name}</option>
-                        ))}
-                      </select>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Category *</label>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setOpenDropdownId(openDropdownId === "add-category" ? null : "add-category")}
+                          className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            {(() => {
+                              const SelectedIcon = categories[addListingData.category]?.icon || HelpCircle;
+                              const selectedColor = categories[addListingData.category]?.color || "";
+                              return <SelectedIcon className={`w-4 h-4 ${selectedColor}`} />;
+                            })()}
+                            <span>{categories[addListingData.category]?.name || "Select Category"}</span>
+                          </div>
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        </button>
+                        {openDropdownId === "add-category" && (
+                          <>
+                            <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                            <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                              {Object.entries(categories).map(([key, value]) => {
+                                const CatIcon = value.icon;
+                                return (
+                                  <button
+                                    key={key}
+                                    type="button"
+                                    onClick={() => {
+                                      handleFormCategoryChange(key, "add");
+                                      setOpenDropdownId(null);
+                                    }}
+                                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                  >
+                                    <CatIcon className={`w-4 h-4 ${value.color}`} />
+                                    <span>{value.name}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     {/* Subcategory */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Subcategory *</label>
-                      <select
-                        value={addListingData.subcategory}
-                        onChange={(e) => setAddListingData(prev => ({ ...prev, subcategory: e.target.value }))}
-                        className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                      >
-                        {(categories[addListingData.category]?.subcategories || []).map(sub => (
-                          <option key={sub} value={sub}>{sub}</option>
-                        ))}
-                      </select>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Subcategory *</label>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setOpenDropdownId(openDropdownId === "add-subcategory" ? null : "add-subcategory")}
+                          className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            {React.createElement(getSubcategoryIcon(addListingData.subcategory), { className: "w-4 h-4 text-primary-500" })}
+                            <span>{addListingData.subcategory || "Select Subcategory"}</span>
+                          </div>
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        </button>
+                        {openDropdownId === "add-subcategory" && (
+                          <>
+                            <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                            <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                              {(categories[addListingData.category]?.subcategories || []).map(sub => {
+                                const Icon = getSubcategoryIcon(sub);
+                                return (
+                                  <button
+                                    key={sub}
+                                    type="button"
+                                    onClick={() => {
+                                      setAddListingData(prev => ({ ...prev, subcategory: sub }));
+                                      setOpenDropdownId(null);
+                                    }}
+                                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                  >
+                                    <Icon className="w-3.5 h-3.5 text-slate-400" />
+                                    <span>{sub}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
 
                   {/* Business Name */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                       {getBusinessNameLabel(addListingData.subcategory)} *
                     </label>
                     <input
@@ -2943,7 +3402,7 @@ export default function AdminDashboard() {
 
                   {/* Contact Number */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Contact Number *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Contact Number *</label>
                     <input
                       type="tel" required
                       value={addListingData.phone}
@@ -2955,7 +3414,7 @@ export default function AdminDashboard() {
 
                   {/* Image uploading */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Upload Thumbnail Image</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Upload Thumbnail Image</label>
                     <input
                       type="file" accept="image/*"
                       onChange={(e) => {
@@ -2965,8 +3424,9 @@ export default function AdminDashboard() {
                           setAddListingImagePreview(URL.createObjectURL(file));
                         }
                       }}
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-semibold focus:outline-none text-slate-500 dark:text-slate-400 file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-black file:bg-primary-50 file:text-primary-600 dark:file:bg-primary-950/20 dark:file:text-primary-400 cursor-pointer"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-semibold focus:outline-none text-slate-500 dark:text-slate-400 file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-black file:bg-primary-50 file:text-primary-600 dark:file:bg-primary-950/20 dark:file:text-primary-400 cursor-pointer file:cursor-pointer"
                     />
+                    <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 mt-1">Recommended: 16:9 ratio, under 6 MB</p>
                     
                     {addListingImagePreview && (
                       <div className="mt-3 relative w-full h-36 bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-dark-border/50 shadow-inner">
@@ -2989,7 +3449,7 @@ export default function AdminDashboard() {
                   
                   {/* Address */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Address *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Address *</label>
                     <textarea
                       required rows="3"
                       value={addListingData.address}
@@ -3001,7 +3461,7 @@ export default function AdminDashboard() {
 
                   {/* Google Maps link */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Google Maps Embed Link *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Google Maps Embed Link *</label>
                     <input
                       type="url" required
                       value={addListingData.googleMapLink}
@@ -3013,29 +3473,65 @@ export default function AdminDashboard() {
 
                   {/* Hours Status preset */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Opening Hours preset</label>
-                    <select
-                      value={addListingData.opening_hours.status}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        const emptyHours = {};
-                        ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].forEach(day => {
-                          emptyHours[day] = { open: "", close: "" };
-                        });
-                        setAddListingData(prev => ({
-                          ...prev,
-                          opening_hours: {
-                            status: val,
-                            hours: val === "custom" ? emptyHours : null
-                          }
-                        }));
-                      }}
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                    >
-                      <option value="open_24_7">Open 24/7</option>
-                      <option value="temporarily_closed">Temporarily Closed</option>
-                      <option value="custom">Set Custom Timings</option>
-                    </select>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Opening Hours Preset</label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setOpenDropdownId(openDropdownId === "add-hours" ? null : "add-hours")}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2">
+                          {addListingData.opening_hours.status === "open_24_7" && <Clock className="w-4 h-4 text-emerald-500" />}
+                          {addListingData.opening_hours.status === "temporarily_closed" && <Ban className="w-4 h-4 text-rose-500" />}
+                          {addListingData.opening_hours.status === "custom" && <Settings className="w-4 h-4 text-blue-500" />}
+                          <span>
+                            {addListingData.opening_hours.status === "open_24_7" && "Open 24/7"}
+                            {addListingData.opening_hours.status === "temporarily_closed" && "Temporarily Closed"}
+                            {addListingData.opening_hours.status === "custom" && "Set Custom Timings"}
+                          </span>
+                        </div>
+                        <ChevronDown className="w-4 h-4 text-slate-400" />
+                      </button>
+                      {openDropdownId === "add-hours" && (
+                        <>
+                          <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                          <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                            {[
+                              { value: "open_24_7", label: "Open 24/7", icon: Clock, color: "text-emerald-500" },
+                              { value: "temporarily_closed", label: "Temporarily Closed", icon: Ban, color: "text-rose-500" },
+                              { value: "custom", label: "Set Custom Timings", icon: Settings, color: "text-blue-500" }
+                            ].map(opt => {
+                              const OptIcon = opt.icon;
+                              return (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => {
+                                    const val = opt.value;
+                                    const emptyHours = {};
+                                    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].forEach(day => {
+                                      emptyHours[day] = { open: "", close: "" };
+                                    });
+                                    setAddListingData(prev => ({
+                                      ...prev,
+                                      opening_hours: {
+                                        status: val,
+                                        hours: val === "custom" ? emptyHours : null
+                                      }
+                                    }));
+                                    setOpenDropdownId(null);
+                                  }}
+                                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                >
+                                  <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                  <span>{opt.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   {/* Custom Hour Editor */}
@@ -3092,7 +3588,7 @@ export default function AdminDashboard() {
 
               {/* Description Span Full */}
               <div className="space-y-1.5 pt-2">
-                <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Business description details</label>
+                <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Business description details</label>
                 <textarea
                   rows="4"
                   value={addListingData.description}
@@ -3107,7 +3603,7 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setAddListingModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3130,12 +3626,12 @@ export default function AdminDashboard() {
           <div className="bg-white dark:bg-dark-card rounded-3xl shadow-xl border border-slate-200/50 dark:border-dark-border max-w-4xl w-full max-h-[90vh] flex flex-col animate-scale-up overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-dark-border/40">
               <div>
-                <h3 className="text-xl font-black text-slate-955 dark:text-white">Modify Listing Details</h3>
-                <p className="text-[10px] text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Edit directory details for this business</p>
+                <h3 className="text-xl font-black text-slate-950 dark:text-white">Modify Listing Details</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Edit directory details for this business</p>
               </div>
               <button
                 onClick={() => setEditListingModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -3151,36 +3647,96 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-2 gap-4">
                     {/* Category */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Category *</label>
-                      <select
-                        value={editListingData.category}
-                        onChange={(e) => handleFormCategoryChange(e.target.value, "edit")}
-                        className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                      >
-                        {Object.entries(categories).map(([key, value]) => (
-                          <option key={key} value={key}>{value.name}</option>
-                        ))}
-                      </select>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Category *</label>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setOpenDropdownId(openDropdownId === "edit-category" ? null : "edit-category")}
+                          className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            {(() => {
+                              const SelectedIcon = categories[editListingData.category]?.icon || HelpCircle;
+                              const selectedColor = categories[editListingData.category]?.color || "";
+                              return <SelectedIcon className={`w-4 h-4 ${selectedColor}`} />;
+                            })()}
+                            <span>{categories[editListingData.category]?.name || "Select Category"}</span>
+                          </div>
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        </button>
+                        {openDropdownId === "edit-category" && (
+                          <>
+                            <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                            <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                              {Object.entries(categories).map(([key, value]) => {
+                                const CatIcon = value.icon;
+                                return (
+                                  <button
+                                    key={key}
+                                    type="button"
+                                    onClick={() => {
+                                      handleFormCategoryChange(key, "edit");
+                                      setOpenDropdownId(null);
+                                    }}
+                                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                  >
+                                    <CatIcon className={`w-4 h-4 ${value.color}`} />
+                                    <span>{value.name}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     {/* Subcategory */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Subcategory *</label>
-                      <select
-                        value={editListingData.subcategory}
-                        onChange={(e) => setEditListingData(prev => ({ ...prev, subcategory: e.target.value }))}
-                        className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                      >
-                        {(categories[editListingData.category]?.subcategories || []).map(sub => (
-                          <option key={sub} value={sub}>{sub}</option>
-                        ))}
-                      </select>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Subcategory *</label>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setOpenDropdownId(openDropdownId === "edit-subcategory" ? null : "edit-subcategory")}
+                          className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            {React.createElement(getSubcategoryIcon(editListingData.subcategory), { className: "w-4 h-4 text-primary-500" })}
+                            <span>{editListingData.subcategory || "Select Subcategory"}</span>
+                          </div>
+                          <ChevronDown className="w-4 h-4 text-slate-400" />
+                        </button>
+                        {openDropdownId === "edit-subcategory" && (
+                          <>
+                            <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                            <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                              {(categories[editListingData.category]?.subcategories || []).map(sub => {
+                                const Icon = getSubcategoryIcon(sub);
+                                return (
+                                  <button
+                                    key={sub}
+                                    type="button"
+                                    onClick={() => {
+                                      setEditListingData(prev => ({ ...prev, subcategory: sub }));
+                                      setOpenDropdownId(null);
+                                    }}
+                                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                  >
+                                    <Icon className="w-3.5 h-3.5 text-slate-400" />
+                                    <span>{sub}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
 
                   {/* Dynamic Name Label */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider font-extrabold">
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider font-extrabold">
                       {getBusinessNameLabel(editListingData.subcategory)} *
                     </label>
                     <input
@@ -3193,7 +3749,7 @@ export default function AdminDashboard() {
 
                   {/* Contact Number */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Contact Number *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Contact Number *</label>
                     <input
                       type="tel" required
                       value={editListingData.phone}
@@ -3204,7 +3760,7 @@ export default function AdminDashboard() {
 
                   {/* Thumbnail Image upload */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Change Thumbnail Image</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Change Thumbnail Image</label>
                     <input
                       type="file" accept="image/*"
                       onChange={(e) => {
@@ -3214,8 +3770,9 @@ export default function AdminDashboard() {
                           setEditListingImagePreview(URL.createObjectURL(file));
                         }
                       }}
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-semibold focus:outline-none text-slate-500 dark:text-slate-400 file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-black file:bg-primary-50 file:text-primary-600 dark:file:bg-primary-955/20 dark:file:text-primary-400 cursor-pointer"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-semibold focus:outline-none text-slate-500 dark:text-slate-400 file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-black file:bg-primary-50 file:text-primary-600 dark:file:bg-primary-950/20 dark:file:text-primary-400 cursor-pointer file:cursor-pointer"
                     />
+                    <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 mt-1">Recommended: 16:9 ratio, under 6 MB</p>
                     
                     {editListingImagePreview && (
                       <div className="mt-3 relative w-full h-36 bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-dark-border/50 shadow-inner">
@@ -3238,7 +3795,7 @@ export default function AdminDashboard() {
                   
                   {/* Address */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Address *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Address *</label>
                     <textarea
                       required rows="3"
                       value={editListingData.address}
@@ -3249,7 +3806,7 @@ export default function AdminDashboard() {
 
                   {/* Google maps link */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Google Maps link</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Google Maps link</label>
                     <input
                       type="url"
                       value={editListingData.googleMapLink || ""}
@@ -3260,29 +3817,65 @@ export default function AdminDashboard() {
 
                   {/* Opening hours dropdown status */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Opening Hours Preset</label>
-                    <select
-                      value={editListingData.opening_hours.status}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        const emptyHours = {};
-                        ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].forEach(day => {
-                          emptyHours[day] = { open: "", close: "" };
-                        });
-                        setEditListingData(prev => ({
-                          ...prev,
-                          opening_hours: {
-                            status: val,
-                            hours: val === "custom" ? emptyHours : null
-                          }
-                        }));
-                      }}
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                    >
-                      <option value="open_24_7">Open 24/7</option>
-                      <option value="temporarily_closed">Temporarily Closed</option>
-                      <option value="custom">Set Custom Timings</option>
-                    </select>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Opening Hours Preset</label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setOpenDropdownId(openDropdownId === "edit-hours" ? null : "edit-hours")}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2">
+                          {editListingData.opening_hours.status === "open_24_7" && <Clock className="w-4 h-4 text-emerald-500" />}
+                          {editListingData.opening_hours.status === "temporarily_closed" && <Ban className="w-4 h-4 text-rose-500" />}
+                          {editListingData.opening_hours.status === "custom" && <Settings className="w-4 h-4 text-blue-500" />}
+                          <span>
+                            {editListingData.opening_hours.status === "open_24_7" && "Open 24/7"}
+                            {editListingData.opening_hours.status === "temporarily_closed" && "Temporarily Closed"}
+                            {editListingData.opening_hours.status === "custom" && "Set Custom Timings"}
+                          </span>
+                        </div>
+                        <ChevronDown className="w-4 h-4 text-slate-400" />
+                      </button>
+                      {openDropdownId === "edit-hours" && (
+                        <>
+                          <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                          <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 max-h-60 overflow-y-auto animate-scale-up">
+                            {[
+                              { value: "open_24_7", label: "Open 24/7", icon: Clock, color: "text-emerald-500" },
+                              { value: "temporarily_closed", label: "Temporarily Closed", icon: Ban, color: "text-rose-500" },
+                              { value: "custom", label: "Set Custom Timings", icon: Settings, color: "text-blue-500" }
+                            ].map(opt => {
+                              const OptIcon = opt.icon;
+                              return (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => {
+                                    const val = opt.value;
+                                    const emptyHours = {};
+                                    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].forEach(day => {
+                                      emptyHours[day] = { open: "", close: "" };
+                                    });
+                                    setEditListingData(prev => ({
+                                      ...prev,
+                                      opening_hours: {
+                                        status: val,
+                                        hours: val === "custom" ? emptyHours : null
+                                      }
+                                    }));
+                                    setOpenDropdownId(null);
+                                  }}
+                                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                >
+                                  <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                  <span>{opt.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   {/* Custom Hour editor */}
@@ -3292,7 +3885,7 @@ export default function AdminDashboard() {
                         const dayKey = day.toLowerCase();
                         return (
                           <div key={day} className="grid grid-cols-3 gap-2 items-center text-xs">
-                            <span className="font-extrabold text-slate-650 dark:text-slate-350">{day}</span>
+                            <span className="font-extrabold text-slate-600 dark:text-slate-300 dark:text-slate-300">{day}</span>
                             <input
                               type="time"
                               value={editListingData.opening_hours.hours?.[dayKey]?.open || ""}
@@ -3339,7 +3932,7 @@ export default function AdminDashboard() {
 
               {/* Description */}
               <div className="space-y-1.5 pt-2">
-                <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Business description details</label>
+                <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Business description details</label>
                 <textarea
                   rows="4"
                   value={editListingData.description || ""}
@@ -3353,7 +3946,92 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setEditListingModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loginLoading}
+                  className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-black rounded-xl text-xs transition-all shadow-md shadow-primary-500/10 cursor-pointer"
+                >
+                  {loginLoading ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- EDIT REVIEW MODAL --- */}
+      {editReviewModalOpen && editReviewData && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-dark-card rounded-3xl shadow-xl border border-slate-200/50 dark:border-dark-border max-w-md w-full flex flex-col animate-scale-up overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-dark-border/40">
+              <div>
+                <h3 className="text-xl font-black text-slate-950 dark:text-white">Edit User Review</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Modify review details</p>
+              </div>
+              <button
+                onClick={() => setEditReviewModalOpen(false)}
+                className="text-slate-400 hover:text-slate-650 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveReviewChanges} className="p-6 space-y-6">
+              <div className="space-y-4">
+                {/* User Name */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Reviewer Name *</label>
+                  <input
+                    type="text" required
+                    value={editReviewData.user_name}
+                    onChange={(e) => setEditReviewData(prev => ({ ...prev, user_name: e.target.value }))}
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white"
+                  />
+                </div>
+
+                {/* Rating Picker */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Rating</label>
+                  <div className="flex items-center gap-2 pt-1.5">
+                    {[1, 2, 3, 4, 5].map((stars) => (
+                      <button
+                        key={stars}
+                        type="button"
+                        onClick={() => setEditReviewData(prev => ({ ...prev, rating: stars }))}
+                        className="p-1.5 text-amber-400 hover:scale-110 transition-transform cursor-pointer"
+                        title={`${stars} Star${stars > 1 ? 's' : ''}`}
+                      >
+                        <Star className={`w-7 h-7 ${stars <= editReviewData.rating ? "fill-amber-400 text-amber-450" : "text-slate-300 dark:text-slate-700"}`} />
+                      </button>
+                    ))}
+                    <span className="text-xs font-black text-slate-500 dark:text-slate-400 ml-2">
+                      ({editReviewData.rating} / 5)
+                    </span>
+                  </div>
+                </div>
+
+                {/* Comment */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Review Content *</label>
+                  <textarea
+                    required rows="4"
+                    value={editReviewData.comment}
+                    onChange={(e) => setEditReviewData(prev => ({ ...prev, comment: e.target.value }))}
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white resize-none"
+                  />
+                </div>
+              </div>
+
+              {/* Action row */}
+              <div className="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-dark-border/40">
+                <button
+                  type="button"
+                  onClick={() => setEditReviewModalOpen(false)}
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3379,11 +4057,11 @@ export default function AdminDashboard() {
                 <h3 className="text-xl font-black text-slate-950 dark:text-white">
                   {postModalData.id ? "Edit Editorial Post" : "Compose Editorial Post"}
                 </h3>
-                <p className="text-[10px] text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Write local guide or news updates</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Write local guide or news updates</p>
               </div>
               <button
                 onClick={() => setPostModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -3396,7 +4074,7 @@ export default function AdminDashboard() {
                 <div className="md:col-span-2 space-y-4">
                   {/* Title */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Post Title *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Post Title *</label>
                     <input
                       type="text" required
                       value={postModalData.title}
@@ -3417,7 +4095,7 @@ export default function AdminDashboard() {
 
                   {/* Markdown Content */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Article Content (Markdown Supported) *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Article Content (Markdown Supported) *</label>
                     <textarea
                       required rows="14"
                       value={postModalData.content}
@@ -3432,7 +4110,7 @@ export default function AdminDashboard() {
                 <div className="space-y-4">
                   {/* Slug */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">URL Slug *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">URL Slug *</label>
                     <input
                       type="text" required
                       value={postModalData.slug}
@@ -3443,7 +4121,7 @@ export default function AdminDashboard() {
 
                   {/* Author */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Author Name *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Author Name *</label>
                     <input
                       type="text" required
                       value={postModalData.author_name}
@@ -3454,7 +4132,7 @@ export default function AdminDashboard() {
 
                   {/* Featured image url */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Featured Image URL *</label>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Featured Image URL *</label>
                     <input
                       type="url" required
                       value={postModalData.featured_image_url}
@@ -3466,15 +4144,51 @@ export default function AdminDashboard() {
 
                   {/* Status */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Publish Status *</label>
-                    <select
-                      value={postModalData.status}
-                      onChange={(e) => setPostModalData(prev => ({ ...prev, status: e.target.value }))}
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                    >
-                      <option value="published">Published</option>
-                      <option value="draft">Draft</option>
-                    </select>
+                    <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Publish Status *</label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setOpenDropdownId(openDropdownId === "blog-status" ? null : "blog-status")}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                      >
+                        <div className="flex items-center gap-2">
+                          {postModalData.status === "published" ? (
+                            <Check className="w-4 h-4 text-emerald-500" />
+                          ) : (
+                            <FileText className="w-4 h-4 text-slate-400" />
+                          )}
+                          <span>{postModalData.status === "published" ? "Published" : "Draft"}</span>
+                        </div>
+                        <ChevronDown className="w-4 h-4 text-slate-400" />
+                      </button>
+                      {openDropdownId === "blog-status" && (
+                        <>
+                          <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                          <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 animate-scale-up">
+                            {[
+                              { value: "published", label: "Published", icon: Check, color: "text-emerald-500" },
+                              { value: "draft", label: "Draft", icon: FileText, color: "text-slate-400" }
+                            ].map(opt => {
+                              const OptIcon = opt.icon;
+                              return (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => {
+                                    setPostModalData(prev => ({ ...prev, status: opt.value }));
+                                    setOpenDropdownId(null);
+                                  }}
+                                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                >
+                                  <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                  <span>{opt.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -3485,7 +4199,7 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setPostModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3511,11 +4225,11 @@ export default function AdminDashboard() {
                 <h3 className="text-xl font-black text-slate-950 dark:text-white">
                   {jobModalData.id ? "Edit Job Posting" : "Publish Job Posting"}
                 </h3>
-                <p className="text-[10px] text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Post new employment details</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Post new employment details</p>
               </div>
               <button
                 onClick={() => setJobModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -3526,7 +4240,7 @@ export default function AdminDashboard() {
                 
                 {/* Title */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Job Title *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Job Title *</label>
                   <input
                     type="text" required
                     value={jobModalData.job_title}
@@ -3537,7 +4251,7 @@ export default function AdminDashboard() {
 
                 {/* Company */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Company Name *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Company Name *</label>
                   <input
                     type="text" required
                     value={jobModalData.company_name}
@@ -3548,7 +4262,7 @@ export default function AdminDashboard() {
 
                 {/* Location */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Location *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Location *</label>
                   <input
                     type="text" required
                     value={jobModalData.location}
@@ -3559,7 +4273,7 @@ export default function AdminDashboard() {
 
                 {/* Contact details */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Contact details *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Contact details *</label>
                   <input
                     type="text" required
                     value={jobModalData.contact_details}
@@ -3570,22 +4284,57 @@ export default function AdminDashboard() {
 
                 {/* Type */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Job Type *</label>
-                  <select
-                    value={jobModalData.job_type}
-                    onChange={(e) => setJobModalData(prev => ({ ...prev, job_type: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                  >
-                    <option value="Full-time">Full-time</option>
-                    <option value="Part-time">Part-time</option>
-                    <option value="Internship">Internship</option>
-                    <option value="Contract">Contract</option>
-                  </select>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Job Type *</label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setOpenDropdownId(openDropdownId === "job-type" ? null : "job-type")}
+                      className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        {jobModalData.job_type === "Full-time" && <Briefcase className="w-4 h-4 text-emerald-500" />}
+                        {jobModalData.job_type === "Part-time" && <Clock className="w-4 h-4 text-orange-500" />}
+                        {jobModalData.job_type === "Internship" && <GraduationCap className="w-4 h-4 text-blue-500" />}
+                        {jobModalData.job_type === "Contract" && <FileText className="w-4 h-4 text-violet-500" />}
+                        <span>{jobModalData.job_type}</span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-slate-400" />
+                    </button>
+                    {openDropdownId === "job-type" && (
+                      <>
+                        <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                        <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 animate-scale-up">
+                          {[
+                            { value: "Full-time", label: "Full-time", icon: Briefcase, color: "text-emerald-500" },
+                            { value: "Part-time", label: "Part-time", icon: Clock, color: "text-orange-500" },
+                            { value: "Internship", label: "Internship", icon: GraduationCap, color: "text-blue-500" },
+                            { value: "Contract", label: "Contract", icon: FileText, color: "text-violet-500" }
+                          ].map(opt => {
+                            const OptIcon = opt.icon;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => {
+                                  setJobModalData(prev => ({ ...prev, job_type: opt.value }));
+                                  setOpenDropdownId(null);
+                                }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              >
+                                <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                <span>{opt.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 {/* Salary */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Salary Range</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Salary Range</label>
                   <input
                     type="text"
                     value={jobModalData.salary_range}
@@ -3597,19 +4346,55 @@ export default function AdminDashboard() {
 
                 {/* Status */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Status *</label>
-                  <select
-                    value={jobModalData.status}
-                    onChange={(e) => setJobModalData(prev => ({ ...prev, status: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                  >
-                    <option value="active">Active</option>
-                    <option value="expired">Expired</option>
-                  </select>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Status *</label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setOpenDropdownId(openDropdownId === "job-status" ? null : "job-status")}
+                      className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        {jobModalData.status === "active" ? (
+                          <Check className="w-4 h-4 text-emerald-500" />
+                        ) : (
+                          <X className="w-4 h-4 text-rose-500" />
+                        )}
+                        <span>{jobModalData.status === "active" ? "Active" : "Expired"}</span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-slate-400" />
+                    </button>
+                    {openDropdownId === "job-status" && (
+                      <>
+                        <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                        <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 animate-scale-up">
+                          {[
+                            { value: "active", label: "Active", icon: Check, color: "text-emerald-500" },
+                            { value: "expired", label: "Expired", icon: X, color: "text-rose-500" }
+                          ].map(opt => {
+                            const OptIcon = opt.icon;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => {
+                                  setJobModalData(prev => ({ ...prev, status: opt.value }));
+                                  setOpenDropdownId(null);
+                                }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              >
+                                <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                <span>{opt.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Job Description *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Job Description *</label>
                   <textarea
                     required rows="4"
                     value={jobModalData.description}
@@ -3619,7 +4404,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Requirements *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Requirements *</label>
                   <textarea
                     required rows="3"
                     value={jobModalData.requirements}
@@ -3634,7 +4419,7 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setJobModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3660,7 +4445,7 @@ export default function AdminDashboard() {
                 <h3 className="text-xl font-black text-slate-950 dark:text-white">
                   {eventModalData.id ? "Edit Event details" : "Publish Event Details"}
                 </h3>
-                <p className="text-[10px] text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Post cultural or emergency announcements</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold mt-0.5">Post cultural or emergency announcements</p>
               </div>
               <button
                 onClick={() => setEventModalOpen(false)}
@@ -3674,7 +4459,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Event Title *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Event Title *</label>
                   <input
                     type="text" required
                     value={eventModalData.title}
@@ -3684,7 +4469,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Date *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Date *</label>
                   <input
                     type="date" required
                     value={eventModalData.date}
@@ -3694,7 +4479,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Time *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Time *</label>
                   <input
                     type="text" required
                     value={eventModalData.time}
@@ -3705,7 +4490,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Location *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Location *</label>
                   <input
                     type="text" required
                     value={eventModalData.location}
@@ -3715,7 +4500,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Category *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Category *</label>
                   <input
                     type="text" required
                     value={eventModalData.category}
@@ -3726,19 +4511,55 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Publish Status *</label>
-                  <select
-                    value={eventModalData.status}
-                    onChange={(e) => setEventModalData(prev => ({ ...prev, status: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
-                  >
-                    <option value="published">Published</option>
-                    <option value="draft">Draft</option>
-                  </select>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Publish Status *</label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setOpenDropdownId(openDropdownId === "event-status" ? null : "event-status")}
+                      className="w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-black focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        {eventModalData.status === "published" ? (
+                          <Check className="w-4 h-4 text-emerald-500" />
+                        ) : (
+                          <FileText className="w-4 h-4 text-slate-450" />
+                        )}
+                        <span>{eventModalData.status === "published" ? "Published" : "Draft"}</span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-slate-400" />
+                    </button>
+                    {openDropdownId === "event-status" && (
+                      <>
+                        <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownId(null)} />
+                        <div className="absolute left-0 right-0 mt-1.5 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl py-1.5 z-40 animate-scale-up">
+                          {[
+                            { value: "published", label: "Published", icon: Check, color: "text-emerald-500" },
+                            { value: "draft", label: "Draft", icon: FileText, color: "text-slate-450" }
+                          ].map(opt => {
+                            const OptIcon = opt.icon;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => {
+                                  setEventModalData(prev => ({ ...prev, status: opt.value }));
+                                  setOpenDropdownId(null);
+                                }}
+                                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs text-left font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              >
+                                <OptIcon className={`w-4 h-4 ${opt.color}`} />
+                                <span>{opt.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Description Details *</label>
+                  <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Description Details *</label>
                   <textarea
                     required rows="4"
                     value={eventModalData.description}
@@ -3754,7 +4575,7 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setEventModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3781,7 +4602,7 @@ export default function AdminDashboard() {
               </h3>
               <button
                 onClick={() => setTransportModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -3792,7 +4613,7 @@ export default function AdminDashboard() {
                 {transportModalType === "trains" && (
                   <>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Train Name *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Train Name *</label>
                       <input
                         type="text" required
                         value={transportModalData.name || ""}
@@ -3802,7 +4623,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">From Station *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">From Station *</label>
                         <input
                           type="text" required
                           value={transportModalData.from_station || ""}
@@ -3811,7 +4632,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">To Station *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">To Station *</label>
                         <input
                           type="text" required
                           value={transportModalData.to_station || ""}
@@ -3822,7 +4643,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="space-y-1.5 col-span-2">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Departs Time *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Departs Time *</label>
                         <input
                           type="text" required
                           value={transportModalData.time || ""}
@@ -3832,7 +4653,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Platform *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Platform *</label>
                         <input
                           type="text" required
                           value={transportModalData.platform || ""}
@@ -3843,7 +4664,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Active Days *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Active Days *</label>
                       <input
                         type="text" required
                         value={transportModalData.days || ""}
@@ -3858,7 +4679,7 @@ export default function AdminDashboard() {
                 {transportModalType === "buses" && (
                   <>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Route *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Route *</label>
                       <input
                         type="text" required
                         value={transportModalData.route || ""}
@@ -3868,7 +4689,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Frequency *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Frequency *</label>
                       <input
                         type="text" required
                         value={transportModalData.frequency || ""}
@@ -3879,7 +4700,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">First Bus *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">First Bus *</label>
                         <input
                           type="text" required
                           value={transportModalData.first_bus || ""}
@@ -3889,7 +4710,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Last Bus *</label>
+                        <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Last Bus *</label>
                         <input
                           type="text" required
                           value={transportModalData.last_bus || ""}
@@ -3905,7 +4726,7 @@ export default function AdminDashboard() {
                 {transportModalType === "toto_routes" && (
                   <>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">Route *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Route *</label>
                       <input
                         type="text" required
                         value={transportModalData.route || ""}
@@ -3914,7 +4735,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-450 dark:text-slate-500 uppercase tracking-wider">One-way Fare *</label>
+                      <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">One-way Fare *</label>
                       <input
                         type="text" required
                         value={transportModalData.fare || ""}
@@ -3932,7 +4753,7 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setTransportModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-black transition-all bg-slate-150 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -3958,16 +4779,16 @@ export default function AdminDashboard() {
             }`}>
               {confirmModal.type === "success" ? <Check className="w-8 h-8 stroke-[2.5]" /> : <ShieldAlert className="w-8 h-8" />}
             </div>
-            <h3 className="text-2xl font-black text-slate-955 dark:text-white mb-4">
+            <h3 className="text-2xl font-black text-slate-950 dark:text-white mb-4">
               {confirmModal.title}
             </h3>
-            <p className="text-slate-500 dark:text-slate-405 mb-8 text-xs font-bold leading-relaxed">
+            <p className="text-slate-500 dark:text-slate-400 mb-8 text-xs font-bold leading-relaxed">
               {confirmModal.message}
             </p>
             
             {confirmModal.showReasonInput && (
               <div className="mb-6 text-left">
-                <label className="block text-xs font-black text-slate-450 dark:text-slate-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-black text-slate-500 dark:text-slate-400 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Reason for Rejection (Optional)
                 </label>
                 <input
@@ -3984,7 +4805,7 @@ export default function AdminDashboard() {
               <button
                 type="button"
                 onClick={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
-                className="px-6 py-3 rounded-xl text-xs font-black transition-all bg-slate-50 hover:bg-slate-100 dark:bg-dark-card-hover dark:hover:bg-slate-700 text-slate-655 dark:text-slate-300 cursor-pointer"
+                className="px-6 py-3 rounded-xl text-xs font-black transition-all bg-slate-50 hover:bg-slate-100 dark:bg-dark-card-hover dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 dark:text-slate-300 cursor-pointer"
               >
                 Cancel
               </button>
@@ -4003,6 +4824,164 @@ export default function AdminDashboard() {
                 Confirm
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2026-style Glassmorphic Bulk Action Dock */}
+      {((activeTab === "listings" && selectedListingIds.length > 0) || 
+        (activeTab === "reviews" && selectedReviewIds.length > 0)) && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center justify-between gap-6 px-6 py-4 bg-white/80 dark:bg-dark-card/85 backdrop-blur-lg border border-slate-200/60 dark:border-dark-border/60 rounded-full shadow-2xl shadow-slate-900/10 dark:shadow-black/40 animate-fade-in max-w-[90vw] md:max-w-xl w-auto">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary-500 text-white text-xs font-black shadow-md shadow-primary-500/20">
+              {activeTab === "listings" ? selectedListingIds.length : selectedReviewIds.length}
+            </div>
+            <span className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">
+              {activeTab === "listings" ? "Listings" : "Reviews"} selected
+            </span>
+          </div>
+          
+          {/* Separator line */}
+          <div className="w-px h-6 bg-slate-200 dark:bg-dark-border" />
+          
+          {/* Bulk Actions */}
+          <div className="flex items-center gap-2">
+            {/* Listing Actions */}
+            {activeTab === "listings" && (
+              <>
+                {listingsFilter === "pending_review" && (
+                  <>
+                    <button
+                      onClick={() => triggerConfirm({
+                        title: "Bulk Approve Listings",
+                        message: `Are you sure you want to approve the ${selectedListingIds.length} selected listings?`,
+                        type: "success",
+                        onConfirm: () => handleBulkListingStatus("approved")
+                      })}
+                      className="px-4 py-2 bg-emerald-550 hover:bg-emerald-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Approve</span>
+                    </button>
+                    <button
+                      onClick={() => triggerConfirm({
+                        title: "Bulk Reject Listings",
+                        message: `Are you sure you want to reject the ${selectedListingIds.length} selected listings?`,
+                        type: "danger",
+                        showReasonInput: true,
+                        onConfirm: (reason) => handleBulkListingStatus("rejected", reason)
+                      })}
+                      className="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Reject</span>
+                    </button>
+                  </>
+                )}
+                
+                {listingsFilter === "rejected" && (
+                  <button
+                    onClick={() => triggerConfirm({
+                      title: "Bulk Approve Listings",
+                      message: `Are you sure you want to approve the ${selectedListingIds.length} selected listings?`,
+                      type: "success",
+                      onConfirm: () => handleBulkListingStatus("approved")
+                    })}
+                    className="px-4 py-2 bg-emerald-550 hover:bg-emerald-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                  >
+                    <Check className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Approve</span>
+                  </button>
+                )}
+                
+                <button
+                  onClick={() => triggerConfirm({
+                    title: "Bulk Delete Listings",
+                    message: `Are you sure you want to permanently delete the ${selectedListingIds.length} selected listings? This cannot be undone.`,
+                    type: "danger",
+                    onConfirm: handleBulkListingDelete
+                  })}
+                  className="px-4 py-2 bg-slate-100 dark:bg-dark-bg hover:bg-red-50 dark:hover:bg-red-950/20 text-slate-600 dark:text-slate-400 hover:text-red-550 dark:hover:text-red-400 border border-slate-200 dark:border-dark-border hover:border-red-250 rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Delete</span>
+                </button>
+              </>
+            )}
+            
+            {/* Review Actions */}
+            {activeTab === "reviews" && (
+              <>
+                {reviewsFilter === "pending" && (
+                  <>
+                    <button
+                      onClick={() => triggerConfirm({
+                        title: "Bulk Approve Reviews",
+                        message: `Are you sure you want to approve the ${selectedReviewIds.length} selected reviews?`,
+                        type: "success",
+                        onConfirm: () => handleBulkReviewStatus("approved")
+                      })}
+                      className="px-4 py-2 bg-emerald-550 hover:bg-emerald-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Approve</span>
+                    </button>
+                    <button
+                      onClick={() => triggerConfirm({
+                        title: "Bulk Reject Reviews",
+                        message: `Are you sure you want to reject the ${selectedReviewIds.length} selected reviews?`,
+                        type: "danger",
+                        onConfirm: () => handleBulkReviewStatus("rejected")
+                      })}
+                      className="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Reject</span>
+                    </button>
+                  </>
+                )}
+                
+                {reviewsFilter === "rejected" && (
+                  <button
+                    onClick={() => triggerConfirm({
+                      title: "Bulk Approve Reviews",
+                      message: `Are you sure you want to approve the ${selectedReviewIds.length} selected reviews?`,
+                      type: "success",
+                      onConfirm: () => handleBulkReviewStatus("approved")
+                    })}
+                    className="px-4 py-2 bg-emerald-550 hover:bg-emerald-600 text-white rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer shadow-sm flex items-center gap-1.5"
+                  >
+                    <Check className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Approve</span>
+                  </button>
+                )}
+                
+                <button
+                  onClick={() => triggerConfirm({
+                    title: "Bulk Delete Reviews",
+                    message: `Are you sure you want to permanently delete the ${selectedReviewIds.length} selected reviews? This cannot be undone.`,
+                    type: "danger",
+                    onConfirm: handleBulkReviewDelete
+                  })}
+                  className="px-4 py-2 bg-slate-100 dark:bg-dark-bg hover:bg-red-50 dark:hover:bg-red-950/20 text-slate-600 dark:text-slate-400 hover:text-red-550 dark:hover:text-red-400 border border-slate-200 dark:border-dark-border hover:border-red-250 rounded-full text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98] cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Delete</span>
+                </button>
+              </>
+            )}
+            
+            {/* Deselect All close button */}
+            <button
+              onClick={() => {
+                if (activeTab === "listings") setSelectedListingIds([]);
+                if (activeTab === "reviews") setSelectedReviewIds([]);
+              }}
+              className="p-2 bg-slate-50 dark:bg-dark-bg hover:bg-slate-150 dark:hover:bg-slate-800 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-white rounded-full text-xs font-bold transition-all cursor-pointer border border-slate-200/50 dark:border-dark-border/40"
+              title="Deselect All"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       )}
