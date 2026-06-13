@@ -16,7 +16,7 @@ export default function Home() {
   const [featuredListings, setFeaturedListings] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [isListening, setIsListening] = useState(false);
-  const [voiceLang, setVoiceLang] = useState("bn-IN");
+  const [voiceLang, setVoiceLang] = useState("en-US");
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
   const [allListings, setAllListings] = useState([]);
   const [searchFocused, setSearchFocused] = useState(false);

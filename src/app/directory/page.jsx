@@ -348,7 +348,7 @@ function DirectoryContent() {
   
   // Voice search and suggestions states
   const [isListening, setIsListening] = useState(false);
-  const [voiceLang, setVoiceLang] = useState("bn-IN");
+  const [voiceLang, setVoiceLang] = useState("en-US");
   const [searchFocused, setSearchFocused] = useState(false);
   const recognitionRef = React.useRef(null);
   
