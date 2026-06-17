@@ -65,10 +65,31 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ghatal Guide",
+      "alternateName": ["GhatalGuide", "Ghatal Guide App"],
+      "url": "https://ghatalguide.netlify.app/",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Ghatal Guide",
+      "url": "https://ghatalguide.netlify.app/",
+      "logo": "https://ghatalguide.netlify.app/logo.png",
+    }
+  ];
+
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${kellySlab.variable} h-full antialiased`} suppressHydrationWarning>
       <head />
       <body className="min-h-full flex flex-col bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Script
           id="theme-initializer"
           strategy="beforeInteractive"
