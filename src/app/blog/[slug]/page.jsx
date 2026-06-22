@@ -7,6 +7,7 @@ import { sampleBlogs } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
 import { ArrowLeft, User, Calendar, FileQuestion } from "lucide-react";
 import { marked } from "marked";
+import DOMPurify from "isomorphic-dompurify";
 
 export default function BlogPost({ params }) {
   const resolvedParams = use(params);
@@ -43,10 +44,19 @@ export default function BlogPost({ params }) {
 
       if (dbPost) {
         setPost(dbPost);
-        // Parse markdown content into html
+        // Parse markdown content into html and sanitize to prevent XSS
         if (dbPost.content) {
-          const parsedHtml = marked.parse(dbPost.content);
-          setHtmlContent(parsedHtml);
+          marked.setOptions({ breaks: true, gfm: true });
+          const rawHtml = marked.parse(dbPost.content);
+          // Sanitize HTML — strips <script>, <iframe>, onerror, onload, etc.
+          const cleanHtml = DOMPurify.sanitize(rawHtml, {
+            ALLOWED_TAGS: ['h1','h2','h3','h4','h5','h6','p','br','hr','ul','ol','li',
+              'a','strong','em','code','pre','blockquote','img','table','thead','tbody',
+              'tr','th','td','span','div','sub','sup','del','s'],
+            ALLOWED_ATTR: ['href','src','alt','title','class','id','target','rel'],
+            ALLOW_DATA_ATTR: false,
+          });
+          setHtmlContent(cleanHtml);
         }
       }
       setLoading(false);

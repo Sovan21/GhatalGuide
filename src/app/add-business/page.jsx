@@ -919,6 +919,11 @@ function AddBusinessContent() {
   // Inline Auth functions
   const handleInlineSignIn = async (e) => {
     e.preventDefault();
+    if (authPassword.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
+      showToast("Password too long (max 72 characters).", "warning");
+      return;
+    }
     setAuthSubmitLoading(true);
     setAuthError("");
     setAuthMessage("");
@@ -941,6 +946,10 @@ function AddBusinessContent() {
     e.preventDefault();
     if (authPassword !== authConfirmPassword) {
       setAuthError("Passwords do not match.");
+      return;
+    }
+    if (authPassword.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
       return;
     }
     setAuthSubmitLoading(true);
@@ -1054,6 +1063,11 @@ function AddBusinessContent() {
 
   const handleInlineUpdatePassword = async (e) => {
     e.preventDefault();
+    if (authNewPassword.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
+      showToast("Password too long (max 72 characters).", "warning");
+      return;
+    }
     setAuthSubmitLoading(true);
     setAuthError("");
     setAuthMessage("");
@@ -1163,6 +1177,7 @@ function AddBusinessContent() {
                           <input
                             type={showPassword ? "text" : "password"}
                             required
+                            maxLength={72}
                             value={authPassword}
                             onChange={(e) => setAuthPassword(e.target.value)}
                             placeholder="Password"
@@ -1315,6 +1330,7 @@ function AddBusinessContent() {
                             type={showPassword ? "text" : "password"}
                             required
                             minLength="6"
+                            maxLength={72}
                             value={authNewPassword}
                             onChange={(e) => setAuthNewPassword(e.target.value)}
                             placeholder="New Password"
@@ -1386,6 +1402,7 @@ function AddBusinessContent() {
                         type={showPassword ? "text" : "password"}
                         required
                         minLength="6"
+                        maxLength={72}
                         value={authPassword}
                         onChange={(e) => setAuthPassword(e.target.value)}
                         placeholder="Password"
@@ -1409,6 +1426,7 @@ function AddBusinessContent() {
                         type={showConfirmPassword ? "text" : "password"}
                         required
                         minLength="6"
+                        maxLength={72}
                         value={authConfirmPassword}
                         onChange={(e) => setAuthConfirmPassword(e.target.value)}
                         placeholder="Confirm Password"

@@ -61,9 +61,8 @@ export default function TestDistancePage() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     setStraight((R * c).toFixed(2));
 
-    // 2. Fetch Road Distance from Ola Maps
-    const apiKey = process.env.NEXT_PUBLIC_OLA_MAPS_API_KEY;
-    fetch(`https://api.olamaps.io/routing/v1/directions?origin=${userLoc.lat},${userLoc.lng}&destination=${dest.lat},${dest.lng}&api_key=${apiKey}`, { method: "POST" })
+    // 2. Fetch Road Distance from Local API Proxy
+    fetch(`/api/distance?origin=${userLoc.lat},${userLoc.lng}&destination=${dest.lat},${dest.lng}`)
       .then(res => res.json())
       .then(data => {
         if (data.routes && data.routes.length > 0 && data.routes[0].legs && data.routes[0].legs.length > 0) {

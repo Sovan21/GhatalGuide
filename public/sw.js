@@ -2,9 +2,7 @@ const CACHE_NAME = 'ghatal-guide-cache-v1';
 const urlsToCache = [
   '/',
   '/manifest.json',
-  '/logo.png',
-  '/icon-192x192.png',
-  '/icon-512x512.png'
+  '/logo.png'
 ];
 
 self.addEventListener('install', event => {

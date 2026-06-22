@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { 
-  Sun, Moon, Menu, X, PlusCircle, LogOut, Heart, LayoutDashboard, ShieldCheck, ChevronDown, UserPlus, LogIn, Plus,
+  Sun, Moon, Menu, X, PlusCircle, LogOut, Heart, LayoutDashboard, ShieldCheck, UserPlus, LogIn, Plus,
   Home, Compass, Bus, Calendar, BookOpen, Briefcase, ChevronRight
 } from "lucide-react";
 
@@ -127,14 +127,35 @@ export default function Navbar() {
     return name.charAt(0).toUpperCase();
   };
 
+  const getUserGradient = (user) => {
+    const gradients = [
+      "from-rose-500 to-orange-500",
+      "from-amber-500 to-red-500",
+      "from-emerald-500 to-teal-600",
+      "from-cyan-500 to-blue-600",
+      "from-purple-500 to-indigo-600",
+      "from-fuchsia-500 to-pink-600",
+      "from-violet-500 to-fuchsia-600",
+      "from-blue-500 to-indigo-600"
+    ];
+    if (!user) return gradients[0];
+    const key = user.email || user.id || "default";
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash = key.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % gradients.length;
+    return gradients[index];
+  };
+
   const isAdmin = currentUser?.user_metadata?.role === "admin" || currentUser?.email === "shovaxxx@gmail.com" || currentUser?.email?.endsWith("@ghatalguide.com");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full px-3 sm:px-4 py-4 bg-transparent pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full px-3 sm:px-4 pt-1.5 pb-0 sm:py-4 bg-transparent pointer-events-none">
       <div className={`max-w-7xl mx-auto relative pointer-events-auto transition-all duration-500 ease-out rounded-full border ${
         isScrolled 
-          ? "bg-white/90 dark:bg-dark-bg/90 backdrop-blur-xl shadow-lg dark:shadow-2xl shadow-slate-200/40 dark:shadow-black/40 border-slate-200/80 dark:border-dark-border" 
-          : "bg-white/70 dark:bg-dark-bg/75 backdrop-blur-md shadow-md dark:shadow-xl shadow-slate-100/30 dark:shadow-black/20 border-slate-200/50 dark:border-dark-border/40"
+          ? "bg-white/90 dark:bg-dark-bg/90 backdrop-blur-xl shadow-[0_12px_40px_rgba(15,23,42,0.22)] dark:shadow-[0_12px_40px_rgba(255,255,255,0.18)] border-slate-200/80 dark:border-dark-border" 
+          : "bg-white/70 dark:bg-dark-bg/75 backdrop-blur-md shadow-[0_8px_30px_rgba(15,23,42,0.14)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.12)] border-slate-200/50 dark:border-dark-border/40"
       }`}>
 
         <nav className="px-4 sm:px-5 lg:px-6 py-3 sm:py-3 flex justify-between items-center">
@@ -205,21 +226,22 @@ export default function Navbar() {
                       setIsDropdownOpen((prev) => !prev);
                     }
                   }}
-                  className="flex items-center gap-1 text-sm rounded-full active:scale-95 transition-all cursor-pointer group"
+                  className="flex items-center text-sm rounded-full active:scale-95 transition-all cursor-pointer group"
                   aria-label="User menu"
                 >
-                  {currentUser.user_metadata?.avatar_url ? (
-                    <img
-                      className="h-8.5 w-8.5 rounded-full object-cover border-2 border-white/10 group-hover:border-primary-400/50 transition-colors"
-                      src={currentUser.user_metadata.avatar_url}
-                      alt="User Avatar"
-                    />
-                  ) : (
-                    <div className="h-8.5 w-8.5 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
-                      {getInitials(currentUser)}
-                    </div>
-                  )}
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-500 hidden sm:block transition-transform duration-200 group-hover:text-slate-800 dark:group-hover:text-white" />
+                  <div className="h-9 w-9 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-blue-500 to-red-500 shadow-md flex items-center justify-center group-hover:scale-105 group-hover:rotate-6 transition-all duration-300">
+                    {currentUser.user_metadata?.avatar_url ? (
+                      <img
+                        className="h-full w-full rounded-full object-cover border border-white dark:border-dark-bg bg-white dark:bg-dark-card"
+                        src={currentUser.user_metadata.avatar_url}
+                        alt="User Avatar"
+                      />
+                    ) : (
+                      <div className={`h-full w-full rounded-full bg-gradient-to-br ${getUserGradient(currentUser)} flex items-center justify-center text-white font-black text-xs border border-white/10`}>
+                        {getInitials(currentUser)}
+                      </div>
+                    )}
+                  </div>
                 </button>
  
                 {/* User Dropdown */}

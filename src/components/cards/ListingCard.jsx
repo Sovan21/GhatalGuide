@@ -233,40 +233,35 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
 
   const isOpen = isBusinessOpen(listing.opening_hours);
 
-  // Star renderer helper (Single star line matches screenshot)
-  const renderStarsLine = (rating) => {
-    const hasRating = rating !== undefined && rating !== null && rating > 0;
+  const reviewCount = listing.reviewCount || 0;
+  const displayRating = Number(listing.rating) || 0;
 
-    if (!hasRating) {
+  // Star renderer helper (Single star line matches screenshot)
+  const renderStarsLine = () => {
+    if (reviewCount <= 0 && displayRating <= 0) {
       return (
         <div className="flex items-center gap-1.5 text-[12px] font-bold text-slate-400 dark:text-slate-500 select-none">
-          No reviews yet
+          No ratings yet
         </div>
       );
     }
 
+    const ratingColor = displayRating >= 4 ? 'bg-[#388e3c]' : displayRating >= 3 ? 'bg-amber-500' : 'bg-red-500';
+
     return (
-      <div className="flex items-center gap-1.5 text-[12px] font-bold text-slate-700 dark:text-slate-400 select-none">
-        <div className="flex items-center gap-0.5">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star 
-              key={i} 
-              className={`w-3.5 h-3.5 ${
-                i < Math.floor(rating) 
-                  ? "text-amber-500 fill-amber-500" 
-                  : "text-slate-300 dark:text-slate-700"
-              }`} 
-            />
-          ))}
-        </div>
-        <span className="text-slate-500 dark:text-slate-400 font-bold">
-          ({listing.reviewCount || 0} {listing.reviewCount === 1 ? 'review' : 'reviews'})
+      <div className="flex items-center gap-1.5 text-[12px] select-none mt-0.5">
+        <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-[4px] text-white font-bold ${ratingColor}`}>
+          <span className="text-[11px] leading-none pt-[1px]">{displayRating.toFixed(1)}</span>
+          <Star className="w-[10px] h-[10px] fill-white text-white" />
+        </span>
+        <span className="text-slate-500 dark:text-slate-400 text-[12px] font-medium tracking-tight">
+          ({reviewCount})
         </span>
       </div>
     );
   };
 
-  // Road distance checker (OSRM Driving distance)
+  // Road distance checker (via server-side proxy)
   useEffect(() => {
     let active = true;
     const run = async () => {
@@ -276,9 +271,8 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
       }
       if (active) setLoadingDistance(true);
       try {
-        const apiKey = process.env.NEXT_PUBLIC_OLA_MAPS_API_KEY;
-        const url = `https://api.olamaps.io/routing/v1/directions?origin=${userLocation.lat},${userLocation.lng}&destination=${listing.lat},${listing.lng}&api_key=${apiKey}`;
-        const res = await fetch(url, { method: "POST" });
+        const url = `/api/distance?origin=${userLocation.lat},${userLocation.lng}&destination=${listing.lat},${listing.lng}`;
+        const res = await fetch(url);
         const data = await res.json();
         if (active && data.routes && data.routes.length > 0 && data.routes[0].legs && data.routes[0].legs.length > 0) {
           const km = (data.routes[0].legs[0].distance / 1000).toFixed(1);
@@ -403,7 +397,7 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
 
           {/* Rating stars & reviews count */}
           <div className="mb-2.5 shrink-0">
-            {renderStarsLine(listing.rating)}
+            {renderStarsLine()}
           </div>
 
           {/* Tag Line: Subcategory | Price: ₹ | Open Now */}

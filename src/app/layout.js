@@ -19,6 +19,7 @@ const kellySlab = Kelly_Slab({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://ghatalguide.netlify.app"),
   title: "Ghatal Guide - Modern City Companion & Business Directory",
   description: "Discover local businesses, services, emergency helplines, bus schedules, events, and jobs in Ghatal. The complete guide to Ghatal town.",
   keywords: [

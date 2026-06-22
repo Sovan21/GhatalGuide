@@ -6,6 +6,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import FeaturedListingCard from "@/components/cards/FeaturedListingCard";
 import { categories } from "@/lib/sampleData";
+import { enrichListingsWithReviewStats } from "@/lib/enrichListingsWithReviewStats";
 import { supabase } from "@/lib/supabaseClient";
 import { CategoryIcon } from "@/lib/categoryIcons";
 import { Search, Mic, MicOff, ArrowRight, Star, Calendar, Bus, MapPin, Clock, Store, Sparkles } from "lucide-react";
@@ -68,6 +69,7 @@ export default function Home() {
         ]);
 
         let dbListings = listingsRes?.data || [];
+        dbListings = await enrichListingsWithReviewStats(supabase, dbListings);
         setFeaturedListings(dbListings);
 
         const session = sessionRes?.data?.session;
@@ -480,7 +482,7 @@ export default function Home() {
               </p>
             </div>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
               {Object.keys(categories).map((key) => {
                 const cat = categories[key];
                 

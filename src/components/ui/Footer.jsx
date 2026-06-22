@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container-perfect py-12 lg:py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           {/* Left Column: Brand Card */}
           <div className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border/80 p-6 sm:p-7 rounded-[28px] shadow-sm flex flex-col justify-between space-y-6">
@@ -57,7 +57,7 @@ export default function Footer() {
                 <a
                   key={social.label}
                   href="#"
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-card-hover text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-dark-card hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-slate-200/80 dark:border-dark-border bg-slate-50 dark:bg-dark-card-hover text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-dark-card hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                   aria-label={social.label}
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
 
           {/* Right Column: Stay Connected Card */}
-          <div className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border/80 p-6 sm:p-7 rounded-[28px] shadow-sm flex flex-col justify-between space-y-5 md:col-span-2 lg:col-span-1">
+          <div className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border/80 p-6 sm:p-7 rounded-[28px] shadow-sm flex flex-col justify-between space-y-5">
             <div className="space-y-2">
               <h4 className="font-black text-slate-900 dark:text-white text-[11px] uppercase tracking-widest flex items-center gap-1.5 select-none">
                 <span className="w-1.5 h-3.5 rounded-full bg-gradient-to-b from-primary-500 to-indigo-500" />

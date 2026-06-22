@@ -238,10 +238,12 @@ export default function FeaturedListingCard({ listing, userLocation, isBookmarke
 
   const isOpen = isBusinessOpen(listing.opening_hours);
 
+  const reviewCount = listing.reviewCount || 0;
+  const displayRating = Number(listing.rating) || 0;
+
   // Star ratings layout renderer
-  const renderStars = (rating) => {
-    const hasRating = rating !== undefined && rating !== null && rating > 0;
-    if (!hasRating) {
+  const renderStars = () => {
+    if (reviewCount <= 0 && displayRating <= 0) {
       return (
         <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500">
           No ratings yet
@@ -249,20 +251,22 @@ export default function FeaturedListingCard({ listing, userLocation, isBookmarke
       );
     }
 
+    const ratingColor = displayRating >= 4 ? 'bg-[#388e3c]' : displayRating >= 3 ? 'bg-amber-500' : 'bg-red-500';
+
     return (
-      <div className="flex items-center gap-1">
-        <span className="text-xs font-black text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-          <Star className="w-3 h-3 fill-amber-500" />
-          <span>{parseFloat(rating).toFixed(1)}</span>
+      <div className="flex items-center gap-1.5">
+        <span className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-[4px] text-white font-bold ${ratingColor}`}>
+          <span className="text-[11px] leading-none pt-[1px]">{displayRating.toFixed(1)}</span>
+          <Star className="w-[10px] h-[10px] fill-white text-white" />
         </span>
-        <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">
-          ({listing.reviewCount || 0} reviews)
+        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">
+          ({reviewCount})
         </span>
       </div>
     );
   };
 
-  // Road distance checker (OSRM/Driving distance)
+  // Road distance checker (via server-side proxy)
   useEffect(() => {
     let active = true;
     const run = async () => {
@@ -272,9 +276,8 @@ export default function FeaturedListingCard({ listing, userLocation, isBookmarke
       }
       if (active) setLoadingDistance(true);
       try {
-        const apiKey = process.env.NEXT_PUBLIC_OLA_MAPS_API_KEY;
-        const url = `https://api.olamaps.io/routing/v1/directions?origin=${userLocation.lat},${userLocation.lng}&destination=${listing.lat},${listing.lng}&api_key=${apiKey}`;
-        const res = await fetch(url, { method: "POST" });
+        const url = `/api/distance?origin=${userLocation.lat},${userLocation.lng}&destination=${listing.lat},${listing.lng}`;
+        const res = await fetch(url);
         const data = await res.json();
         if (active && data.routes && data.routes.length > 0 && data.routes[0].legs && data.routes[0].legs.length > 0) {
           const km = (data.routes[0].legs[0].distance / 1000).toFixed(1);
@@ -375,7 +378,7 @@ export default function FeaturedListingCard({ listing, userLocation, isBookmarke
             <span className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md ${theme.badgeBg}`}>
               {listing.subcategory || listing.category}
             </span>
-            {renderStars(listing.rating)}
+            {renderStars()}
           </div>
 
           {/* Title */}

@@ -26,16 +26,23 @@ function FiltersSidebarContent({
   nearMe,
   setNearMe,
   userLocation,
+  setUserLocation,
   selectedCategory,
-  setSelectedCategory
+  setSelectedCategory,
+  onFilterChange // Optional callback triggered on user interaction
 }) {
   const [isSortOpen, setIsSortOpen] = useState(false);
+
+  // Helper to trigger callback
+  const handleInteraction = () => {
+    if (onFilterChange) onFilterChange();
+  };
 
   const sortOptions = [
     { value: "name", label: "Name A-Z", icon: null },
     { value: "rating", label: "Top Rated", icon: Star },
     { value: "newest", label: "Newest", icon: Clock },
-    ...(userLocation ? [{ value: "distance", label: "Nearest", icon: MapPin }] : [])
+    { value: "distance", label: "Nearest", icon: MapPin }
   ];
 
   const currentSortOption = sortOptions.find(opt => opt.value === sortBy) || sortOptions[0];
@@ -52,7 +59,7 @@ function FiltersSidebarContent({
           </div>
           <button 
             type="button"
-            onClick={() => clearFilter("search")}
+            onClick={() => { clearFilter("search"); handleInteraction(); }}
             className="p-1 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full text-slate-500 cursor-pointer transition-colors"
           >
             <X className="w-3.5 h-3.5" />
@@ -99,7 +106,28 @@ function FiltersSidebarContent({
                       key={option.value}
                       type="button"
                       onClick={() => {
-                        setSortBy(option.value);
+                        if (option.value === "distance" && !userLocation) {
+                          if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(
+                              (pos) => {
+                                setUserLocation({
+                                  lat: pos.coords.latitude,
+                                  lng: pos.coords.longitude
+                                });
+                                setSortBy("distance");
+                                handleInteraction();
+                              },
+                              (err) => {
+                                alert("Please allow location access in your browser settings to sort by nearest.");
+                              }
+                            );
+                          } else {
+                            alert("Geolocation is not supported by your browser.");
+                          }
+                        } else {
+                          setSortBy(option.value);
+                          handleInteraction();
+                        }
                         setIsSortOpen(false);
                       }}
                       className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-bold transition-colors cursor-pointer text-left ${
@@ -148,7 +176,7 @@ function FiltersSidebarContent({
             
             <button
               type="button"
-              onClick={() => setOpenNow(!openNow)}
+              onClick={() => { setOpenNow(!openNow); handleInteraction(); }}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                 openNow ? "bg-emerald-500" : "bg-slate-200 dark:bg-dark-card-hover"
               }`}
@@ -175,7 +203,7 @@ function FiltersSidebarContent({
             
             <button
               type="button"
-              onClick={() => setTopRated(!topRated)}
+              onClick={() => { setTopRated(!topRated); handleInteraction(); }}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                 topRated ? "bg-amber-500" : "bg-slate-200 dark:bg-dark-card-hover"
               }`}
@@ -203,11 +231,39 @@ function FiltersSidebarContent({
             <button
               type="button"
               onClick={() => {
-                if (!userLocation) {
-                  alert("Please enable location services to use Near Me filter.");
-                  return;
+                const newNearMe = !nearMe;
+                setNearMe(newNearMe);
+                if (newNearMe) {
+                  if (!userLocation) {
+                    if (navigator.geolocation) {
+                      navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                          setUserLocation({
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude
+                          });
+                          setSortBy("distance");
+                          handleInteraction();
+                        },
+                        (err) => {
+                          alert("Please allow location access in your browser settings to use Near Me filter.");
+                          setNearMe(false);
+                        }
+                      );
+                    } else {
+                      alert("Geolocation is not supported by your browser.");
+                      setNearMe(false);
+                    }
+                  } else {
+                    setSortBy("distance");
+                    handleInteraction();
+                  }
+                } else {
+                  if (sortBy === "distance") {
+                    setSortBy("name");
+                  }
+                  handleInteraction();
                 }
-                setNearMe(!nearMe);
               }}
               className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
                 nearMe ? "bg-blue-500" : "bg-slate-200 dark:bg-dark-card-hover"
@@ -234,7 +290,7 @@ function FiltersSidebarContent({
           {selectedCategory !== "all" && (
             <button 
               type="button"
-              onClick={() => setSelectedCategory("all")}
+              onClick={() => { setSelectedCategory("all"); handleInteraction(); }}
               className="text-[11px] font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 cursor-pointer transition-colors"
             >
               Clear
@@ -244,7 +300,7 @@ function FiltersSidebarContent({
         <div className="flex flex-col gap-1 max-h-[210px] lg:max-h-[210px] xl:max-h-[260px] overflow-y-auto pr-1 custom-scrollbar">
           <button
             type="button"
-            onClick={() => setSelectedCategory("all")}
+            onClick={() => { setSelectedCategory("all"); handleInteraction(); }}
             className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-sm font-bold transition-all cursor-pointer group ${
               selectedCategory === "all"
                 ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
@@ -265,7 +321,7 @@ function FiltersSidebarContent({
               <button
                 key={key}
                 type="button"
-                onClick={() => setSelectedCategory(key)}
+                onClick={() => { setSelectedCategory(key); handleInteraction(); }}
                 className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-sm font-bold transition-all cursor-pointer group ${
                   isSelected
                     ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
@@ -358,9 +414,20 @@ function DirectoryContent() {
   const [topRated, setTopRated] = useState(initialFilter === "top-rated" || searchParams.get("topRated") === "true");
   const [nearMe, setNearMe] = useState(initialFilter === "near-me" || searchParams.get("nearMe") === "true");
   
-  const [sortBy, setSortBy] = useState("name"); // 'name', 'rating', 'distance', 'newest'
+  const [sortBy, setSortBy] = useState(
+    (initialFilter === "near-me" || searchParams.get("nearMe") === "true") ? "distance" : "name"
+  ); // 'name', 'rating', 'distance', 'newest'
   const [viewMode, setViewMode] = useState("grid"); // 'grid', 'list'
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  
+  const handleCloseDrawer = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsFilterDrawerOpen(false);
+      setIsClosing(false);
+    }, 300); // Wait for the close animation to finish
+  };
   
   const [allListings, setAllListings] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
@@ -784,7 +851,12 @@ function DirectoryContent() {
     if (type === "category") setSelectedCategory("all");
     if (type === "openNow") setOpenNow(false);
     if (type === "topRated") setTopRated(false);
-    if (type === "nearMe") setNearMe(false);
+    if (type === "nearMe") {
+      setNearMe(false);
+      if (sortBy === "distance") {
+        setSortBy("name");
+      }
+    }
     if (type === "search") setSearchQuery("");
   };
 
@@ -830,6 +902,7 @@ function DirectoryContent() {
                 nearMe={nearMe}
                 setNearMe={setNearMe}
                 userLocation={userLocation}
+                setUserLocation={setUserLocation}
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
               />
@@ -838,9 +911,9 @@ function DirectoryContent() {
             {/* Main Area */}
             <div className="flex-grow w-full space-y-6">
               
-              {/* Directory Filter Bar Panel */}
-              <div className="bg-white dark:bg-dark-card rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-dark-border p-4 sm:p-5 shadow-sm">
-                <div className="flex gap-3 items-center">
+              {/* Directory Filter Bar Panel (Fixed bottom on mobile, relative top on desktop) */}
+              <div className="fixed bottom-0 left-0 right-0 !m-0 lg:relative lg:bottom-auto lg:left-auto lg:right-auto lg:top-0 z-40 bg-white dark:bg-dark-card lg:rounded-2xl border-t lg:border border-slate-200 dark:border-dark-border py-3.5 px-4 pb-5 lg:p-5 shadow-[0_-4px_20px_rgba(15,23,42,0.18)] dark:shadow-[0_-4px_20px_rgba(255,255,255,0.12)] lg:shadow-[0_8px_30px_rgba(15,23,42,0.08)] lg:dark:shadow-[0_8px_30px_rgba(255,255,255,0.06)]">
+                <div className="flex gap-2.5 items-center">
                   
                   {/* Search Bar Input */}
                   <form onSubmit={(e) => { e.preventDefault(); document.activeElement?.blur(); }} className="relative flex-grow">
@@ -851,16 +924,16 @@ function DirectoryContent() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setSearchFocused(true)}
                       onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                      className="w-full pl-11 pr-28 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all"
+                      className="w-full pl-9 pr-22 py-2.5 lg:pl-11 lg:pr-28 lg:py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl lg:rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm lg:text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-all"
                     />
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
                     
                     {/* Voice Search Pill inside input */}
-                    <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5 z-20">
+                    <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1 z-20">
                       <button
                         type="button"
                         onClick={() => handleToggleVoiceLang(voiceLang === "bn-IN" ? "en-US" : "bn-IN")}
-                        className="text-[9px] font-black uppercase bg-slate-200/80 dark:bg-dark-card hover:bg-slate-300/80 dark:hover:bg-dark-card-hover px-2 py-1 rounded-md text-slate-650 dark:text-slate-300 transition-colors"
+                        className="text-[8px] font-black uppercase bg-slate-200/80 dark:bg-dark-card hover:bg-slate-300/80 dark:hover:bg-dark-card-hover px-1.5 py-0.5 rounded text-slate-650 dark:text-slate-300 transition-colors"
                         title="Switch voice search language"
                       >
                         {voiceLang === "bn-IN" ? "বাংলা" : "ENG"}
@@ -868,7 +941,7 @@ function DirectoryContent() {
                       <button
                         type="button"
                         onClick={handleVoiceSearch}
-                        className={`p-2 rounded-xl transition-all cursor-pointer relative shrink-0 ${
+                        className={`p-1.5 rounded-lg transition-all cursor-pointer relative shrink-0 ${
                            isListening 
                              ? "bg-red-500 text-white shadow-lg shadow-red-500/30" 
                              : "text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-dark-card-hover"
@@ -876,15 +949,15 @@ function DirectoryContent() {
                         title={isListening ? "Stop listening" : "Voice Search"}
                       >
                         {isListening && (
-                          <span className="absolute inset-0 rounded-xl border-2 border-red-400 animate-ping opacity-40" />
+                          <span className="absolute inset-0 rounded-lg border-2 border-red-400 animate-ping opacity-40" />
                         )}
-                        {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                        {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
                       </button>
                     </div>
 
-                    {/* Suggestions Dropdown */}
+                    {/* Suggestions Dropdown (Opens upwards on mobile, downwards on desktop) */}
                     {searchFocused && suggestions.length > 0 && (
-                      <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden max-h-72 overflow-y-auto animate-fade-in text-slate-900 dark:text-white">
+                      <div className="absolute left-0 right-0 bottom-full mb-2 lg:bottom-auto lg:top-full lg:mb-0 lg:mt-2 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl shadow-xl z-50 py-2.5 overflow-hidden max-h-56 lg:max-h-72 overflow-y-auto animate-fade-in text-slate-900 dark:text-white">
                         {suggestions.map((suggestion, idx) => (
                           <button
                             key={`sug-${idx}`}
@@ -924,10 +997,10 @@ function DirectoryContent() {
                   {/* Mobile Filters Toggle Button (hidden on desktop) */}
                   <button
                     onClick={() => setIsFilterDrawerOpen(true)}
-                    className="lg:hidden p-3.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-2xl text-slate-650 dark:text-slate-300 hover:bg-slate-100 transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                    className="lg:hidden p-2.5 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-slate-650 dark:text-slate-300 hover:bg-slate-100 transition-all flex items-center justify-center shrink-0 cursor-pointer"
                     title="Filters"
                   >
-                    <SlidersHorizontal className="w-5 h-5" />
+                    <SlidersHorizontal className="w-4.5 h-4.5" />
                   </button>
  
                   {/* View Mode Toggle Switch */}
@@ -958,9 +1031,9 @@ function DirectoryContent() {
 
                 </div>
 
-                {/* Active Filter Badges */}
+                {/* Active Filter Badges (Desktop only inside the panel) */}
                 {activeFiltersCount > 0 && (
-                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-dark-border flex flex-wrap items-center gap-2 text-xs font-black">
+                  <div className="hidden lg:flex mt-4 pt-4 border-t border-slate-100 dark:border-dark-border flex-wrap items-center gap-2 text-xs font-black">
                     <span className="text-slate-400 uppercase select-none text-[10px] tracking-wide">Active Filters:</span>
                     
                     {selectedCategory !== "all" && (
@@ -1006,6 +1079,54 @@ function DirectoryContent() {
                   </div>
                 )}
               </div>
+
+              {/* Active Filter Badges (Mobile only, rendered above listings) */}
+              {activeFiltersCount > 0 && (
+                <div className="lg:hidden bg-white dark:bg-dark-card rounded-2xl border border-slate-200/80 dark:border-dark-border/80 p-4 shadow-sm flex flex-wrap items-center gap-2 text-xs font-black">
+                  <span className="text-slate-400 uppercase select-none text-[10px] tracking-wide">Active Filters:</span>
+                  
+                  {selectedCategory !== "all" && (
+                    <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 px-3 py-1 rounded-full border border-indigo-200/20 shadow-sm">
+                      <span>Category: {categories[selectedCategory]?.name}</span>
+                      <button onClick={() => clearFilter("category")} className="hover:text-indigo-900 cursor-pointer"><X className="w-3 h-3" /></button>
+                    </span>
+                  )}
+
+                  {openNow && (
+                    <span className="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 px-3.5 py-1 rounded-full border border-emerald-200/20 shadow-sm">
+                      <span>Status: Open Now</span>
+                      <button onClick={() => clearFilter("openNow")} className="hover:text-emerald-900 cursor-pointer"><X className="w-3 h-3" /></button>
+                    </span>
+                  )}
+
+                  {topRated && (
+                    <span className="inline-flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 px-3.5 py-1 rounded-full border border-amber-200/20 shadow-sm">
+                      <span>Rating: 4.0+ Stars</span>
+                      <button onClick={() => clearFilter("topRated")} className="hover:text-amber-900 cursor-pointer"><X className="w-3 h-3" /></button>
+                    </span>
+                  )}
+
+                  {nearMe && (
+                    <span className="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 px-3.5 py-1 rounded-full border border-blue-200/20 shadow-sm">
+                      <span>Distance: &lt; 20 km</span>
+                      <button onClick={() => clearFilter("nearMe")} className="hover:text-blue-900 cursor-pointer"><X className="w-3 h-3" /></button>
+                    </span>
+                  )}
+
+                  <button
+                    onClick={() => {
+                      setSelectedCategory("all");
+                      setOpenNow(false);
+                      setTopRated(false);
+                      setNearMe(false);
+                      setSearchQuery("");
+                    }}
+                    className="text-red-500 hover:text-red-600 hover:underline font-black ml-auto cursor-pointer text-xs"
+                  >
+                    Clear All
+                  </button>
+                </div>
+              )}
 
               {/* Listings Render Grid */}
               {loading && allListings.length === 0 ? (
@@ -1064,6 +1185,8 @@ function DirectoryContent() {
                       <p className="text-sm font-bold text-slate-500 dark:text-slate-400 animate-pulse">Loading more listings...</p>
                     </div>
                   )}
+                  {/* Spacer for mobile bottom search bar */}
+                  <div className="h-20 lg:hidden" />
                 </div>
               )}
 
@@ -1075,29 +1198,36 @@ function DirectoryContent() {
 
       {/* Mobile Drawer (visible on mobile viewport when toggled) */}
       {isFilterDrawerOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
           {/* Backdrop Overlay */}
           <div 
-            onClick={() => setIsFilterDrawerOpen(false)}
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity" 
+            onClick={handleCloseDrawer}
+            className={`fixed inset-0 bg-slate-950/70 backdrop-blur-sm ${isClosing ? 'animate-overlay-fade-out' : 'animate-overlay-fade-in'}`} 
           />
           
-          {/* Drawer container panel */}
-          <div className="relative ml-auto w-full max-w-xs h-full bg-white dark:bg-dark-card shadow-2xl p-6 overflow-y-auto flex flex-col transition-transform duration-300">
-            <div className="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-dark-border mb-6">
-              <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+          {/* Bottom Sheet container */}
+          <div className={`relative w-full max-h-[85vh] bg-white dark:bg-dark-card shadow-2xl rounded-t-3xl overflow-hidden flex flex-col ${isClosing ? 'animate-bottom-sheet-close' : 'animate-bottom-sheet'}`}>
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-1">
+              <div className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full" />
+            </div>
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pb-4 pt-2 border-b border-slate-100 dark:border-dark-border">
+              <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2.5">
                 <SlidersHorizontal className="w-5 h-5 text-indigo-500" />
                 <span>Filters & Sort</span>
               </h2>
               <button 
-                onClick={() => setIsFilterDrawerOpen(false)}
-                className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 cursor-pointer"
+                onClick={handleCloseDrawer}
+                className="p-2.5 rounded-xl bg-white dark:bg-dark-card border-2 border-slate-200 dark:border-dark-border shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all cursor-pointer flex items-center justify-center"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
             
-            <div className="flex-grow">
+            {/* Scrollable Content */}
+            <div className="flex-grow overflow-y-auto px-6 py-5 pb-8 custom-scrollbar">
               <FiltersSidebarContent 
                 searchQuery={searchQuery}
                 clearFilter={clearFilter}
@@ -1110,18 +1240,11 @@ function DirectoryContent() {
                 nearMe={nearMe}
                 setNearMe={setNearMe}
                 userLocation={userLocation}
+                setUserLocation={setUserLocation}
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
+                onFilterChange={handleCloseDrawer}
               />
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-dark-border">
-              <button
-                onClick={() => setIsFilterDrawerOpen(false)}
-                className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md text-sm transition-all cursor-pointer"
-              >
-                Apply Filters ({filteredListings.length} results)
-              </button>
             </div>
           </div>
         </div>

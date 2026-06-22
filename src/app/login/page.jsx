@@ -9,7 +9,21 @@ import { KeyRound, Mail, User, Lock, RotateCcw, ShieldCheck, MailOpen, CheckCirc
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectPath = searchParams.get("redirect") || "/dashboard";
+
+  // Security: Validate redirect path to prevent open redirect attacks
+  // Only allows same-origin relative paths (blocks https://evil.com, //evil.com, etc.)
+  const redirectPath = (() => {
+    const raw = searchParams.get("redirect");
+    if (!raw) return "/dashboard";
+    // Must start with / and NOT start with // (protocol-relative URL)
+    if (raw.startsWith("/") && !raw.startsWith("//")) {
+      try {
+        const url = new URL(raw, window.location.origin);
+        if (url.origin === window.location.origin) return raw;
+      } catch { /* invalid URL — fall through to default */ }
+    }
+    return "/dashboard";
+  })();
 
   // Auth States
   const [panelActive, setPanelActive] = useState("left"); // 'left' = signin, 'right' = signup
@@ -29,6 +43,10 @@ function LoginContent() {
   const [authError, setAuthError] = useState("");
   const [authMessage, setAuthMessage] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
+
+  // Security: Rate limiting — progressive lockout after failed login attempts
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState(null);
 
   // Verification Polling States
   const [isAwaitingConfirmation, setIsAwaitingConfirmation] = useState(false);
@@ -70,6 +88,22 @@ function LoginContent() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+
+    // Security: Rate limit check — progressive lockout after failed attempts
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      const secsLeft = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      setAuthError(`Too many failed attempts. Please try again in ${secsLeft}s.`);
+      showToast(`Please wait ${secsLeft} seconds before trying again.`, "warning");
+      return;
+    }
+
+    // Security: Block excessively long passwords (bcrypt limit is 72 bytes)
+    if (password.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
+      showToast("Password too long (max 72 characters).", "warning");
+      return;
+    }
+
     setAuthLoading(true);
     setAuthError("");
     setAuthMessage("");
@@ -79,6 +113,9 @@ function LoginContent() {
       
       showToast("Signed in successfully!", "success");
       setAuthMessage("Signed in successfully!");
+      // Security: Reset rate limit on successful login
+      setFailedAttempts(0);
+      setLockoutUntil(null);
       
       // Check user listings to redirect appropriately
       const user = signInData.user;
@@ -103,6 +140,16 @@ function LoginContent() {
     } catch (err) {
       setAuthError(err.message || "Wrong password or email. Please try again.");
       showToast(err.message || "Wrong password or email. Please try again.", "error");
+      // Security: Track failed attempts for progressive lockout
+      const newAttempts = failedAttempts + 1;
+      setFailedAttempts(newAttempts);
+      if (newAttempts >= 3) {
+        // Progressive backoff: 15s → 30s → 60s → 120s max
+        const cooldownMs = Math.min(15000 * Math.pow(2, newAttempts - 3), 120000);
+        setLockoutUntil(Date.now() + cooldownMs);
+        const cooldownSecs = Math.ceil(cooldownMs / 1000);
+        showToast(`Account locked for ${cooldownSecs}s after ${newAttempts} failed attempts.`, "warning");
+      }
     } finally {
       setAuthLoading(false);
     }
@@ -113,6 +160,12 @@ function LoginContent() {
     if (password !== confirmPassword) {
       setAuthError("Passwords do not match. Please try again.");
       showToast("Passwords do not match. Please try again.", "warning");
+      return;
+    }
+    // Security: Block excessively long passwords (bcrypt limit is 72 bytes)
+    if (password.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
+      showToast("Password too long (max 72 characters).", "warning");
       return;
     }
     setAuthLoading(true);
@@ -236,6 +289,12 @@ function LoginContent() {
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
+    // Security: Block excessively long passwords (bcrypt limit is 72 bytes)
+    if (newPassword.length > 72) {
+      setAuthError("Password must be 72 characters or less.");
+      showToast("Password too long (max 72 characters).", "warning");
+      return;
+    }
     setAuthLoading(true);
     setAuthError("");
     setAuthMessage("");
@@ -331,6 +390,7 @@ function LoginContent() {
                     <input 
                       type={showPassword ? "text" : "password"}
                       required 
+                      maxLength={72}
                       value={password} 
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter Password"
@@ -490,6 +550,7 @@ function LoginContent() {
                       type={showPassword ? "text" : "password"}
                       required 
                       minLength="6" 
+                      maxLength={72}
                       value={newPassword} 
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Enter New Password"
@@ -562,6 +623,7 @@ function LoginContent() {
                   type={showPassword ? "text" : "password"}
                   required 
                   minLength="6" 
+                  maxLength={72}
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create Password"
@@ -585,6 +647,7 @@ function LoginContent() {
                   type={showConfirmPassword ? "text" : "password"}
                   required 
                   minLength="6" 
+                  maxLength={72}
                   value={confirmPassword} 
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm Password"

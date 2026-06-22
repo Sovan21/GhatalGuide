@@ -53,15 +53,13 @@ export default function Favorites() {
         }
       }
 
-      // Fetch all approved listings
+      // Fetch all approved listings (includes review counts from API)
       let allListings = [];
       try {
-        const { data, error } = await supabase
-          .from("listings")
-          .select("*")
-          .eq("status", "approved");
-        if (data && !error) {
-          allListings = data;
+        const res = await fetch("/api/listings");
+        if (res.ok) {
+          const data = await res.json();
+          allListings = data?.listings || [];
         }
       } catch (e) {}
 

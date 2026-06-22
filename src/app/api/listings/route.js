@@ -1,3 +1,4 @@
+import { enrichListingsWithReviewStats } from "@/lib/enrichListingsWithReviewStats";
 import { supabase } from "@/lib/supabaseClient";
 import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
@@ -15,9 +16,10 @@ const getCachedListings = unstable_cache(
       console.error("Database query failed:", error);
       throw error;
     }
-    return data || [];
+
+    return enrichListingsWithReviewStats(supabase, data || []);
   },
-  ["all-approved-listings"],
+  ["all-approved-listings-v2"],
   {
     tags: ["listings"],
     revalidate: 300 // 5 minutes

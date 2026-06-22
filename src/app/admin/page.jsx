@@ -1,4 +1,22 @@
 "use client";
+/**
+ * ⚠️ SECURITY NOTE:
+ * This admin panel's access control is a CLIENT-SIDE UI gate only.
+ * It does NOT provide real security. The actual protection must come from:
+ * 
+ * 1. Supabase Row Level Security (RLS) policies on ALL tables.
+ *    Without RLS policies, anyone can access and modify your data using the client keys.
+ * 2. Supabase service_role key used ONLY on server-side (API routes).
+ *    Never expose the service_role key to the browser.
+ * 3. NEVER trust client-side role checks for data protection.
+ * 
+ * Required Supabase RLS policies:
+ * - listings: Only admin can update 'status', 'is_featured', 'feature_status'
+ * - posts: Only admin can insert/update/delete
+ * - reviews: Only admin can update 'status', delete
+ * - jobs, events: Only admin can insert/update/delete
+ * - trains, buses, toto_routes: Only admin can insert/update/delete
+ */
 import React, { useState, useEffect } from "react";
 import { supabase } from "@/lib/adminSupabaseClient";
 import { 
@@ -826,7 +844,7 @@ export default function AdminDashboard() {
 
   const handleSaveReviewChanges = async (e) => {
     e.preventDefault();
-    if (!editReviewData.user_name || !editReviewData.comment) {
+    if (!editReviewData.user_name || !editReviewData.review_text) {
       showToast("User name and review content cannot be empty", "error");
       return;
     }
@@ -835,7 +853,7 @@ export default function AdminDashboard() {
     try {
       const updateData = {
         user_name: editReviewData.user_name,
-        comment: editReviewData.comment,
+        review_text: editReviewData.review_text,
         rating: parseInt(editReviewData.rating, 10)
       };
 
@@ -2631,7 +2649,7 @@ export default function AdminDashboard() {
                       const searchLower = reviewsSearch.toLowerCase();
                       filteredReviews = filteredReviews.filter(r => 
                         r.user_name.toLowerCase().includes(searchLower) ||
-                        r.comment.toLowerCase().includes(searchLower)
+                        (r.review_text || "").toLowerCase().includes(searchLower)
                       );
                     }
 
@@ -2712,7 +2730,7 @@ export default function AdminDashboard() {
                                     </div>
 
                                     <p className="text-slate-600 dark:text-slate-300 dark:text-slate-300 text-xs italic font-semibold leading-relaxed mt-2 whitespace-pre-wrap pl-7 line-clamp-4">
-                                      "{review.comment}"
+                                      "{review.review_text}"
                                     </p>
                                   </div>
 
@@ -4019,8 +4037,8 @@ export default function AdminDashboard() {
                   <label className="text-[10px] font-black text-slate-500 dark:text-slate-400 dark:text-slate-500 uppercase tracking-wider">Review Content *</label>
                   <textarea
                     required rows="4"
-                    value={editReviewData.comment}
-                    onChange={(e) => setEditReviewData(prev => ({ ...prev, comment: e.target.value }))}
+                    value={editReviewData.review_text || ""}
+                    onChange={(e) => setEditReviewData(prev => ({ ...prev, review_text: e.target.value }))}
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary-500 text-slate-900 dark:text-white resize-none"
                   />
                 </div>
