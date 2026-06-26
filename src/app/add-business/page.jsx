@@ -766,7 +766,10 @@ function AddBusinessContent() {
   // Google Maps coords helper
   const extractLatLngFromGoogleMapsLink = (url) => {
     if (!url) return { lat: null, lng: null };
-    const match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    let match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (!match) {
+      match = url.match(/[?&](?:query|q)=(-?\d+\.\d+),(-?\d+\.\d+)/);
+    }
     if (match && match.length >= 3) {
       const lat = parseFloat(match[1]);
       const lng = parseFloat(match[2]);

@@ -101,7 +101,10 @@ const getBusinessNameLabel = (subcategory) => {
 // Extract Lat/Lng from Google Maps link
 const extractLatLngFromGoogleMapsLink = (url) => {
   if (!url) return { lat: null, lng: null };
-  const match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  let match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (!match) {
+    match = url.match(/[?&](?:query|q)=(-?\d+\.\d+),(-?\d+\.\d+)/);
+  }
   if (match && match.length >= 3) {
     const lat = parseFloat(match[1]);
     const lng = parseFloat(match[2]);
@@ -2446,10 +2449,13 @@ export default function AdminDashboard() {
                                         )}
 
                                         {/* Google Maps Embed Link */}
-                                        {listing.googleMapLink && (
+                                        {(listing.googleMapLink || (listing.lat != null && listing.lng != null)) && (
                                           <div className="mt-3">
                                             <a 
-                                              href={listing.googleMapLink}
+                                              href={listing.lat != null && listing.lng != null
+                                                ? `https://www.google.com/maps/search/?api=1&query=${listing.lat},${listing.lng}`
+                                                : listing.googleMapLink
+                                              }
                                               target="_blank" 
                                               rel="noopener noreferrer" 
                                               onClick={(e) => e.stopPropagation()} 

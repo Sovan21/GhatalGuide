@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { supabase } from "@/lib/supabaseClient";
+import { generateSlug, getUrlToken } from "@/lib/slugify";
 import { 
   LayoutDashboard, PlusCircle, AlertCircle, CheckCircle, Clock, Trash2, Eye, Store, Pencil, Star, Info 
 } from "lucide-react";
@@ -300,7 +301,7 @@ export default function Dashboard() {
 
                       {l.status === "approved" && (
                         <Link
-                          href={`/listings/${l.id}`}
+                          href={`/listings/${l.id}${generateSlug(l.name) ? `-${generateSlug(l.name)}` : ''}--${getUrlToken(l.id)}`}
                           className="p-2.5 rounded-xl border border-slate-200 dark:border-dark-border hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
                           title="View Listing"
                         >

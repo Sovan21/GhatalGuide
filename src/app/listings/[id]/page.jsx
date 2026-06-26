@@ -6,6 +6,7 @@ import Footer from "@/components/ui/Footer";
 import { computeAverageRating } from "@/lib/enrichListingsWithReviewStats";
 import { sampleListings } from "@/lib/sampleData";
 import { supabase } from "@/lib/supabaseClient";
+import { getUrlToken, generateSlug } from "@/lib/slugify";
 import { 
   ArrowLeft, Star, MapPin, Phone, Heart, MessageSquare, Car, Share2, Store,
   Clock, Calendar, Copy, Check, ExternalLink, Sparkles, User, ShieldCheck, Info,
@@ -14,7 +15,10 @@ import {
 
 export default function ListingDetails({ params }) {
   const resolvedParams = use(params);
-  const listingId = resolvedParams.id;
+  const slugParts = resolvedParams.id ? resolvedParams.id.split("--") : [];
+  const mainSlug = slugParts[0] || "";
+  const routeToken = slugParts[1] || "";
+  const listingId = mainSlug.split("-")[0] || "";
 
   const [listing, setListing] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -59,6 +63,13 @@ export default function ListingDetails({ params }) {
     return Number(listing?.rating) || 0;
   }, [reviews, listing?.rating]);
 
+  const mapHref = React.useMemo(() => {
+    if (listing?.lat !== undefined && listing?.lat !== null && listing?.lng !== undefined && listing?.lng !== null) {
+      return `https://www.google.com/maps/search/?api=1&query=${listing.lat},${listing.lng}`;
+    }
+    return listing?.googleMapLink || "";
+  }, [listing]);
+
   // Review form states
   const [newRating, setNewRating] = useState(5);
   const [newComment, setNewComment] = useState("");
@@ -81,6 +92,15 @@ export default function ListingDetails({ params }) {
     async function loadListingData() {
       setLoading(true);
       try {
+        const expectedToken = getUrlToken(listingId);
+        if (!listingId || (routeToken && routeToken !== expectedToken)) {
+          // Token is present but incorrect, or listingId is invalid — block access
+          setListing(null);
+          setReviews([]);
+          setLoading(false);
+          return;
+        }
+
         const [listingRes, reviewsRes, sessionRes] = await Promise.all([
           supabase.from("listings").select("*").eq("id", listingId).maybeSingle(),
           supabase.from("reviews").select("*").eq("listing_id", listingId).eq("status", "approved").order("created_at", { ascending: false }),
@@ -120,7 +140,17 @@ export default function ListingDetails({ params }) {
       }
     }
     loadListingData();
-  }, [listingId]);
+  }, [listingId, routeToken]);
+
+  // Silently update URL bar with canonical token URL if token was missing
+  useEffect(() => {
+    if (listing && !routeToken) {
+      const slug = generateSlug(listing.name);
+      const token = getUrlToken(listing.id);
+      const canonicalUrl = `/listings/${listing.id}${slug ? `-${slug}` : ''}--${token}`;
+      window.history.replaceState(null, '', canonicalUrl);
+    }
+  }, [listing, routeToken]);
 
   // Road distance calculation (via server-side proxy)
   useEffect(() => {
@@ -534,9 +564,9 @@ export default function ListingDetails({ params }) {
                 </a>
               )}
               
-              {listing.googleMapLink && (
+              {mapHref && (
                 <a
-                  href={listing.googleMapLink}
+                  href={mapHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-grow flex items-center justify-center gap-2.5 bg-slate-50/50 dark:bg-dark-bg/45 backdrop-blur-md border border-slate-200/60 dark:border-dark-border/70 text-slate-800 dark:text-slate-200 hover:bg-slate-100/60 dark:hover:bg-dark-bg/70 font-black py-4 px-6 rounded-2xl transition-all text-xs tracking-wider uppercase cursor-pointer shadow-sm hover:shadow-md select-none"
@@ -1025,9 +1055,9 @@ export default function ListingDetails({ params }) {
             <span>Call Now</span>
           </a>
           
-          {listing.googleMapLink && (
+          {mapHref && (
             <a
-              href={listing.googleMapLink}
+              href={mapHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-slate-50/60 dark:bg-dark-bg/50 border border-slate-200/60 dark:border-dark-border/80 text-slate-800 dark:text-slate-200 font-black py-4 px-4 rounded-xl flex items-center justify-center gap-2 text-xs transition-all uppercase tracking-wider select-none cursor-pointer"

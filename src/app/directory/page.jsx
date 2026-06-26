@@ -912,7 +912,7 @@ function DirectoryContent() {
             <div className="flex-grow w-full space-y-6">
               
               {/* Directory Filter Bar Panel (Fixed bottom on mobile, relative top on desktop) */}
-              <div className="fixed bottom-0 left-0 right-0 !m-0 lg:relative lg:bottom-auto lg:left-auto lg:right-auto lg:top-0 z-40 bg-white dark:bg-dark-card lg:rounded-2xl border-t lg:border border-slate-200 dark:border-dark-border py-3.5 px-4 pb-5 lg:p-5 shadow-[0_-4px_20px_rgba(15,23,42,0.18)] dark:shadow-[0_-4px_20px_rgba(255,255,255,0.12)] lg:shadow-[0_8px_30px_rgba(15,23,42,0.08)] lg:dark:shadow-[0_8px_30px_rgba(255,255,255,0.06)]">
+              <div className="fixed bottom-0 left-0 right-0 m-0 lg:relative lg:bottom-auto lg:left-auto lg:right-auto lg:top-0 lg:mb-6 z-40 bg-white dark:bg-dark-card lg:rounded-2xl border-t lg:border border-slate-200 dark:border-dark-border py-3.5 px-4 pb-5 lg:p-5 shadow-[0_-4px_20px_rgba(15,23,42,0.18)] dark:shadow-[0_-4px_20px_rgba(255,255,255,0.12)] lg:shadow-[0_8px_30px_rgba(15,23,42,0.08)] lg:dark:shadow-[0_8px_30px_rgba(255,255,255,0.06)]">
                 <div className="flex gap-2.5 items-center">
                   
                   {/* Search Bar Input */}

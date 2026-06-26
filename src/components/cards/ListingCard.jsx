@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { 
-  Star, MapPin, Phone, Heart, Share2, Car,
+  Star, MapPin, Phone, Heart, Share2,
   Stethoscope, PillBottle, Utensils, ShoppingBag, Wrench, GraduationCap, ShieldAlert, Store, Hospital
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { generateSlug, getUrlToken } from "@/lib/slugify";
 
 const MedicalCross = (props) => (
   <svg 
@@ -22,8 +23,6 @@ const MedicalCross = (props) => (
 
 export default function ListingCard({ listing, userLocation, isBookmarked, onBookmarkToggle }) {
   const router = useRouter();
-  const [roadDistance, setRoadDistance] = useState(null);
-  const [loadingDistance, setLoadingDistance] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // Calculate straight-line air distance
@@ -261,38 +260,11 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
     );
   };
 
-  // Road distance checker (via server-side proxy)
-  useEffect(() => {
-    let active = true;
-    const run = async () => {
-      if (!userLocation || !listing.lat || !listing.lng) {
-        if (active) setRoadDistance(null);
-        return;
-      }
-      if (active) setLoadingDistance(true);
-      try {
-        const url = `/api/distance?origin=${userLocation.lat},${userLocation.lng}&destination=${listing.lat},${listing.lng}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (active && data.routes && data.routes.length > 0 && data.routes[0].legs && data.routes[0].legs.length > 0) {
-          const km = (data.routes[0].legs[0].distance / 1000).toFixed(1);
-          setRoadDistance(km);
-        }
-      } catch (e) {
-        console.warn("Road distance check failed", e);
-      } finally {
-        if (active) setLoadingDistance(false);
-      }
-    };
-    const timer = setTimeout(run, 0);
-    return () => {
-      active = false;
-      clearTimeout(timer);
-    };
-  }, [userLocation, listing.lat, listing.lng]);
 
   const handleCardClick = () => {
-    router.push(`/listings/${listing.id}`);
+    const slug = generateSlug(listing.name);
+    const token = getUrlToken(listing.id);
+    router.push(`/listings/${listing.id}${slug ? `-${slug}` : ''}--${token}`);
   };
 
   const copyToClipboard = (text) => {
@@ -306,7 +278,9 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
 
   const handleShareClick = (e) => {
     e.stopPropagation();
-    const shareUrl = `${window.location.origin}/listings/${listing.id}`;
+    const slug = generateSlug(listing.name);
+    const token = getUrlToken(listing.id);
+    const shareUrl = `${window.location.origin}/listings/${listing.id}${slug ? `-${slug}` : ''}--${token}`;
     if (navigator.share) {
       navigator.share({
         title: listing.name,
@@ -419,22 +393,13 @@ export default function ListingCard({ listing, userLocation, isBookmarked, onBoo
             <span className="text-[12px] font-semibold line-clamp-2 min-h-[36px]">{listing.address}</span>
           </div>
 
-          {/* Distance Indicator (Dual Air & Road Distance) */}
+          {/* Distance Indicator */}
           {airDistance && (
             <div className="mt-3.5 flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-dark-card w-fit px-2 py-0.5 rounded border border-slate-100 dark:border-dark-border select-none">
               <span className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-indigo-500 dark:text-indigo-400 shrink-0" />
-                <span>{airDistance} km (straight)</span>
+                <span>{airDistance} km away</span>
               </span>
-              {roadDistance && (
-                <>
-                  <span className="text-slate-300 dark:text-slate-700">|</span>
-                  <span className="flex items-center gap-1">
-                    <Car className="w-3 h-3 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                    <span>{roadDistance} km (road)</span>
-                  </span>
-                </>
-              )}
             </div>
           )}
         </div>

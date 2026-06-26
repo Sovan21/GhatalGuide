@@ -97,7 +97,7 @@ export default function TestDistancePage() {
                 onChange={e => {
                   const link = e.target.value;
                   setMapLink(link);
-                  const match = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+                  const match = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || link.match(/[?&](?:query|q)=(-?\d+\.\d+),(-?\d+\.\d+)/);
                   if (match) {
                     setDestCoords(`${match[1]}, ${match[2]}`);
                     setMapLink(""); // clear after extraction
